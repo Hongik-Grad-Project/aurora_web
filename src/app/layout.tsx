@@ -36,13 +36,21 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 })
 
+const museomoderno = localFont({
+  src: './fonts/MuseoModerno-VariableFont_wght.ttf',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-museomoderno',
+})
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" className={`${pretendard.variable}`}>
+    <html lang="ko" className={`${pretendard.variable} ${museomoderno.variable}`}>
       <body className={`${pretendard.className} bg-[#fff]`}>
         <ClientProvider>
           <FetchSetting>

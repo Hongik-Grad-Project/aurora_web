@@ -23,7 +23,7 @@ export default function Landing1() {
           }}
           className="pt-[6.56rem]"
         >
-          <h1 className="text-center text-[6.13rem] font-bold text-main">
+          <h1 className="text-center text-[6.13rem] font-regular" style={{ fontFamily: 'var(--font-museomoderno)' }}>
             Aurora
           </h1>
           <p className="text-center pt-4 text-[1.25rem] text-semiDarkGrey">
