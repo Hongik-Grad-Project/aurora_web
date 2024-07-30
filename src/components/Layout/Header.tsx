@@ -179,13 +179,6 @@ export default function Header() {
           </div>
         </div>
       </nav>
-
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
-      <PopUpAlertModal
-        isOpen={isAlertModalOpen}
-        onClose={() => setIsAlertModalOpen(false)}
-        text="곧 오픈 예정입니다!"
-      />
     </>
   )
 }
