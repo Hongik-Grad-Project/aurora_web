@@ -7,10 +7,29 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
 
-@media (prefers-color-scheme: dark) {
+/* 1200px */
+/* @media (min-width: 1200px) {
+  body {
+    display: flex;
+    justify-content: center;
+  }
+} */
+
+.content-container {
+  max-width: 1920px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: light) {
   :root {
-    --foreground-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
@@ -18,12 +37,14 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-feature-settings:
+    'clig' 0,
+    'liga' 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--scroll-padding, 5rem);
 }
 
 @layer utilities {

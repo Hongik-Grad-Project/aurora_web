@@ -95,29 +95,29 @@ export default function Header() {
     <>
       <nav className="fixed top-0 z-[20] w-full flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
-          <div className="flex gap-[2.19rem]">
+          <div className="flex gap-[15rem]">
             <div className="flex">
               <Link href="/" className="-m-1.5 p-1.5">
-                <div className="relative h-[20px] w-[110px]">
+                <div className="relative h-[33px] w-[112px]">
                   <Image src="/assets/colorLogo.svg" fill style={{ objectFit: 'contain' }} alt="logo" />
                 </div>
               </Link>
             </div>
 
-            <div className="hidden gap-[1.88rem] lg:flex lg:flex-1 lg:items-center lg:justify-between">
-              <Link
-                href="#"
-                className=" font-medium leading-5 text-grey90  hover:text-main"
-                onClick={() => setIsAlertModalOpen(true)} // 클릭 시 팝업 모달 열기
-              >
-                창업/공모전 정보
+            <div className="hidden gap-[5.19rem] lg:flex lg:flex-1 lg:items-center lg:justify-between">
+              <Link href="/aurora/chat" className="font-medium leading-5 text-grey90 hover:text-main">
+                오로라 채팅하기
               </Link>
-              <Link href="/findMember" className="font-medium leading-5 text-grey90 hover:text-main">
-                팀원 찾기
+              <Link href="/idea/note" className="font-medium leading-5 text-grey90 hover:text-main">
+                아이디어 노트
               </Link>
-              <Link href="/findTeam" className="font-medium leading-5 text-grey90 hover:text-main">
-                팀 찾기
+              <Link href="/project/gallary" className="font-medium leading-5 text-grey90 hover:text-main">
+                프로젝트 갤러리
               </Link>
+              <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main">
+                마이페이지
+              </Link>
+              
             </div>
           </div>
 
@@ -179,6 +179,7 @@ export default function Header() {
           </div>
         </div>
       </nav>
+
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       <PopUpAlertModal
         isOpen={isAlertModalOpen}

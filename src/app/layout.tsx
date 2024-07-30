@@ -4,7 +4,6 @@ import { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Header from '@/components/Layout/Header'
 import Footer from '@/components/Layout/Footer'
-import { GoogleAnalytics } from '@next/third-parties/google'
 
 import './globals.css'
 
@@ -12,18 +11,18 @@ import ClientProvider from '@/components/common/ClientProvider'
 import FetchSetting from '@/components/common/fetch/page'
 
 export const metadata: Metadata = {
-  title: 'Linkit',
-  description: '팀 빌딩 서비스, 링킷',
+  title: 'Aurora',
+  description: '사회 문제 해결의 시작은, 오로라에서',
   icons: {
     icon: '/logo.png',
   },
   openGraph: {
-    title: 'Linkit',
-    description: '팀 빌딩 서비스, 링킷',
-    siteName: 'Linkit',
+    title: 'Aurora',
+    description: '사회 문제 해결의 시작은, 오로라에서',
+    siteName: 'Aurora',
     locale: 'ko_KR',
     type: 'website',
-    url: 'https://linkit.im',
+    url: 'https://myaurora.co.kr',
     images: {
       url: '/logo.png',
     },
@@ -52,7 +51,6 @@ export default function RootLayout({
             <Footer />
           </FetchSetting>
         </ClientProvider>
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
       </body>
     </html>
   )
