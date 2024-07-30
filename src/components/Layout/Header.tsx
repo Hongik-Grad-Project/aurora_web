@@ -105,7 +105,7 @@ export default function Header() {
               </Link>
             </div>
             <div className="hidden gap-[5.19rem] lg:flex lg:flex-1 lg:items-center lg:justify-between">
-              <Link href="/aurora/chat" className="font-medium leading-5 text-grey90 hover:text-main">
+              <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main">
                 오로라 채팅하기
               </Link>
               <Link href="/idea/note" className="font-medium leading-5 text-grey90 hover:text-main">
