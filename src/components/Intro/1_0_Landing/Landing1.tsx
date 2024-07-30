@@ -1,8 +1,6 @@
 // Landing1.tsx
 'use client'
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { floatingAnimation, mainHoverEffect } from '@/lib/animations'
 
 export default function Landing1() {
     return (

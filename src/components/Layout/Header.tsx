@@ -95,7 +95,8 @@ export default function Header() {
     <>
       <nav className="fixed top-0 z-[20] w-full flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
-          <div className="flex gap-[15rem]">
+          {/* 라우팅 링크 */}
+          <div className="flex gap-[15rem] ml-[9.44rem]">
             <div className="flex">
               <Link href="/" className="-m-1.5 p-1.5">
                 <div className="relative h-[33px] w-[112px]">
@@ -103,7 +104,6 @@ export default function Header() {
                 </div>
               </Link>
             </div>
-
             <div className="hidden gap-[5.19rem] lg:flex lg:flex-1 lg:items-center lg:justify-between">
               <Link href="/aurora/chat" className="font-medium leading-5 text-grey90 hover:text-main">
                 오로라 채팅하기
@@ -117,32 +117,16 @@ export default function Header() {
               <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main">
                 마이페이지
               </Link>
-              
             </div>
           </div>
 
-          <div className="flex flex-1 justify-end gap-10">
-            {isAuth ? (
-              <>
-                <Link href="/match/from" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
-                  매칭 관리
-                </Link>
-                <DropdownMenu />
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => setIsLoginModalOpen(true)}
-                  className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex"
-                >
-                  로그인
-                </button>
-
-                <Link href="#FAQ" className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex">
-                  FAQ
-                </Link>
-              </>
-            )}
+          <div className="flex gap-[1.44rem] items-center">
+              <Link href="/project/search" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
+                <img src="/assets/icons/search_icon.svg" alt="search" />
+              </Link>
+              <Link href="/setting" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
+                <img src="/assets/icons/my_profile_icon.svg" alt="setting" />
+              </Link>
           </div>
 
           <div className="ml-auto flex lg:hidden">
@@ -163,16 +147,23 @@ export default function Header() {
             </button>
           </div>
         </div>
+
         <div
           className={`mobile-menu transition-max-height absolute w-full duration-500 ease-in-out ${
             mobileMenuOpen ? 'max-h-96' : 'max-h-0'
           }`}
         >
           <Link href="/myResume" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            마이페이지
+            오로라 채팅하기
           </Link>
           <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            매칭 관리
+            아이디어 노트
+          </Link>
+          <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
+            프로젝트 갤러리
+          </Link>
+          <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
+            마이페이지
           </Link>
           <div onClick={handleLogout} className="block p-4 pl-8 text-sm font-semibold leading-6 text-[#FF345F]">
             로그아웃
