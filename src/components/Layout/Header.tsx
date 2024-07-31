@@ -93,7 +93,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full h-[5rem] flex-shrink bg-white backdrop-blur-3xl">
+      <nav className="fixed top-0 z-[20] w-full h-[5rem] flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
           {/* 라우팅 링크 */}
           <div className="flex gap-[15rem] ml-[9.44rem]">
