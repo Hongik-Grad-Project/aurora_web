@@ -1,4 +1,5 @@
 'use client'
+
 import FooterComponent from '../Layout/FooterComponent'
 import Landing1 from './1_0_Landing/Landing1'
 import Landing2 from './1_0_Landing/Landing2'

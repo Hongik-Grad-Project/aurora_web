@@ -96,7 +96,7 @@ export default function Header() {
       <nav className="fixed top-0 z-[20] w-full h-[5rem] flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
           {/* 라우팅 링크 */}
-          <div className="flex gap-[15rem] ml-[9.44rem]">
+          <div className="flex gap-[20rem] ml-[9.44rem]">
             <div className="flex">
               <Link href="/" className="-m-1.5 p-1.5">
                 <div className="relative h-[33px] w-[112px]">
@@ -121,7 +121,7 @@ export default function Header() {
           </div>
 
           <div className="flex gap-[1.44rem] items-center">
-              <Link href="/project/search" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
+              <Link href="/search" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
                 <img src="/assets/icons/search_icon.svg" alt="search" />
               </Link>
               <Link href="/setting" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">

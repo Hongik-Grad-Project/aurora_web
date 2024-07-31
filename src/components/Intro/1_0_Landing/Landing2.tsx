@@ -22,10 +22,11 @@ export default function Landing2() {
             긍정적인 사회 변화를 위한 공익 프로젝트를 진행할 수 있어요!
             </p>
             <Link href="/chat/aurora">
-                <div className="flex w-[13.75rem] h-[3.31138rem] px-5 py-3.5 flex-col justify-center items-center gap-[0.70456rem] rounded-[0.3125rem] bg-[#776BFF] cursor-pointer hover:bg-[#6659e6] transition-colors">
-                    <p className="text-white text-center" style={{ fontFamily: 'Pretendard, sans-serif' }}>
+                <div className="flex w-[13.75rem] h-[3.31138rem] flex-row justify-center items-center gap-[0.5rem] rounded-[0.3125rem] bg-[#776BFF] cursor-pointer hover:bg-[#6659e6] transition-colors">
+                    <p className="text-white text-center w-[5.5rem] ml-[1.3rem]">
                     AI와 채팅하기
                     </p>
+                    <img src="/assets/icons/speech_bubble.svg" alt="speech_bubble" className="w-[2.3125rem] h-[1.625rem]" />
                 </div>
             </Link>
         </div>

@@ -15,7 +15,7 @@ export default function Banner({ imgSrc, title, description, scrolledTitle, scro
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 60) {
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
@@ -30,7 +30,7 @@ export default function Banner({ imgSrc, title, description, scrolledTitle, scro
       style={{
         backgroundImage: `url(${imgSrc})`,
         backgroundSize: 'cover',
-        height: isScrolled ? '8rem' : '18.375rem',
+        height: isScrolled ? '4rem' : '18.375rem',
         transition: 'height 0.3s ease',
         position: 'fixed',
         top: '5rem',
@@ -44,7 +44,7 @@ export default function Banner({ imgSrc, title, description, scrolledTitle, scro
       >
         {isScrolled ? (
           <>
-            <div className="flex flex-row gap- pt-[3rem] ml-[6.5rem]">
+            <div className="flex flex-row gap- pt-[1rem] ml-[6.5rem]">
               <p className="text-[1.25rem] font-medium text-[#FFFFFF] opacity-80">{scrolledTitle}</p>
             </div>
           </>

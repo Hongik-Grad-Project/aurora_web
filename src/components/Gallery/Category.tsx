@@ -4,7 +4,7 @@ import LableBtn from "./Lable"
 
 export default function categoryNav(){
     return (
-        <div className="flex gap-[0.5rem]">
+        <div className="flex gap-[0.5rem] mb-[2.37rem]">
             <LableBtn text="전체"/>
             <LableBtn text="여성"/>
             <LableBtn text="지구촌"/>
