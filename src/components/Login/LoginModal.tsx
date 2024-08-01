@@ -43,59 +43,45 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: '100vh', opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="rounded-lg bg-[#fff] px-[4.25rem] pb-[2.31rem] pt-[4.73rem]"
+        className="w-[31.5rem] h-[31.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
       >
         <div className="flex flex-col items-center">
-          <h1 className="mb-4 text-[1.1rem] text-grey100">팀빌딩의 시작 링킷</h1>
-          <Image src="/assets/icons/headerLogo.svg" width={213} height={40} alt="logo" />
-          <h2 className="mt-4 text-2xl font-bold">팀빌딩의 시작 링킷</h2>
-          <motion.div
-            animate={{ y: ['0px', '10px', '0px'] }}
-            transition={{ repeat: Infinity, repeatType: 'loop', duration: 2.5, ease: 'easeInOut' }}
-          >
-            <Image
-              src={'/assets/icons/quickStart.svg'}
-              width={111}
-              height={44}
-              alt="quickStart"
-              className="pt-[2.5rem]"
-            />
-          </motion.div>
-
+          <Image src="/assets/colorLogo.svg" width={172} height={57} alt="logo" />
+          <div className="flex flex-col flex-start w-[23.6335rem] mt-[2.35rem]">
+            <div
+              className="text-[#0F1011] text-[1.25rem] font-bold leading-[1.875rem]"
+            >
+              회원가입하기
+            </div>
+            <div
+              className="text-[#0F1011] text-[0.875rem] font-medium leading-[1.3125rem] mb-[1.93rem]"
+            >
+              소셜 로그인 및 이메일로 가입할 수 있습니다.
+            </div>
+            <div className="w-[23.3475rem] h-0 flex-shrink-0 border-t-[0.598px] border-[#CDCDCD]"></div>
+          </div>
           <div className="flex flex-col items-center gap-2 pt-6">
-            {/* <Link href="#"> */}
-            <Link href={NAVER_AUTH_URL}>
-              <div className="flex h-[3.5rem] w-[23rem] cursor-pointer items-center gap-1 rounded bg-[#00C73C] px-24">
-                <Image src={'/assets/login/naverLogo.svg'} width={39} height={44} alt="naverLogin" />
-                <span className="font-semibold text-[#fff]">네이버로 시작하기</span>
-              </div>
-            </Link>
-
-            <Link href={KAKAO_AUTH_URL}>
-              <div className="flex h-[3.5rem] w-[23rem] cursor-pointer items-center gap-1 rounded bg-[#FFE500] px-24">
-                <Image src={'/assets/login/kakaoLogo.svg'} width={39} height={56} alt="kakaoLogin" />
-                <span className="font-semibold">카카오로 시작하기</span>
-              </div>
-            </Link>
-
             <Link href={GOOGLE_AUTH_URL}>
-              <div className="items-cente flex h-[3.5rem] w-[23rem] cursor-pointer items-center gap-3 rounded border-[1px] border-grey30 px-[6.5rem]">
+              <div className="flex h-[2.64825rem] w-[23.6335rem] flex-shrink-0 pl-[0.82rem] cursor-pointer items-center gap-[6.13rem] rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
                 <Image src={'/assets/login/googleLogo.svg'} width={23} height={23} alt="GoogleLogin" />
-                <span className="font-semibold">구글로 시작하기</span>
+                <span className="font-normal text-[0.875rem]">Google로 시작하기</span>
+              </div>
+            </Link>
+            
+            <Link href={KAKAO_AUTH_URL}>
+              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.44rem] cursor-pointer items-center gap-[6.04rem] rounded-[0.5rem] bg-[#FDDC3F]">
+                <Image src={'/assets/login/kakaoLogo.svg'} width={39} height={56} alt="kakaoLogin" />
+                <span className="font-normal text-[0.875rem]">카카오로 시작하기</span>
+              </div>
+            </Link>
+
+            <Link href={NAVER_AUTH_URL}>
+              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.44rem] cursor-pointer items-center gap-[6.04rem] rounded-[0.5rem] bg-[#04BF19]">
+                <Image src={'/assets/login/naverLogo.svg'} width={39} height={44} alt="naverLogin" />
+                <p className="text-normal text-[0.875rem]">네이버로 시작하기</p>
               </div>
             </Link>
           </div>
-          <p className="w-full pt-[2.37rem] text-center text-xs font-normal text-grey60">
-            회원가입 시 Linkit의
-            <Link href="https://amusing-hygienic-ec8.notion.site/503c5d589f0942068517f84febb99f3c" target="_blank">
-              서비스 이용약관
-            </Link>
-            과{' '}
-            <Link href="https://amusing-hygienic-ec8.notion.site/c11cc9b3354b4c55946679d00a4a5168" target="_blank">
-              개인정보 수집 및 이용
-            </Link>
-            에 동의하게 됩니다.
-          </p>
         </div>
       </motion.div>
     </div>

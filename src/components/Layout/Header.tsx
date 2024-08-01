@@ -108,7 +108,7 @@ export default function Header() {
               <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main">
                 오로라 채팅하기
               </Link>
-              <Link href="/idea/note" className="font-medium leading-5 text-grey90 hover:text-main">
+              <Link href="/idea_note" className="font-medium leading-5 text-grey90 hover:text-main">
                 아이디어 노트
               </Link>
               <Link href="/gallery" className="font-medium leading-5 text-grey90 hover:text-main">
@@ -124,9 +124,12 @@ export default function Header() {
               <Link href="/search" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
                 <img src="/assets/icons/search_icon.svg" alt="search" />
               </Link>
-              <Link href="/setting" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
+              <button
+                onClick={() => setIsLoginModalOpen(true)}
+                className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex"
+              >
                 <img src="/assets/icons/my_profile_icon.svg" alt="setting" />
-              </Link>
+              </button>
           </div>
 
           <div className="ml-auto flex lg:hidden">
@@ -170,6 +173,7 @@ export default function Header() {
           </div>
         </div>
       </nav>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   )
 }
