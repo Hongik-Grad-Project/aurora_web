@@ -7,6 +7,8 @@ import Landing3 from './1_0_Landing/Landing3'
 import Landing4 from './1_0_Landing/Landing4'
 import Landing5 from './1_0_Landing/Landing5'
 import Landing6 from './1_0_Landing/Landing6'
+import Landing7 from './1_0_Landing/Landing7'
+import Landing8 from './1_0_Landing/Landing8'
 
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -20,6 +22,8 @@ export default function IntroLayout() {
           <Landing4 />
           <Landing5 />
           <Landing6 />
+          <Landing7 />
+          <Landing8 />
           <div className="h-screen snap-start">
             <FooterComponent />
           </div>
