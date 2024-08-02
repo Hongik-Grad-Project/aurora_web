@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 
 export default function Landing3() {
     return (
-        <div className="relative flex justify-center h-screen min-h-screen w-full snap-mandatory snap-start snap-always flex-row overflow-hidden overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]">
-            <div className="flex w-full flex-row justify-between items-start gap-[1.19rem] mt-[9.03rem]">
+        <div className="relative flex justify-center h-screen min-h-screen 
+        w-full snap-mandatory snap-start snap-always flex-row overflow-hidden 
+        overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]">
+            <div className="flex w-full flex-row justify-between items-start pr-[3.19rem] pl-[6.87rem]">
                 <motion.div
-                    className="inline-flex flex-col items-start gap-[1.1875rem]"
+                    className="inline-flex flex-col items-start gap-[1.1875rem] mt-[9.03rem]"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.5 }}
@@ -51,13 +53,13 @@ export default function Landing3() {
                         delay: 1,
                         duration: 1.0,
                     }}
+                    className="mt-[11.69rem]"
                 >
                     <Image
                         src={'/assets/intro/section3bubble.png'}
                         width={589}
                         height={378}
                         alt="landing3"
-                        className="mt-[1.5rem]"
                     />
                 </motion.div>
             </div>

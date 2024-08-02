@@ -5,10 +5,14 @@ import { motion } from "framer-motion";
 
 export default function Landing5() {
     return (
-        <div className="relative flex justify-center h-screen min-h-screen w-full snap-mandatory snap-start snap-always flex-row overflow-hidden overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]">
-            <div className="flex w-full flex-row justify-between items-start gap-[1.19rem] pt-[4.87rem]">
+        <div className="relative flex justify-center h-screen min-h-screen 
+        w-full snap-mandatory snap-start snap-always flex-row overflow-hidden 
+        overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]
+        ">
+            <div className="flex w-full flex-row justify-between items-start 
+            gap-[1.19rem] ml-[6.87rem]">
                 <motion.div
-                    className="inline-flex flex-col items-start gap-[1.1875rem]"
+                    className="inline-flex flex-col items-start gap-[1.1875rem] mt-[9rem]"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.5 }}
@@ -50,6 +54,7 @@ export default function Landing5() {
                         delay: 1,
                         duration: 1.0,
                     }}
+                    className="mt-[4.88rem]"
                 >
                     <Image
                         src={'/assets/intro/section5_summary.png'}
