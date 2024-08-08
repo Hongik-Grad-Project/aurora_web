@@ -1,4 +1,5 @@
 'use client'
+
 import CategoryNav from '@/components/Gallery/Category'
 
 export default function searchBar() {
