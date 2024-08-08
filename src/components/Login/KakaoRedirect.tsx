@@ -19,35 +19,19 @@ const KakaoRedirect: React.FC = () => {
   useEffect(() => {
     const kakaoLogin = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_LINKIT_SERVER_URL}/login/kakao`, {
+        await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/login/kakao`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json;charset=utf-8' },
           credentials: 'include',
           body: JSON.stringify({ code }),
         })
-        if (response.ok) {
-          const responseData = await response.json()
-          setAccessToken(responseData.accessToken)
-          setToEmail(responseData.email)
-          // setIsAuth(true)
-
-          if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === true) {
-            router.push('/')
-          } else if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === false) {
-            router.push(`/onBoarding/select`)
-          } else {
-            router.push(`/onBoarding`)
-          }
-        }
       } catch (error) {
-      } finally {
-        setLoading(false)
       }
     }
     if (code) {
       kakaoLogin()
     }
-  }, [code, router, setToEmail, setIsAuth, setAccessToken])
+  }, [code, setIsAuth, setAccessToken])
 
   return loading ? (
     <div className="flex h-screen flex-col items-center justify-center">
