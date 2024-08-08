@@ -25,20 +25,6 @@ const KakaoRedirect: React.FC = () => {
           credentials: 'include',
           body: JSON.stringify({ code }),
         })
-        if (response.ok) {
-          const responseData = await response.json()
-          setAccessToken(responseData.accessToken)
-          setToEmail(responseData.email)
-          // setIsAuth(true)
-
-          if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === true) {
-            router.push('/')
-          } else if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === false) {
-            router.push(`/onBoarding/select`)
-          } else {
-            router.push(`/onBoarding`)
-          }
-        }
       } catch (error) {
       } finally {
         setLoading(false)
