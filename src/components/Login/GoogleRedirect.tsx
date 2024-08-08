@@ -24,29 +24,14 @@ const GoogleRedirect: React.FC = () => {
             credentials: 'include',
             body: JSON.stringify({ code }),
           })
-          if (response.ok) {
-            const responseData = await response.json()
-            setAccessToken(responseData.accessToken)
-            setToEmail(responseData.email)
-            // setIsAuth(true)
-  
-            if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === true) {
-              router.push('/')
-            } else if (responseData.existMemberBasicInform === true && responseData.existDefaultProfile === false) {
-              router.push(`/onBoarding/select`)
-            } else {
-              router.push(`/onBoarding`)
-            }
-          }
         } catch (error) {
         } finally {
-          setLoading(false)
         }
       }
       googleLogin()
-    }, [code, router, setToEmail, setIsAuth, setAccessToken])
+    }, [code, setAccessToken])
   
-    return loading ? (
+    return (
       <div className="flex h-screen flex-col items-center justify-center">
         <motion.div
           className="border-t-blue-500 border-blue-200 h-12 w-12 animate-spin rounded-full border-4"
@@ -55,7 +40,7 @@ const GoogleRedirect: React.FC = () => {
         />
         <p className="mt-4 text-lg">Loading...</p>
       </div>
-    ) : null
+    ) 
   }
   
   export default GoogleRedirect
