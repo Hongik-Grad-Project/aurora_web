@@ -18,7 +18,7 @@ const GoogleRedirect: React.FC = () => {
     useEffect(() => {
       const googleLogin = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/login/google`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/login/google`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
             credentials: 'include',
