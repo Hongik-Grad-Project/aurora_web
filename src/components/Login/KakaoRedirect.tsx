@@ -19,7 +19,7 @@ const KakaoRedirect: React.FC = () => {
   useEffect(() => {
     const kakaoLogin = async () => {
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/login/kakao`, {
+        await fetch(`http://localhost:8080/login/kakao`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json;charset=utf-8' },
           credentials: 'include',
@@ -29,7 +29,9 @@ const KakaoRedirect: React.FC = () => {
       }
     }
     if (code) {
+      console.log("code를 받아왔습니다.")
       kakaoLogin()
+      console.log("kakaoLogin을 실행했습니다.")
     }
   }, [code, setIsAuth, setAccessToken])
 
