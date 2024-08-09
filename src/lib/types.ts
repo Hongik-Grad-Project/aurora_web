@@ -1,3 +1,14 @@
+// 오로라 개발 시작부
+export interface ProjectWindowData {
+  imagePath: string;
+  count: number;
+  title: string;
+  problemAndTarget: string;
+  date: string;
+  tag: string;
+}
+
+// 링킷 구현부
 export interface IFormData {
     memberName: string
     contact: string

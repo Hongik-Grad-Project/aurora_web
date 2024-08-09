@@ -26,7 +26,7 @@ export default function Landing7() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1, duration: 0.4 }}
                         >
-                            사람을 모으자
+                            프로젝트를 스스로 검증하기 어려웠나요?
                         </motion.div>
                         <motion.h1
                             className="text-[2.625rem] text-[#0F1A2A] font-bold mb-[1.19rem]"
@@ -34,9 +34,7 @@ export default function Landing7() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.25, duration: 0.4 }}
                         >
-                            이제 행동으로
-                            <br />
-                            옮길 일만 남았어요
+                            사회 문제에 공감하는 사람들에게 응원받아요
                         </motion.h1>
                     </div>
                     <motion.div
@@ -46,9 +44,7 @@ export default function Landing7() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.35, duration: 0.5 }}
                     >
-                        내가 구체화한 프로젝트를 소개하고 홍보해보세요.
-                        <br />
-                        아이디어에 공감하는 사람들이 모여 직접 해결할 수 있는 힘을 만들어드려요
+                        내 프로젝트를 응원하고 지켜보는 사람들이 있어요!
                     </motion.div>
                 </motion.div>
 
