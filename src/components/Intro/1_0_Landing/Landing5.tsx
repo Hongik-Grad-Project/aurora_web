@@ -10,7 +10,7 @@ export default function Landing5() {
         overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]
         ">
             <div className="flex w-full flex-row justify-between items-start 
-            gap-[1.19rem] ml-[6.87rem]">
+            gap-[1.19rem] pl-[6.87rem]">
                 <motion.div
                     className="inline-flex flex-col items-start gap-[1.1875rem] mt-[9rem]"
                     initial={{ opacity: 0, y: 30 }}
