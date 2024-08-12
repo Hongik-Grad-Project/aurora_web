@@ -5,17 +5,16 @@ import { useState, useEffect } from 'react'
 interface BannerProps {
   imgSrc: string
   title: string
-  description: string
+  subTitle: string
   scrolledTitle: string
-  scrolledDescription: string
 }
 
-export default function Banner({ imgSrc, title, description, scrolledTitle, scrolledDescription }: BannerProps) {
+export default function Banner({ imgSrc, title, subTitle, scrolledTitle }: BannerProps) {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 60) {
+      if (window.scrollY > 50) {
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
@@ -30,33 +29,31 @@ export default function Banner({ imgSrc, title, description, scrolledTitle, scro
       style={{
         backgroundImage: `url(${imgSrc})`,
         backgroundSize: 'cover',
-        height: isScrolled ? '4rem' : '18.375rem',
+        height: isScrolled ? '8rem' : '18.375rem',
         transition: 'height 0.3s ease',
         position: 'fixed',
-        top: '5rem',
-        width: '100%',
-        display: 'flex'
+        // width: '100%',
+        zIndex: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
-      className="transition-all duration-300"
+      className="w-full px-4 transition-all duration-300 lg:px-12"
     >
       <div
-        className="flex w-full flex-col text-left transition-all duration-300" // Center text horizontally
+        className="flex flex-col pt-12 text-left transition-all duration-300 lg:w-[64rem]" // Center text horizontally
       >
         {isScrolled ? (
           <>
-            <div className="flex flex-row gap- pt-[1rem] ml-[6.5rem]">
-              <p className="text-[1.25rem] font-medium text-[#FFFFFF] opacity-80">{scrolledTitle}</p>
+            <div className="flex items-center gap-6 pt-3">
+              <p className="text-xs font-bold text-grey90 md:text-[1.2rem]">{scrolledTitle}</p>
+              <p className="text-xs text-grey90 md:text-lg">{subTitle}</p>
             </div>
           </>
         ) : (
           <>
-            <div className="flex flex-col pt-[5.5rem] ml-[6.5rem]">
-              <p className="text-[1.25rem] font-medium text-[#FFFFFF] opacity-80">{title}</p>
-              <p className="text-[2.5rem] font-normal text-[#FEFEFE]">
-                <span>
-                  이제 행동으로 <br/> 옮길 일만 남았어요
-                </span>
-              </p>
+            <div className="flex flex-col pt-16">
+              <p className="text-2xl font-bold text-grey90 lg:text-4xl">{title}</p>
             </div>
           </>
         )}

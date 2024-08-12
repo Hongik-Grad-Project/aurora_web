@@ -67,9 +67,6 @@ const DropdownMenu = () => {
       {dropdownOpen && (
         <div className="absolute right-[-20px] mt-7 flex w-[7.93rem] flex-col items-center rounded-md bg-[#fff] text-center shadow-lg ring-1 ring-grey40 ring-opacity-5">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            <Link href="/myResume" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem">
-              마이페이지
-            </Link>
             <div
               onClick={handleSettingClick}
               className="text-gray-700 block cursor-pointer px-4 py-2 text-sm"

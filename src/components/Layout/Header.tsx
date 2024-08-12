@@ -1,21 +1,16 @@
-// Header.tsx
 'use client'
 import { useEffect, useState } from 'react'
 import './Example.css'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import DropdownMenu from './HeaderModal'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { accessTokenState, authState } from '@/context/recoil-context'
 import { Logout, RefreshAccessToken } from '@/lib/action'
 import LoginModal from '../Login/LoginModal'
-import PopUpAlertModal from '../common/CommonModal/PopUpAlertModal'
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false) // 새로 추가된 상태
   const router = useRouter()
   const [token, setToken] = useRecoilState(accessTokenState)
   const resetAccessTokenState = useResetRecoilState(accessTokenState)
@@ -86,17 +81,15 @@ export default function Header() {
     }
   }
 
-  // 조건부 렌더링을 JSX 내부로 옮김
   if (hiddenPaths.includes(pathname)) {
     return null
   }
 
   return (
     <>
-      <nav className="fixed top-0 z-[20] w-full h-[5rem] flex-shrink bg-white backdrop-blur-3xl">
+      <nav className="fixed top-0 z-[20] w-full flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
-          {/* 라우팅 링크 */}
-          <div className="flex gap-[20rem] ml-[9.44rem]">
+          <div className="flex gap-[2.19rem]">
             <div className="flex">
               <Link href="/" className="-m-1.5 p-1.5">
                 <div className="relative h-[33px] w-[112px]">
@@ -104,8 +97,10 @@ export default function Header() {
                 </div>
               </Link>
             </div>
-            <div className="hidden gap-[5.19rem] lg:flex lg:flex-1 lg:items-center lg:justify-between">
-              <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main">
+            <div className="hidden gap-[1.88rem] md:flex md:items-center md:justify-between lg:flex-1">
+              <Link
+                href="/chat"
+                className="font-medium leading-5 text-grey90 hover:text-main">
                 오로라 채팅하기
               </Link>
               <Link href="/idea_note" className="font-medium leading-5 text-grey90 hover:text-main">
@@ -120,56 +115,34 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="flex gap-[1.44rem] items-center">
-              <Link href="/search" className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
-                <img src="/assets/icons/search_icon.svg" alt="search" />
-              </Link>
-              <button
-                onClick={() => setIsLoginModalOpen(true)}
-                className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex"
-              >
-                <img src="/assets/icons/my_profile_icon.svg" alt="setting" />
-              </button>
-          </div>
-
-          <div className="ml-auto flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex cursor-pointer items-center justify-center rounded-md p-2.5 text-grey100"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div
-          className={`mobile-menu transition-max-height absolute w-full duration-500 ease-in-out ${
-            mobileMenuOpen ? 'max-h-96' : 'max-h-0'
-          }`}
-        >
-          <Link href="/myResume" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            오로라 채팅하기
-          </Link>
-          <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            아이디어 노트
-          </Link>
-          <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            프로젝트 갤러리
-          </Link>
-          <Link href="#" className="block p-4 pl-8 text-sm font-semibold leading-6 text-grey100">
-            마이페이지
-          </Link>
-          <div onClick={handleLogout} className="block p-4 pl-8 text-sm font-semibold leading-6 text-[#FF345F]">
-            로그아웃
+          <div className="flex flex-1 justify-end gap-10">
+            {isAuth ? (
+              <>
+                <Link href="/search" className="hidden font-medium leading-5 text-grey80 lg:flex">
+                  <img src="/assets/icons/search_icon.svg" alt="search" />
+                </Link>
+                <Link
+                  href="/mypage"
+                  className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex">
+                  <img src="/assets/icons/my_profile_icon.svg" alt="mypage" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/search"
+                  className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
+                  <img src="/assets/icons/search_icon.svg" alt="search" />
+                </Link>
+                <button
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex"
+                >
+                  <img src="/assets/icons/my_profile_icon.svg" alt="setting" />
+                </button>
+              </>
+            )
+            }
           </div>
         </div>
       </nav>
