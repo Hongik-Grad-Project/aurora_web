@@ -1,6 +1,6 @@
 'use client'
 
-export default function summary() {
+export default function projectSummary() {
     return (
         <div className="flex p-[1.875rem] flex-col items-start gap-[1.5rem] self-stretch rounded-[1rem] bg-[#FEFEFE]">
                 <div>

@@ -7,12 +7,11 @@ import { ProjectWindowData } from '@/lib/types';
 
 export default function ProjectGalleryPage() {
     return (
-        <div className="flex w-full flex-col justify-center pt-[61px]">
+        <div className="flex w-full flex-col justify-center pt-[5rem]">
             <Banner
                 imgSrc="/assets/images/project_gallery_banner.png"
                 title="프로젝트 갤러리"
                 subTitle="이제 행동으로 옮길 일만 남았어요"
-                scrolledTitle="프로젝트 갤러리"
             />
 
             <div className="flex w-full justify-center bg-gry10 px-4 pb-24 pt-[16rem]">

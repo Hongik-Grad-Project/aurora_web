@@ -88,10 +88,10 @@ export default function Header() {
   return (
     <>
       <nav className="fixed top-0 z-[20] w-full flex-shrink bg-white backdrop-blur-3xl">
-        <div className="flex w-full items-center justify-between px-[2.5rem] py-[1.3rem]">
+        <div className="flex w-full items-center justify-between px-[2.5rem] py-[18.5px]">
           <div className="flex gap-[2.19rem]">
             <div className="flex">
-              <Link href="/" className="-m-1.5 p-1.5">
+              <Link href="/" >
                 <div className="relative h-[33px] w-[112px]">
                   <Image src="/assets/colorLogo.svg" fill style={{ objectFit: 'contain' }} alt="logo" />
                 </div>
@@ -103,7 +103,7 @@ export default function Header() {
                 className="font-medium leading-5 text-grey90 hover:text-main">
                 오로라 채팅하기
               </Link>
-              <Link href="/idea_note" className="font-medium leading-5 text-grey90 hover:text-main">
+              <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main">
                 아이디어 노트
               </Link>
               <Link href="/gallery" className="font-medium leading-5 text-grey90 hover:text-main">

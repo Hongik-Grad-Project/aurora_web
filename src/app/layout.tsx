@@ -51,13 +51,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${museomoderno.variable}`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      </head>
       <body className={`${pretendard.className} bg-[#fff]`}>
         <ClientProvider>
-          <FetchSetting>
+          {/* <FetchSetting> */}
             <Header />
-            <div className="bg-grey10">{children}</div>
+            <div className="bg-[#F4F6FA]">{children}</div>
             <Footer />
-          </FetchSetting>
+          {/* </FetchSetting> */}
         </ClientProvider>
       </body>
     </html>
