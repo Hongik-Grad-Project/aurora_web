@@ -1,6 +1,7 @@
 'use client'
 
 import Input from "@/components/common/Input"
+import Image from 'next/image'
 
 interface ProfileEditProps {
     isOpen: boolean
@@ -13,10 +14,10 @@ export default function ProfileEdit({ isOpen, onClose }: ProfileEditProps) {
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.target === event.currentTarget) {
-          onClose()
+            onClose()
         }
-      }
-    
+    }
+
     return (
         <div 
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-40"
@@ -46,7 +47,7 @@ export default function ProfileEdit({ isOpen, onClose }: ProfileEditProps) {
                         </div>
                         <div className="flex items-end gap-[4.9375rem]">
                             <div className="flex w-[7.79256rem] h-[7.79256rem] p-[2.62569rem] pt-[2.66688rem] pr-[2.64456rem] pl-[2.648rem] justify-center items-center rounded-[12.5rem] bg-[#E2E6EF]">
-                                <img src="/assets/icons/camera.svg" alt="Description of image" className="w-[2.5rem] h-[2.5rem]" />
+                                <Image src="/assets/icons/camera.svg" alt="Description of image" width={40} height={40} className="w-[2.5rem] h-[2.5rem]" />
                             </div>
                             <button className="flex h-[2.8125rem] py-[0.25rem] px-[0.875rem] items-center gap-[0.4375rem] rounded-[0.3125rem] bg-[#776BFF]">
                                 <span

@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import './Example.css'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -119,12 +118,12 @@ export default function Header() {
             {isAuth ? (
               <>
                 <Link href="/search" className="hidden font-medium leading-5 text-grey80 lg:flex">
-                  <img src="/assets/icons/search_icon.svg" alt="search" />
+                  <Image src="/assets/icons/search_icon.svg" alt="search" width={24} height={24} />
                 </Link>
                 <Link
                   href="/mypage"
                   className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex">
-                  <img src="/assets/icons/my_profile_icon.svg" alt="mypage" />
+                  <Image src="/assets/icons/my_profile_icon.svg" alt="mypage" width={24} height={24} />
                 </Link>
               </>
             ) : (
@@ -132,13 +131,13 @@ export default function Header() {
                 <Link
                   href="/search"
                   className="hidden text-sm font-medium leading-5 text-grey80 lg:flex">
-                  <img src="/assets/icons/search_icon.svg" alt="search" />
+                  <Image src="/assets/icons/search_icon.svg" alt="search" width={24} height={24} />
                 </Link>
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
                   className="hidden text-sm font-medium leading-5 text-grey80 hover:text-main lg:flex"
                 >
-                  <img src="/assets/icons/my_profile_icon.svg" alt="setting" />
+                  <Image src="/assets/icons/my_profile_icon.svg" alt="setting" width={24} height={24} />
                 </button>
               </>
             )
