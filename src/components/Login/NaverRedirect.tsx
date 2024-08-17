@@ -25,9 +25,13 @@ const NaverRedirect: React.FC = () => {
           credentials: 'include',
           body: JSON.stringify({ code }),
         })
+        if(response.ok) {
+          const responseData = await response.json()
+          setAccessToken(responseData.accessToken)
+        }
       } catch (error) {
       } finally {
-        
+        router.push('/')
       }
     }
     naverLogin()

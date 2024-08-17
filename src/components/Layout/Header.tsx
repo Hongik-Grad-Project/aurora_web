@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -30,6 +31,8 @@ export default function Header() {
     '/onBoarding/team/profile',
     '/onBoarding/complete',
     '/onBoarding',
+    'project/idea',
+    'project/outline',
   ]
 
   useEffect(() => {
@@ -38,13 +41,8 @@ export default function Header() {
 
     RefreshAccessToken(token)
       .then((response) => {
-        if (response.existMemberBasicInform === false) {
-          router.push('/onBoarding')
-        } else if (response.existDefaultProfile === false) {
-          router.push('/onBoarding/select')
-        }
-
-        if (response.existMemberBasicInform && response.existDefaultProfile) {
+        console.log(response)
+        if (response.ok) {
           setToken(response.accessToken)
           setIsAuth(true)
         }
@@ -67,7 +65,6 @@ export default function Header() {
 
   const handleLogout = async () => {
     if (!token) return
-
     try {
       const response = await Logout(token)
       if (response.ok) {

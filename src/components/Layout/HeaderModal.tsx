@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Logout } from '@/lib/action'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { accessTokenState } from '@/context/recoil-context'
-import AccountModal from '../common/user/AccountModal'
+// import AccountModal from '../common/user/AccountModal'
 
 const DropdownMenu = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -80,7 +80,7 @@ const DropdownMenu = () => {
           </div>
         </div>
       )}
-      {modalOpen && <AccountModal onClose={closeModal} />}
+      {/* {modalOpen && <AccountModal onClose={closeModal} />} */}
     </div>
   )
 }
