@@ -84,9 +84,6 @@ export default function ProjectOutlinePage() {
     };
 
     try {
-      console.log("Submitting data:", dto); // 데이터 확인
-      console.log("Image:", projectRepresentImage); // 이미지 확인
-
       const response = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
 
       if (response.ok) {
@@ -101,30 +98,15 @@ export default function ProjectOutlinePage() {
 
   return (
     <>
-
-      <div className="flex w-full flex-col justify-center items-center pt-[80px]">
+      <div className="flex w-full flex-col justify-center items-center pt-[70px]">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-[0.9375rem] pt-[2.94rem] pb-[12rem]">
           <div className="flex w-[62.5rem] items-center gap-[1.75rem]">
             <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
               프로젝트 개요
             </div>
             <div className="flex-shrink-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="20"
-                viewBox="0 0 12 20"
-                fill="none"
-                className="w-[0.5rem] h-[1rem] opacity-80"
-              >
-                <path
-                  d="M2 2L10 10L2 18"
-                  stroke="#9DA1AD"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="fill-[#E2E6EF] stroke-[#9DA1AD]"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
+                <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]"/>
               </svg>
             </div>
             <div className="text-[#9DA1AD] font-medium text-[2.5rem] leading-[3.75rem] opacity-80">
@@ -133,7 +115,6 @@ export default function ProjectOutlinePage() {
           </div>
 
           <div className="flex flex-col justify-center items-center w-[62.5rem] p-[1.875rem] gap-[4.9375rem] rounded-[1rem] bg-[#FEFEFE]">
-
             {/* 타겟 대상 선택 */}
             <div className="flex flex-col items-start h-[10.8125rem] gap-[2rem] self-stretch">
               <TextLayout

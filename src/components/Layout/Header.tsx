@@ -33,6 +33,7 @@ export default function Header() {
     '/onBoarding',
     'project/idea',
     'project/outline',
+    'project/body',
   ]
 
   useEffect(() => {
@@ -42,16 +43,14 @@ export default function Header() {
     RefreshAccessToken(token)
       .then((response) => {
         console.log(response)
-        if (response.ok) {
-          setToken(response.accessToken)
-          setIsAuth(true)
-        }
-
         if (response.code === 9103) {
           alert('세션이 만료되었습니다. 다시 로그인해주세요.')
           setIsAuth(false)
           setToken(null)
           router.push('/')
+        } else {
+          setToken(response.accessToken)
+          setIsAuth(true)
         }
       })
       .catch((error) => {

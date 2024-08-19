@@ -70,9 +70,11 @@ export default function Landing7() {
                             <div className="flex flex-col justify-center items-center gap-[0.65406rem] self-stretch">
                                 <div className="flex w-[14.78125rem] h-[6.67118rem] justify-center items-center rounded-[3.92425rem] border-[2.093px] border-[#E2E6EF] bg-[#FEFEFE]">
                                     <div className="flex flex-row justify-center gap-[1.57rem]">
-                                        <img
+                                        <Image
                                             src="/assets/intro/section7_small_fire.png"
                                             alt="Your Image"
+                                            width={50} // 적절한 width 값을 지정
+                                            height={60} // 적절한 height 값을 지정
                                             className="flex w-[3.13938rem] h-[4.0355rem] justify-center items-center flex-shrink-0 mt-[0.27rem]"
                                         />
                                         <span

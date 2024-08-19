@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Header from '@/components/Layout/Header'
 import Footer from '@/components/Layout/Footer'
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 import './globals.css'
 
