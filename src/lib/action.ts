@@ -76,3 +76,20 @@ export async function GetRecommendProjects(accessToken: string) {
   const data = await response.json()
   return data
 }
+
+export async function GetChatLocation(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const location = response.headers.get('Location')
+  return location
+}
