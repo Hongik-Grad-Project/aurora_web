@@ -1,8 +1,7 @@
 'use client'
 
-import CategoryNav from '@/components/Gallery/Category'
 import Image from 'next/image'
-
+import GalleryCategoryNav from '../Gallery/GalleryCategoryNav'
 export default function SearchBar() {
     return (
         <div className="flex w-full flex-col justify-center items-center mb-[4.38rem]">
@@ -23,7 +22,7 @@ export default function SearchBar() {
                 <p className="font-[1rem] font-normal font-[#000000] mb-[1rem]">
                     태그로 찾기
                 </p>
-                <CategoryNav />
+                <GalleryCategoryNav />
             </div>
         </div>
     )

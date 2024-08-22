@@ -63,3 +63,16 @@ export async function PostProjectOutlineData(accessToken: string, payload: any, 
   })
   return response
 }
+
+// 0.1. 추천 프로젝트 조회 (GET /recommends)
+export async function GetRecommendProjects(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/recommends`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+  const data = await response.json()
+  return data
+}

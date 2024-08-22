@@ -2,7 +2,7 @@
 import { accessTokenState, authState, emailState } from '@/context/recoil-context'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { motion } from 'framer-motion'
 
@@ -15,7 +15,6 @@ const NaverRedirect: React.FC = () => {
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
 
-  
   useEffect(() => {
     const naverLogin = async () => {
       try {

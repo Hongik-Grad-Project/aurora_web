@@ -34,6 +34,7 @@ export default function Header() {
     'project/idea',
     'project/outline',
     'project/body',
+    'project/gallery'
   ]
 
   useEffect(() => {
@@ -101,7 +102,7 @@ export default function Header() {
               <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main">
                 아이디어 노트
               </Link>
-              <Link href="/gallery" className="font-medium leading-5 text-grey90 hover:text-main">
+              <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main">
                 프로젝트 갤러리
               </Link>
               <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main">

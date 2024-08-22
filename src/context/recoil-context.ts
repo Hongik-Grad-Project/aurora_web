@@ -1,4 +1,4 @@
-import { Career, Education, FindTeamInterface, TeamProfile } from '@/lib/types'
+import { Career, Education, FindTeamInterface, TeamProfile, ProjectGalleryInterface } from '@/lib/types'
 import { atom } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
 const { persistAtom } = recoilPersist()
@@ -47,5 +47,14 @@ export const filteredProfilesState = atom<PrivateProfile[]>({
 })
 export const filteredTeamsState = atom<FindTeamInterface[]>({
   key: 'filteredTeamsState',
+  default: [],
+})
+
+
+import { ProjectGalleryWindow } from '@/lib/types'
+
+// 오로라 구현부
+export const filteredProjectGalleryState = atom<ProjectGalleryWindow[]>({
+  key: 'filteredProjectGalleryState',
   default: [],
 })

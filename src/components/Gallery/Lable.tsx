@@ -16,14 +16,14 @@ export default function LableBtn({ text }: LableBtnProps) {
     return (
         <div onClick={handleClick} className="cursor-pointer">
             {isActive ? (
-                <div className="inline-flex h-[2.6875rem] py-[0.5rem] px-[0.9375rem] justify-center items-center gap-[0.25rem] rounded-[6.25rem] border border-[#776BFF] bg-[#776BFF]">
-                    <span className="text-[#FEFEFE] text-[1.125rem] font-medium">
+                <div className="flex justify-center items-center gap-[0.25rem] px-[0.9375rem] py-[0.5rem] rounded-full border border-[#776BFF] bg-[#776BFF]">
+                    <span className="text-[#FEFEFE] font-medium text-[1.125rem] leading-[1.6875rem]">
                         {text}
                     </span>
                 </div>
             ) : (
-                <div className="inline-flex h-[2.6875rem] py-[0.5rem] px-[0.9375rem] justify-center items-center gap-[0.25rem] rounded-[6.25rem] border border-[#776BFF] bg-[#FEFEFE]">
-                    <span className="text-[#776BFF] text-[1.125rem] font-medium">
+                <div className="flex justify-center items-center gap-[0.25rem] px-[0.9375rem] py-[0.5rem] rounded-full border border-[#776BFF] bg-[#FEFEFE]">
+                    <span className="text-[#776BFF] font-medium text-[1.125rem] leading-[1.6875rem]">
                         {text}
                     </span>
                 </div>
