@@ -25,10 +25,42 @@ export interface ProjectGalleryWindow {
   likeCount: number;
 }
 
-export interface ChatLocation{
-  
+export interface ChatLocation {
+
 }
 
+// 6.1. 마이페이지 조회 관련 데이터
+export interface MyProfileData {
+  nickname: string
+  profileImage: string | null
+  email: string
+  introduction: string
+}
+
+export interface MyProjectData {
+  projectId: number
+  mainImagePath: string
+  projectTitle: string
+  summary: string
+  target: string
+  endDate: string
+  completedStatusType: string
+  isLike: boolean
+  likeCount: number
+}
+
+export interface MyLikeProjectData {
+  projectId: number
+  target: string
+  projectTitle: string
+  endDate: string
+}
+
+export interface MyPageResponse {
+  myProfile: MyProfileData
+  myProjects: MyProjectData[]
+  likeProjects: MyLikeProjectData[]
+}
 
 
 // 링킷 구현부

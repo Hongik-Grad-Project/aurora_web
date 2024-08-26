@@ -93,3 +93,18 @@ export async function GetChatLocation(accessToken: string) {
   const location = response.headers.get('Location')
   return location
 }
+
+
+// 6.1. 마이페이지 조회 API (GET /mypage)
+export async function GetMyPage(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/mypage`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  const data = await response.json()
+  return data
+}

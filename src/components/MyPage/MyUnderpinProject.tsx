@@ -2,7 +2,16 @@
 
 import UnderpinList from "./UnderpinList"
 
-export default function MyUnderpinProject() {
+interface LikeProjectProps {
+    likeProjectData: {
+        projectId: number
+        target: string
+        projectTitle: string
+        endDate: string
+    }[]
+}
+
+export default function MyUnderpinProject({ likeProjectData }: LikeProjectProps) {
     return (
         <div className="flex flex-col items-center gap-[2.1875rem] self-stretch">
             <div className="flex items-center gap-[3.6875rem] self-stretch">
@@ -12,9 +21,9 @@ export default function MyUnderpinProject() {
             </div>
             <div className="flex flex-col justify-center items-center gap-[1.1875rem] self-stretch">
                 <div className="flex flex-col items-start self-stretch">
-                    <UnderpinList />
-                    <UnderpinList />
-                    <UnderpinList />
+                    {likeProjectData.map((project) => (
+                        <UnderpinList key={project.projectId} project={project} />
+                    ))}
                 </div>
             </div>
             <div className="flex w-[56.25rem] h-[2.8125rem] p-[0.5rem] px-[0.625rem] justify-center items-center gap-[0.625rem] rounded-[0.3125rem] bg-[#F4F6FA]">

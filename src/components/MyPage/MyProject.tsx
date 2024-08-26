@@ -3,34 +3,30 @@
 import ProjectWindow from "@/components/Gallery/Window"
 import { ProjectWindowData } from '@/lib/types'
 
-export default function MyProject() {
-    // Sample data for demonstration purposes
-    const myProjects: ProjectWindowData[] = [
-        {
-            imagePath: "/assets/images/my_project1.png",
-            count: 120,
-            title: "My Project 1",
-            problemAndTarget: "Environmental Issues",
-            date: "2024-08-01",
-            tag: "Environment"
-        },
-        {
-            imagePath: "/assets/images/my_project2.png",
-            count: 85,
-            title: "My Project 2",
-            problemAndTarget: "Social Inequality",
-            date: "2024-07-20",
-            tag: "Social"
-        },
-        {
-            imagePath: "/assets/images/my_project3.png",
-            count: 42,
-            title: "My Project 3",
-            problemAndTarget: "Healthcare Access",
-            date: "2024-06-15",
-            tag: "Health"
-        }
-    ];
+interface MyProjectProps {
+    projectData: {
+        projectId: number
+        mainImagePath: string
+        projectTitle: string
+        summary: string
+        target: string
+        endDate: string
+        completedStatusType: string
+        isLike: boolean
+        likeCount: number
+    }[]
+}
+
+export default function MyProject({ projectData }: MyProjectProps) {
+    // Map the incoming projectData to the structure expected by ProjectWindow
+    const myProjects: ProjectWindowData[] = projectData.map(project => ({
+        imagePath: project.mainImagePath,
+        count: project.likeCount,
+        title: project.projectTitle,
+        problemAndTarget: project.target,
+        date: project.endDate,
+        tag: project.target
+    }));
 
     return (
         <div className="flex flex-col w-[56.25rem]">
