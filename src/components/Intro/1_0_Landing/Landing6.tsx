@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ProjectGallery from "@/components/Gallery/Window";
 import { ProjectWindowData } from '@/lib/types';
+import { GetRecommendProjects } from '@/lib/action';
 
 export default function Landing6() {
     // Sample data

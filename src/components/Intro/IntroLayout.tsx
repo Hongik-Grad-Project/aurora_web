@@ -13,7 +13,7 @@ import Landing8 from './1_0_Landing/Landing8'
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { GetRecommendProjects } from '@/lib/action';
+
 
 export default function IntroLayout() {
     return (

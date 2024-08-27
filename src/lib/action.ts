@@ -78,7 +78,7 @@ export async function GetRecommendProjects(accessToken: string) {
 }
 
 export async function GetChatLocation(accessToken: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/v2`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -107,4 +107,25 @@ export async function GetMyPage(accessToken: string) {
 
   const data = await response.json()
   return data
+}
+
+// 6.2. 마이페이지 수정 API (POST /mypage/update)
+export async function UpdateMyPage(accessToken: string, payload: any, profileImage: File | null) {
+  const formData = new FormData()
+  formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
+
+  if (profileImage) {
+    formData.append('file', profileImage)
+  }
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/mypage/update`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+    body: formData,
+  })
+
+  return response 
 }
