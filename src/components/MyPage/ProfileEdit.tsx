@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Input from "@/components/common/Input";
 import { UpdateMyPage } from '@/lib/action';
+import { on } from 'events';
 
 interface ProfileEditProps {
     isOpen: boolean;
@@ -13,32 +14,36 @@ interface ProfileEditProps {
         email: string;
         introduction: string;
     } | null;
-    accessToken: string; // Pass accessToken from parent component
+    accessToken: string;
 }
 
 export default function ProfileEdit({ isOpen, onClose, profileData, accessToken }: ProfileEditProps) {
-    // State for inputs and file
+    if (!isOpen) return null;
+
     const [nickname, setNickname] = useState(profileData?.nickname || '');
     const [introduction, setIntroduction] = useState(profileData?.introduction || '');
     const [profileImage, setProfileImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    // Handle file input change
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            setProfileImage(event.target.files[0]);
+            const file = event.target.files[0];
+            setProfileImage(file);
+            setImagePreview(URL.createObjectURL(file));
         }
     };
-    
-    // Handle profile update
+
     const handleUpdateProfile = async () => {
         const payload = {
             nickname,
             introduction
         };
-        const response = await UpdateMyPage(accessToken, payload, profileImage);
-        if (response.ok) {
-            window.location.reload();  // Reload the page upon successful update
-        }
+        const response = await UpdateMyPage(accessToken, payload, null);
+        onClose();
+        // if (response.ok) {
+        //     window.location.reload();  // Reload the page upon successful update
+        // }
     };
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -47,14 +52,14 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
         }
     };
 
-    // Guard clause moved after hook declarations to maintain correct hook order
-    if (!isOpen) return null;
+    const handleUploadButtonClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click(); // Trigger click on the hidden file input
+        }
+    };
 
     return (
-        <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-40"
-            onClick={handleBackgroundClick}
-        >
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-40" onClick={handleBackgroundClick}>
             <div className="flex w-[55.875rem] p-[1.25rem] flex-col items-start gap-[1.3125rem] flex-shrink-0 rounded-[1rem] bg-[#FFF]">
                 <span className="text-[#1E2A3B] text-[1.25rem] font-bold leading-[1.6875rem]">
                     프로필 수정
@@ -72,15 +77,44 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
                             </div>
                         </div>
                         <div className="flex items-end gap-[4.9375rem]">
-                            <div className="flex w-[7.79256rem] h-[7.79256rem] p-[2.62569rem] pt-[2.66688rem] pr-[2.64456rem] pl-[2.648rem] justify-center items-center rounded-[12.5rem] bg-[#E2E6EF]">
-                                <Image src="/assets/icons/camera.svg" alt="프로필 이미지 업로드" width={40} height={40} className="w-[2.5rem] h-[2.5rem]" />
-                            </div>
-                            <button className="flex h-[2.8125rem] py-[0.25rem] px-[0.875rem] items-center gap-[0.4375rem] rounded-[0.3125rem] bg-[#776BFF]">
+                            <label className="relative w-[7.79256rem] h-[7.79256rem] cursor-pointer">
+                                {imagePreview ? (
+                                    <Image
+                                        src={imagePreview}
+                                        alt="이미지 미리보기"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        className="rounded-full" // Ensure the image is rounded to fit the circle
+                                    />
+                                ) : (
+                                    <div className="flex justify-center items-center w-full h-full rounded-full bg-[#E2E6EF]">
+                                        <Image
+                                            src="/assets/icons/camera.svg"
+                                            alt="프로필 이미지 업로드"
+                                            width={40}
+                                            height={40}
+                                            className="w-[2.5rem] h-[2.5rem]"
+                                        />
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={handleImageChange}
+                                    ref={fileInputRef}
+                                />
+                            </label>
+                            <button
+                                className="flex h-[2.8125rem] py-[0.25rem] px-[0.875rem] items-center gap-[0.4375rem] rounded-[0.3125rem] bg-[#776BFF]"
+                                onClick={handleUploadButtonClick}
+                            >
                                 <span className="text-white text-center text-[0.875rem] font-medium leading-[1.375rem]">
                                     이미지 업로드
                                 </span>
                             </button>
                         </div>
+
                     </div>
                     <div className="flex flex-col items-start gap-[1.1875rem]">
                         <Input label="이름" placeholder="이름을 입력하세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />

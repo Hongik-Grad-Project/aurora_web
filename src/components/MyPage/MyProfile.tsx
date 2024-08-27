@@ -65,9 +65,9 @@ export default function MyProfile({ profileData }: MyProfileProps) {
                         <div className="flex h-[2.8125rem] pl-[21.0625rem] justify-end items-center flex-[1_0_0]">
                             <button
                                 onClick={() => setIsProfileEditModalOpen(true)}
-                                className="flex h-[2.8125rem] px-[1.6875rem] py-[0.1875rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-[#F0F0F0]"
+                                className="flex h-[2.8125rem] min-w-[8rem] px-[1.6875rem] py-[0.1875rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-[#F0F0F0]"
                             >
-                                <span className="text-[#4E525C] text-[1rem] font-medium leading-[1.5rem]">
+                                <span className="text-[#4E525C] text-[1rem] font-medium leading-[1.5rem] whitespace-nowrap">
                                     프로필 수정하기
                                 </span>
                             </button>
