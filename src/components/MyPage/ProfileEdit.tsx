@@ -74,6 +74,8 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
                                     추천 사이즈: 512 x 512 px / JPG, PNG, 최대 2MB
                                 </span>
                             </div>
+                        </div>
+                        <div className="flex items-end gap-[4.9375rem]">
                             <label className="relative w-[7.79256rem] h-[7.79256rem] cursor-pointer">
                                 {imagePreview ? (
                                     <Image
@@ -111,11 +113,12 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
                                 </span>
                             </button>
                         </div>
-                        <div className="flex flex-col items-start gap-[1.1875rem]">
-                            <Input label="이름" placeholder="이름을 입력하세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-                            <Input label="이메일" placeholder="변경 불가" value={profileData?.email} readOnly={true} />
-                            <Input label="자기소개" placeholder="자기소개를 입력하세요" value={introduction} onChange={(e) => setIntroduction(e.target.value)} />
-                        </div>
+
+                    </div>
+                    <div className="flex flex-col items-start gap-[1.1875rem]">
+                        <Input label="이름" placeholder="이름을 입력하세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+                        <Input label="이메일" placeholder="변경 불가" value={profileData?.email} readOnly={true} />
+                        <Input label="자기소개" placeholder="자기소개를 입력하세요" value={introduction} onChange={(e) => setIntroduction(e.target.value)} />
                     </div>
                 </div>
                 <div className="flex h-[3.5rem] pl-[45.9375rem] justify-end items-center w-full">

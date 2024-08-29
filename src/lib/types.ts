@@ -62,7 +62,23 @@ export interface MyPageResponse {
   likeProjects: MyLikeProjectData[]
 }
 
-
+// 4.1. 프로젝트 갤러리 상세 조회 응답
+export interface ProjectGalleryDetailResponse {
+  projectId: number
+  projectTarget: string
+  startDate: string
+  projectTitle: string
+  likeCount: number,
+  mainImagePath: string
+  tagList: string[]
+  subtitleList: string[]
+  contentList: string[]
+  projectImageList: string[]
+  memberName: string
+  memberEmail: string
+  memberIntro: string
+  like: boolean
+}
 // 링킷 구현부
 export interface IFormData {
   memberName: string
