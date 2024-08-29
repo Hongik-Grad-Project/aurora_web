@@ -1,10 +1,7 @@
-'use client'
-
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Input from "@/components/common/Input";
 import { UpdateMyPage } from '@/lib/action';
-import { on } from 'events';
 
 interface ProfileEditProps {
     isOpen: boolean;
@@ -18,13 +15,15 @@ interface ProfileEditProps {
 }
 
 export default function ProfileEdit({ isOpen, onClose, profileData, accessToken }: ProfileEditProps) {
-    if (!isOpen) return null;
-
+    // Declare all states and refs at the top, unconditionally
     const [nickname, setNickname] = useState(profileData?.nickname || '');
     const [introduction, setIntroduction] = useState(profileData?.introduction || '');
     const [profileImage, setProfileImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    // Early return must come after all hooks
+    if (!isOpen) return null;
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -39,11 +38,11 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
             nickname,
             introduction
         };
-        const response = await UpdateMyPage(accessToken, payload, null);
-        onClose();
-        // if (response.ok) {
-        //     window.location.reload();  // Reload the page upon successful update
-        // }
+        const response = await UpdateMyPage(accessToken, payload, profileImage);
+        if (response.ok) {
+            onClose();
+            window.location.reload(); // Optionally reload the page to reflect changes
+        }
     };
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -75,8 +74,6 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
                                     추천 사이즈: 512 x 512 px / JPG, PNG, 최대 2MB
                                 </span>
                             </div>
-                        </div>
-                        <div className="flex items-end gap-[4.9375rem]">
                             <label className="relative w-[7.79256rem] h-[7.79256rem] cursor-pointer">
                                 {imagePreview ? (
                                     <Image
@@ -114,12 +111,11 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
                                 </span>
                             </button>
                         </div>
-
-                    </div>
-                    <div className="flex flex-col items-start gap-[1.1875rem]">
-                        <Input label="이름" placeholder="이름을 입력하세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-                        <Input label="이메일" placeholder="변경 불가" value={profileData?.email} readOnly={true} />
-                        <Input label="자기소개" placeholder="자기소개를 입력하세요" value={introduction} onChange={(e) => setIntroduction(e.target.value)} />
+                        <div className="flex flex-col items-start gap-[1.1875rem]">
+                            <Input label="이름" placeholder="이름을 입력하세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+                            <Input label="이메일" placeholder="변경 불가" value={profileData?.email} readOnly={true} />
+                            <Input label="자기소개" placeholder="자기소개를 입력하세요" value={introduction} onChange={(e) => setIntroduction(e.target.value)} />
+                        </div>
                     </div>
                 </div>
                 <div className="flex h-[3.5rem] pl-[45.9375rem] justify-end items-center w-full">

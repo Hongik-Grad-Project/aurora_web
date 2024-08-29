@@ -126,6 +126,5 @@ export async function UpdateMyPage(accessToken: string, payload: any, profileIma
     credentials: 'include',
     body: formData,
   })
-
   return response 
 }
