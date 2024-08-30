@@ -75,6 +75,21 @@ export async function GetChatLocation(accessToken: string) {
   return location
 }
 
+// 2.4. 메시지 보내기 (POST /chat/{chatRoomId}/message/v2)
+export async function SendMessage(accessToken: string, chatRoomId: string, message: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/message/v2`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+    body: JSON.stringify({ message }),
+  })
+
+  return response
+}
+
 // 3.1. 프로젝트 개요 저장 (POST /project/outline/save)
 export async function PostProjectOutlineData(accessToken: string, payload: any, projectRepresentImage: File | null) {
   const formData = new FormData()

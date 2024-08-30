@@ -8,6 +8,7 @@ import MyProfile from '@/components/MyPage/MyProfile'
 import MyProject from '@/components/MyPage/MyProject'
 import MyUnderpinProject from '@/components/MyPage/MyUnderpinProject'
 import { MyPageResponse, MyProfileData, MyProjectData, MyLikeProjectData } from '@/lib/types'
+import Footer from '@/components/Layout/Footer'
 
 export default function MyPage() {
     const accessToken = useRecoilValue(accessTokenState) || ''
@@ -36,6 +37,7 @@ export default function MyPage() {
                 <MyProject projectData={myProjects} />
                 <MyUnderpinProject likeProjectData={likeProjects} />
             </div>
+            <Footer />
         </div>
     )
 }

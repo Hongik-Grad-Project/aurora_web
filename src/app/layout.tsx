@@ -47,9 +47,10 @@ const museomoderno = localFont({
 
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode
+  hideFooter?: boolean // Optional prop to hide the footer
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${museomoderno.variable}`}>
@@ -61,10 +62,10 @@ export default function RootLayout({
           {/* <FetchSetting> */}
             <Header />
             <div className="bg-[#F4F6FA]">{children}</div>
-            <Footer />
           {/* </FetchSetting> */}
         </ClientProvider>
       </body>
     </html>
   )
 }
+
