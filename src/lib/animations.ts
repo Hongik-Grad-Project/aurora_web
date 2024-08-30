@@ -51,3 +51,15 @@ export const floatingAnimation = {
     viewport: { once: true, amount: 0.5 },
   }
   
+
+  // 로고 떠다니는 애니메이션
+export const floatingAnimation2 = {
+  animate: {
+    y: [0, -10, 0],
+    transition: {
+      duration: 3, // 애니메이션 지속 시간 (초)
+      ease: 'easeInOut', // 애니메이션 효과
+      repeat: Infinity, // 무한 반복
+    },
+  },
+}
