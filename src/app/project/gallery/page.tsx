@@ -3,6 +3,7 @@
 import Banner from '@/components/Gallery/Banner';
 import GalleryCategoryNav from '@/components/Gallery/GalleryCategoryNav';
 import GalleryArray from '@/components/Gallery/GalleryArray';
+import Footer from '@/components/Layout/Footer';
 
 export default function ProjectGalleryPage() {
     return (
@@ -13,17 +14,21 @@ export default function ProjectGalleryPage() {
                 subTitle="이제 행동으로 옮길 일만 남았어요"
             />
 
-
-            <div className="flex w-full justify-center bg-gry10 px-4 pb-24 pt-[16rem]">
+            <div className="flex w-full justify-center bg-gry10 px-4 pb-24 pt-[4rem] md:pt-[8rem] lg:pt-[2rem]">
                 <div className="flex w-full flex-col items-center justify-center gap-[1.5rem] lg:flex-row lg:items-start">
                     <GalleryCategoryNav />
                 </div>
             </div>
 
-            {/* Frame 1948755248 */}
             <div className="flex flex-col items-start gap-[4.375rem] self-stretch">
                 <GalleryArray />
             </div>
+
+            <div className="flex justify-between items-center w-full mt-8">
+                <button className="px-4 py-2 bg-gray-300 text-white rounded">Previous</button>
+                <button className="px-4 py-2 bg-gray-300 text-white rounded">Next</button>
+            </div>
+            <Footer />
         </div>
     );
 }

@@ -48,7 +48,7 @@ export default function GalleryCategoryNav() {
 
     return (
         <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
-            <div className="flex items-center gap-[0.5rem] self-stretch">
+            <div className="flex flex-wrap items-center gap-[0.5rem] self-stretch">
                 {TargetObject.map((target) => (
                     <LableBtn key={target} text={target} />
                 ))}
