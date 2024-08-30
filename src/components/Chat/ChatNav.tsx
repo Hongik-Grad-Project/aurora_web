@@ -10,19 +10,19 @@ export default function ChatNav() {
             {/* Chat List */}
             <div className="flex flex-col space-y-2">
                 <div className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                    <p className="text-sm font-medium text-gray-700">Chat with Alice</p>
+                    <p className="text-sm font-medium text-gray-700">Chat with TaeHyung</p>
                     <p className="text-xs text-gray-500">Last message preview...</p>
                 </div>
                 <div className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                    <p className="text-sm font-medium text-gray-700">Chat with Bob</p>
+                    <p className="text-sm font-medium text-gray-700">Chat with Yoona</p>
                     <p className="text-xs text-gray-500">Last message preview...</p>
                 </div>
                 <div className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                    <p className="text-sm font-medium text-gray-700">Chat with Carol</p>
+                    <p className="text-sm font-medium text-gray-700">Chat with Gemini</p>
                     <p className="text-xs text-gray-500">Last message preview...</p>
                 </div>
                 <div className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer">
-                    <p className="text-sm font-medium text-gray-700">Chat with Dave</p>
+                    <p className="text-sm font-medium text-gray-700">Chat with Dongmin</p>
                     <p className="text-xs text-gray-500">Last message preview...</p>
                 </div>
             </div>

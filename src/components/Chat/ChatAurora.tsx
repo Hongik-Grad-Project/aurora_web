@@ -29,7 +29,7 @@ export default function ChatAurora() {
     }, [chatLocation, messages]);
 
     return (
-        <div className="flex flex-col w-full h-screen bg-gray-100 relative">
+        <div className="flex flex-col w-full h-full bg-gray-100 relative pt-[70px]"> {/* pt-[70px]로 상단 간격 유지 */}
             {/* Chat Messages Area */}
             <div className="flex-grow overflow-y-auto p-6 bg-white">
                 {chatLocation ? (
@@ -102,7 +102,7 @@ export default function ChatAurora() {
             </div>
 
             {/* Chat Input Area */}
-            <div className="mt-auto w-full">
+            <div className="w-full">
                 {chatLocation && (
                     <div className="p-4 text-sm text-gray-600 bg-gray-50 text-center">
                         Chat location: {chatLocation}

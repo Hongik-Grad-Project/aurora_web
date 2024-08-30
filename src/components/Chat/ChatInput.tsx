@@ -34,16 +34,18 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            await createChatRoomAndSendMessage();
+            const currentValue = inputValue;
+            setInputValue(''); // Clear the input immediately after Enter is pressed
+            await createChatRoomAndSendMessage(currentValue);
         }
     };
 
-    const createChatRoomAndSendMessage = async () => {
-        if (inputValue.trim() === '' || isSendingRef.current) return;
+    const createChatRoomAndSendMessage = async (messageContent: string) => {
+        if (messageContent.trim() === '' || isSendingRef.current) return;
 
         isSendingRef.current = true;  // Set the flag to prevent double sending
 
-        const userMessage: Message = { type: 'user', content: inputValue };
+        const userMessage: Message = { type: 'user', content: messageContent };
 
         try {
             let currentChatRoomId = chatRoomId;
@@ -64,7 +66,7 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
                 // First, add the user's message to the chat
                 setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-                const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
+                const response = await SendMessage(accessToken, currentChatRoomId.toString(), messageContent);
                 if (response.ok) {
                     const data = await response.json();
                     // Then, add the AI's response to the chat
@@ -79,8 +81,7 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
             console.error('Error sending message:', error);
         }
 
-        // Clear the input after sending the message
-        setInputValue('');
+        // Scroll to the bottom after sending the message
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
@@ -104,8 +105,12 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
                     />
                 </div>
                 <button
-                    onClick={createChatRoomAndSendMessage}
-                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#007BFF] text-white font-semibold"
+                    onClick={() => {
+                        const currentValue = inputValue;
+                        setInputValue(''); // Clear the input immediately after button click
+                        createChatRoomAndSendMessage(currentValue);
+                    }}
+                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#F4F6FA] text-[#4E525C] font-semibold"
                 >
                     대화 끝내기
                 </button>
