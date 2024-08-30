@@ -40,9 +40,6 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
                             value=""
                             disabled
                             className="text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] font-pretendard"
-                            style={{
-                                flex: "1 0 0",
-                            }}
                         >
                             {placeholder}
                         </option>
