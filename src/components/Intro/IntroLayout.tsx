@@ -10,11 +10,6 @@ import Landing6 from './1_0_Landing/Landing6'
 import Landing7 from './1_0_Landing/Landing7'
 import Landing8 from './1_0_Landing/Landing8'
 
-import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-
-
-
 export default function IntroLayout() {
     return (
         <div className="flex h-screen w-full snap-y snap-mandatory flex-col overflow-y-scroll">

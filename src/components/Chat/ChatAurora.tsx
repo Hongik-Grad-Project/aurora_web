@@ -70,7 +70,7 @@ export default function ChatAurora() {
                                         height="16"
                                         viewBox="0 0 16 16"
                                         fill="none"
-                                        className="absolute left-[-8px] bottom-[-2px]" // 위치를 더 아래로 조정
+                                        className="absolute left-[-7px] bottom-[-2px]" // 위치를 더 아래로 조정
                                     >
                                         <path d="M1.00011 14.9864C6.97239 12.3076 8.00157 5.71985 7.47251 1.21582L14.5923 11.4268C11.0143 13.1219 5.80766 15.1835 1.00011 14.9864Z" fill="#E2E6EF" stroke="#E2E6EF"/>
                                     </svg>
