@@ -5,27 +5,26 @@ import { ProjectWindowData } from '@/lib/types'
 
 interface MyProjectProps {
     projectData: {
-        projectId: number
-        mainImagePath: string
-        projectTitle: string
-        summary: string
-        target: string
-        endDate: string
-        completedStatusType: string
-        isLike: boolean
-        likeCount: number
-    }[]
+        projectId: number;
+        mainImagePath: string;
+        projectTitle: string;
+        summary: string;
+        target: string;
+        endDate: string;
+        completedStatusType: string;
+        isLike: boolean;
+        likeCount: number;
+    }[];
 }
 
 export default function MyProject({ projectData }: MyProjectProps) {
-    // Map the incoming projectData to the structure expected by ProjectWindow
     const myProjects: ProjectWindowData[] = projectData.map(project => ({
         imagePath: project.mainImagePath,
         count: project.likeCount,
         title: project.projectTitle,
-        problemAndTarget: project.target,
+        problemAndTarget: project.target,  // 예: 문제 및 대상 필드 매핑
         date: project.endDate,
-        tag: project.target
+        tag: project.target  // 예: 태그 필드 매핑
     }));
 
     return (
@@ -44,5 +43,5 @@ export default function MyProject({ projectData }: MyProjectProps) {
                 ))}
             </div>
         </div>
-    )   
+    );
 }

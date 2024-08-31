@@ -14,7 +14,7 @@ export default function ProjectGalleryPage() {
                 subTitle="이제 행동으로 옮길 일만 남았어요"
             />
 
-            <div className="flex w-full justify-center bg-gry10 px-4 pb-24 pt-[4rem] md:pt-[8rem] lg:pt-[2rem]">
+            <div className="flex w-full justify-center bg-gry10 px-4 pb-12 pt-[4rem] md:pt-[8rem] lg:pt-[2rem]">
                 <div className="flex w-full flex-col items-center justify-center gap-[1.5rem] lg:flex-row lg:items-start">
                     <GalleryCategoryNav />
                 </div>
