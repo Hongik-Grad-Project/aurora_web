@@ -110,6 +110,31 @@ export async function PostProjectOutlineData(accessToken: string, payload: any, 
   return response
 }
 
+// 3.4. 프로젝트 본문 저장 (POST /project/{projectId}/body/save)
+export async function PostProjectBodyData(accessToken: string, projectId: number, payload: any, files: File[]) {
+  const formData = new FormData();
+
+  // JSON 데이터를 문자열로 변환하여 formData에 추가
+  formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+
+  // 파일 데이터를 formData에 추가
+  files.forEach((file) => {
+      formData.append('files', file);
+  });
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/body/save`, {
+      method: 'POST',
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: formData, // FormData 객체를 body로 설정
+  });
+
+  return response;
+}
+
+
 // 4.1. 프로젝트 갤러리 상세 조회 (GET /gallery/{projectId})
 export async function GetProjectGalleryDetail(accessToken: string, projectId: number) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery/${projectId}`, {

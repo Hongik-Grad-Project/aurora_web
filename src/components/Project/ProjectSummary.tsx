@@ -11,17 +11,15 @@ export default function ProjectSummary() {
     const router = useRouter();
 
     const handleYesClick = () => {
-        // AI 요약 내용을 placeholder로 전달하여 /project/outline 페이지로 이동
         router.push(`/project/outline?summary=${encodeURIComponent(aiSummary)}`);
     };
 
     const handleNoClick = () => {
-        // 단순히 /project/outline 페이지로 이동
         router.push('/project/outline');
     };
 
     return (
-        <>
+        <div className="flex flex-col w-full h-full bg-gray-100 relative pt-[70px] items-center justify-center"> {/* 페이지 전체를 차지하고, 상단 간격 유지 */}
             <div className="flex w-[46rem] flex-col items-end gap-[1rem]">
                 <div className="flex p-[1.875rem] flex-col items-start gap-[1.5rem] self-stretch rounded-[1rem] bg-[#FEFEFE]">
                     {/* 오로라 AI가 요약했어요! 보라색 박스 */}
@@ -53,7 +51,7 @@ export default function ProjectSummary() {
                     </div>
 
                     {/* 기획서 작성하기 */}
-                    <div className="flex h-[3.5rem] pl-[31.625rem] justify-end items-center self-stretch">
+                    <div className="flex justify-end items-center self-stretch">
                         <button
                             onClick={() => setIsAlertModalOpen(true)}
                             className="flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#776BFF]">
@@ -71,6 +69,6 @@ export default function ProjectSummary() {
                 onYes={handleYesClick} // 예 버튼 클릭 핸들러
                 onNo={handleNoClick} // 아니오 버튼 클릭 핸들러
             />
-        </>
+        </div>
     )
 }
