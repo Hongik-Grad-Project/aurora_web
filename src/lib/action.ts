@@ -77,22 +77,24 @@ export async function GetChatList(accessToken: string) {
 // 2.2. 
 
 // 2.4. 새로운 채팅방 생성 (POST /chat/v2)
-export async function GetChatLocation(accessToken: string) {
+export async function GetChatLocation(accessToken: string): Promise<string | null> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/v2`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    credentials: 'include',
-  })
+      method: 'POST',
+      headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+  });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+  if (response.status === 201) {
+      // Location 헤더에서 URL 추출
+      return response.headers.get('Location');
   }
 
-  const location = response.headers.get('Location')
-  return location
+  return null;
 }
+
 
 // 2.5. 메시지 보내기 (POST /chat/{chatRoomId}/message/v2)
 export async function SendMessage(accessToken: string, chatRoomId: string, message: string) {
