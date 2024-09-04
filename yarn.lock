@@ -2583,6 +2583,7 @@ __metadata:
     react-lottie-player: "npm:^2.0.0"
     react-redux: "npm:^9.1.2"
     react-select: "npm:^5.8.0"
+    react-spinners: "npm:^0.14.1"
     recoil: "npm:^0.7.7"
     recoil-persist: "npm:^5.1.0"
     tailwindcss: "npm:^3.4.1"
@@ -5927,6 +5928,16 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/b4b98aaf117ee5cc4642871b7bd51fd0e2697988d0b880f30b21e933ca90258959147117d8aada36713b622e0e4cb06bd18ec02069f3f108896e0d31e69e3c16
+  languageName: node
+  linkType: hard
+
+"react-spinners@npm:^0.14.1":
+  version: 0.14.1
+  resolution: "react-spinners@npm:0.14.1"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/5b3c101f789716331a0b6afad156293fb9aa05620e65494753001afcdb611788057f379b5979b34d570d527fa978003293266b59db505bf2d243ebab899ceeda
   languageName: node
   linkType: hard
 

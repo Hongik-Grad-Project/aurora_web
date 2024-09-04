@@ -25,8 +25,17 @@ export interface ProjectGalleryWindow {
   likeCount: number;
 }
 
-export interface ChatLocation {
+export interface ChatRoom {
+  chatRoomId: number;
+  chatRoomName: string;
+  isSummarized: boolean;
+  updatedAt: string;
+}
 
+export interface Message {
+  contents: string;
+  senderType: string;
+  createdAt: string;
 }
 
 // 6.1. 마이페이지 조회 관련 데이터

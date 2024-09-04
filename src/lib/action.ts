@@ -57,7 +57,26 @@ export async function Withdrawal(accessToken: string) {
   return response
 }
 
-// 2.3. 새로운 채팅방 생성 (POST /chat/v2)
+// 2.1. 채팅방 목록 조회 (GET /chat)
+export async function GetChatList(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch chat list');
+  }
+
+  return response.json(); // 응답 데이터를 JSON 형식으로 반환
+}
+
+// 2.2. 
+
+// 2.4. 새로운 채팅방 생성 (POST /chat/v2)
 export async function GetChatLocation(accessToken: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/v2`, {
     method: 'POST',
@@ -75,7 +94,7 @@ export async function GetChatLocation(accessToken: string) {
   return location
 }
 
-// 2.4. 메시지 보내기 (POST /chat/{chatRoomId}/message/v2)
+// 2.5. 메시지 보내기 (POST /chat/{chatRoomId}/message/v2)
 export async function SendMessage(accessToken: string, chatRoomId: string, message: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/message/v2`, {
     method: 'POST',
@@ -85,6 +104,19 @@ export async function SendMessage(accessToken: string, chatRoomId: string, messa
     },
     credentials: 'include',
     body: JSON.stringify({ message }),
+  })
+
+  return response
+}
+
+// 2.8. 채팅 내역 조회 ( GET /chat/:chatRoomId/history )
+export async function GetChatHistory(accessToken: string, chatRoomId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/history`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
   })
 
   return response
@@ -119,16 +151,16 @@ export async function PostProjectBodyData(accessToken: string, projectId: number
 
   // 파일 데이터를 formData에 추가
   files.forEach((file) => {
-      formData.append('files', file);
+    formData.append('files', file);
   });
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/body/save`, {
-      method: 'POST',
-      headers: {
-          Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-      body: formData, // FormData 객체를 body로 설정
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+    body: formData, // FormData 객체를 body로 설정
   });
 
   return response;
@@ -179,6 +211,6 @@ export async function UpdateMyPage(accessToken: string, payload: any, profileIma
     credentials: 'include',
     body: formData,
   })
-  
-  return response 
+
+  return response
 }
