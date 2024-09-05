@@ -16,18 +16,19 @@ export default function AuroraChatPage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    // ChatRoom 목록 가져오기
     useEffect(() => {
         const fetchChatRooms = async () => {
+            if (!accessToken) {
+                setError('Access token is required.');
+                return;
+            }
+
             try {
-                const chatRoomsResponse = await GetChatList(accessToken);
-                if (chatRoomsResponse.ok) {
-                    const rooms = await chatRoomsResponse.json();
-                    setChatRooms(rooms);
-                } else {
-                    throw new Error('Failed to fetch chat rooms.');
-                }
+                const chatRoomsResponse = await GetChatList(accessToken); // API 호출
+                setChatRooms(chatRoomsResponse); // 채팅 목록 설정
             } catch (error) {
-                console.error(error);
+                console.error('Failed to load chat rooms:', error);
                 setError('Failed to load chat rooms.');
             } finally {
                 setLoading(false);
@@ -39,10 +40,11 @@ export default function AuroraChatPage() {
         }
     }, [accessToken]);
 
+    // 채팅방 선택 핸들러
     const handleSelectChatRoom = async (chatRoomId: number) => {
         const selectedRoom = chatRooms.find(room => room.chatRoomId === chatRoomId) || null;
         setSelectedChatRoom(selectedRoom);
-        setChatHistory([]);
+        setChatHistory([]); // 이전 채팅 내역 초기화
 
         if (selectedRoom) {
             try {
@@ -54,7 +56,7 @@ export default function AuroraChatPage() {
                     throw new Error('Failed to fetch chat history.');
                 }
             } catch (error) {
-                console.error(error);
+                console.error('Failed to load chat history:', error);
                 setError('Failed to load chat history.');
             }
         }
@@ -64,6 +66,14 @@ export default function AuroraChatPage() {
         return (
             <div className="flex items-center justify-center w-full h-screen">
                 <p>Loading...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center w-full h-screen">
+                <p className="text-red-500">{error}</p>
             </div>
         );
     }
@@ -78,6 +88,10 @@ export default function AuroraChatPage() {
                     chatRoom={selectedChatRoom}
                     chatHistory={chatHistory}
                     setChatHistory={setChatHistory}
+                    setChatRoomId={(id: number | null) => {
+                        const selectedRoom = chatRooms.find(room => room.chatRoomId === id) || null;
+                        setSelectedChatRoom(selectedRoom);
+                    }} // ChatAurora에 setChatRoomId 전달
                     accessToken={accessToken}
                 />
             </div>

@@ -32,11 +32,13 @@ export interface ChatRoom {
   updatedAt: string;
 }
 
+// lib/types.ts 파일에서 정확한 Message 타입 정의
 export interface Message {
   contents: string;
-  senderType: string;
+  senderType: 'MEMBER' | 'AURORA_AI';
   createdAt: string;
 }
+
 
 // 6.1. 마이페이지 조회 관련 데이터
 export interface MyProfileData {

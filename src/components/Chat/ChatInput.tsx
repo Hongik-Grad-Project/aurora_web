@@ -1,33 +1,87 @@
-'use client'
+'use client';
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import { useRecoilValue } from 'recoil';
 import { GetChatLocation, SendMessage } from '@/lib/action';
-import { accessTokenState } from '@/context/recoil-context';
-
-interface Message {
-    type: 'user' | 'ai';
-    content: string;
-}
+import { Message as AuroraMessage } from '@/lib/types'; // 동일하게 AuroraMessage로 타입 명시
 
 interface ChatInputProps {
-    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-    setChatLocation: React.Dispatch<React.SetStateAction<string | null>>;
-    messagesEndRef: React.RefObject<HTMLDivElement>;
+    chatRoomId: number | null;
+    setChatRoomId: (id: number | null) => void;
+    chatHistory: AuroraMessage[]; // lib/types에서 가져온 Message 타입을 사용
+    setChatHistory: React.Dispatch<React.SetStateAction<AuroraMessage[]>>; // 정확한 타입 사용
+    accessToken: string;
 }
 
-export default function ChatInput({ setMessages, setChatLocation, messagesEndRef }: ChatInputProps) {
+export default function ChatInput({
+    chatRoomId,
+    setChatRoomId,
+    chatHistory,
+    setChatHistory,
+    accessToken,
+}: ChatInputProps) {
     const [inputValue, setInputValue] = useState<string>('');
-    const [chatRoomId, setChatRoomId] = useState<number | null>(null);
-    const accessToken = useRecoilValue(accessTokenState) || '';
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const isSendingRef = useRef<boolean>(false);  // To prevent double sending
+    const isSendingRef = useRef<boolean>(false); // 중복 전송 방지 플래그 설정
 
     const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
+        autoResizeTextarea();
+    };
+
+    const autoResizeTextarea = () => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    };
+
+    const createChatRoomAndSendMessage = async () => {
+        if (inputValue.trim() === '' || isSendingRef.current) return;
+
+        isSendingRef.current = true;
+
+        // 사용자 메시지 구성
+        const userMessage: AuroraMessage = {
+            contents: inputValue,
+            senderType: 'MEMBER',
+            createdAt: new Date().toISOString(),
+        };
+
+        try {
+            let currentChatRoomId = chatRoomId;
+
+            if (!currentChatRoomId) {
+                const location = await GetChatLocation(accessToken);
+                if (location) {
+                    const id = parseInt(location.split('/').pop()!); // Location에서 ID 추출
+                    setChatRoomId(id);
+                    currentChatRoomId = id;
+                }
+            }
+
+            // 사용자 메시지를 채팅 내역에 추가
+            setChatHistory((prevMessages) => [...prevMessages, userMessage]);
+
+            // 서버로 메시지 전송 및 AI 응답 받기
+            if (currentChatRoomId) {
+                const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiMessage: AuroraMessage = {
+                        contents: data.responseMessage,
+                        senderType: 'AURORA_AI',
+                        createdAt: new Date().toISOString(),
+                    };
+                    setChatHistory((prevMessages) => [...prevMessages, aiMessage]);
+                } else {
+                    console.error('Failed to send message:', response.statusText);
+                }
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+        } finally {
+            setInputValue('');
+            isSendingRef.current = false;
         }
     };
 
@@ -36,56 +90,6 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
             e.preventDefault();
             await createChatRoomAndSendMessage();
         }
-    };
-
-    const createChatRoomAndSendMessage = async () => {
-        if (inputValue.trim() === '' || isSendingRef.current) return;
-
-        isSendingRef.current = true;  // Set the flag to prevent double sending
-
-        const userMessage: Message = { type: 'user', content: inputValue };
-
-        try {
-            let currentChatRoomId = chatRoomId;
-
-            if (!currentChatRoomId) {
-                // Create a new chat room and get its location
-                const location = await GetChatLocation(accessToken);
-                if (location) {
-                    const id = parseInt(location.split('/').pop()!); // Extract the chat room ID
-                    setChatRoomId(id);
-                    setChatLocation(location); // Update the chatLocation in the parent component
-                    currentChatRoomId = id;
-                }
-            }
-
-            // Send the user's message to the chat room
-            if (currentChatRoomId) {
-                // First, add the user's message to the chat
-                setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-                const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
-                if (response.ok) {
-                    const data = await response.json();
-                    // Then, add the AI's response to the chat
-                    setMessages((prevMessages) => [...prevMessages, { type: 'ai', content: data.responseMessage }]);
-                } else {
-                    console.error('Failed to send message:', response.statusText);
-                }
-            } else {
-                console.error('Chat room ID is null or invalid.');
-            }
-        } catch (error) {
-            console.error('Error sending message:', error);
-        }
-
-        // Clear the input after sending the message
-        setInputValue('');
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        isSendingRef.current = false;  // Reset the flag
     };
 
     return (
@@ -107,7 +111,7 @@ export default function ChatInput({ setMessages, setChatLocation, messagesEndRef
                     onClick={createChatRoomAndSendMessage}
                     className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#007BFF] text-white font-semibold"
                 >
-                    대화 끝내기
+                    전송
                 </button>
             </div>
         </div>
