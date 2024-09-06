@@ -16,18 +16,18 @@ export default function Banner({ imgSrc, title, subTitle }: BannerProps) {
         height: '8rem', // 세로 크기를 줄임
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start', // 텍스트를 왼쪽으로 정렬
+        paddingLeft: '3rem', // 왼쪽 패딩 설정
       }}
-      className="w-full px-4 transition-all duration-300 lg:px-4"
+      className="w-full transition-all duration-300"
     >
       <div
-        className="flex flex-col text-left transition-all duration-300 lg:w-[64rem] lg:pl-0" // 왼쪽 여백 제거
+        className="flex flex-col text-left transition-all duration-300"
       >
-        <div className="flex flex-col lg:pl-2"> {/* 텍스트를 왼쪽으로 조금 더 붙임 */}
+        <div className="flex flex-col">
           <p 
             className="text-[1.25rem] font-medium text-white leading-[1.875rem]" 
             style={{
-              alignSelf: 'stretch',
               fontFamily: 'Pretendard',
               fontStyle: 'normal',
               fontWeight: 500,

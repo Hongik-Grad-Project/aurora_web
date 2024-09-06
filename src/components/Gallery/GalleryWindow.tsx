@@ -16,7 +16,7 @@ export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
     return (
         <div className="flex flex-col w-full max-w-xs items-start gap-4">
             <div
-                className="relative w-full h-48 rounded-lg mb-4"
+                className="relative w-full h-48 rounded-lg mb-4 border border-purple-500"
                 style={{
                     backgroundImage: `url(${project.mainImagePath})`,
                     backgroundSize: 'cover',

@@ -1,6 +1,5 @@
 'use client'
 
-import ChatNav from '@/components/Chat/ChatNav';
 import ProjectSummary from '@/components/Project/ProjectSummary';
 import SummaryNav from '@/components/Summary/SummaryNav';
 import { accessTokenState } from '@/context/recoil-context'

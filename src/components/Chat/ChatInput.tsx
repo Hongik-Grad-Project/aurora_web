@@ -2,15 +2,17 @@
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import { GetChatLocation, SendMessage } from '@/lib/action';
-import { Message as AuroraMessage } from '@/lib/types'; // 동일하게 AuroraMessage로 타입 명시
+import { Message as AuroraMessage } from '@/lib/types';
 
 interface ChatInputProps {
     chatRoomId: number | null;
     setChatRoomId: (id: number | null) => void;
-    chatHistory: AuroraMessage[]; // lib/types에서 가져온 Message 타입을 사용
-    setChatHistory: React.Dispatch<React.SetStateAction<AuroraMessage[]>>; // 정확한 타입 사용
+    chatHistory: AuroraMessage[];
+    setChatHistory: React.Dispatch<React.SetStateAction<AuroraMessage[]>>;
     accessToken: string;
+    onCreateNewChatRoom: (message: string) => Promise<void>; // Assuming it returns a promise
 }
+
 
 export default function ChatInput({
     chatRoomId,
@@ -21,7 +23,7 @@ export default function ChatInput({
 }: ChatInputProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const isSendingRef = useRef<boolean>(false); // 중복 전송 방지 플래그 설정
+    const isSendingRef = useRef<boolean>(false);
 
     const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
@@ -39,50 +41,42 @@ export default function ChatInput({
         if (inputValue.trim() === '' || isSendingRef.current) return;
 
         isSendingRef.current = true;
+        let currentChatRoomId = chatRoomId;
 
-        // 사용자 메시지 구성
-        const userMessage: AuroraMessage = {
-            contents: inputValue,
-            senderType: 'MEMBER',
-            createdAt: new Date().toISOString(),
-        };
-
-        try {
-            let currentChatRoomId = chatRoomId;
-
-            if (!currentChatRoomId) {
-                const location = await GetChatLocation(accessToken);
-                if (location) {
-                    const id = parseInt(location.split('/').pop()!); // Location에서 ID 추출
-                    setChatRoomId(id);
-                    currentChatRoomId = id;
-                }
+        if (!currentChatRoomId) {
+            // 새 채팅방 생성
+            const location = await GetChatLocation(accessToken);
+            if (location) {
+                currentChatRoomId = parseInt(location.split('/').pop()!);
+                setChatRoomId(currentChatRoomId);  // 새 채팅방 ID 설정
             }
-
-            // 사용자 메시지를 채팅 내역에 추가
-            setChatHistory((prevMessages) => [...prevMessages, userMessage]);
-
-            // 서버로 메시지 전송 및 AI 응답 받기
-            if (currentChatRoomId) {
-                const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
-                if (response.ok) {
-                    const data = await response.json();
-                    const aiMessage: AuroraMessage = {
-                        contents: data.responseMessage,
-                        senderType: 'AURORA_AI',
-                        createdAt: new Date().toISOString(),
-                    };
-                    setChatHistory((prevMessages) => [...prevMessages, aiMessage]);
-                } else {
-                    console.error('Failed to send message:', response.statusText);
-                }
-            }
-        } catch (error) {
-            console.error('Error sending message:', error);
-        } finally {
-            setInputValue('');
-            isSendingRef.current = false;
         }
+
+        // 메시지 전송 로직
+        if (currentChatRoomId) {
+            const userMessage: AuroraMessage = {
+                contents: inputValue,
+                senderType: 'MEMBER',
+                createdAt: new Date().toISOString(),
+            };
+            setChatHistory(prev => [...prev, userMessage]); // 로컬 채팅 내역에 추가
+
+            const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
+            if (response.ok) {
+                const data = await response.json();
+                const aiMessage: AuroraMessage = {
+                    contents: data.responseMessage,
+                    senderType: 'AURORA_AI',
+                    createdAt: new Date().toISOString(),
+                };
+                setChatHistory(prev => [...prev, aiMessage]);  // AI 응답을 채팅 내역에 추가
+            } else {
+                console.error('Failed to send message:', response.statusText);
+            }
+        }
+
+        setInputValue('');
+        isSendingRef.current = false;
     };
 
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
