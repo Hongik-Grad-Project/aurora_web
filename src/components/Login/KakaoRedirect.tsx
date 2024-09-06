@@ -1,4 +1,3 @@
-// KakaoRedirect.tsx
 'use client'
 import { authState, emailState, accessTokenState } from '@/context/recoil-context'
 import { useSearchParams } from 'next/navigation'
@@ -25,11 +24,15 @@ const KakaoRedirect: React.FC = () => {
           credentials: 'include',
           body: JSON.stringify({ code }),
         })
+        const data = await response.json()
+        // 상태 업데이트 예: setAccessToken(data.accessToken)
       } catch (error) {
+        console.error('Kakao login failed:', error)
       } finally {
         setLoading(false)
       }
     }
+
     if (code) {
       kakaoLogin()
     }
