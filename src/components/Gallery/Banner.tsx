@@ -13,7 +13,7 @@ export default function Banner({ imgSrc, title, subTitle }: BannerProps) {
       style={{
         backgroundImage: `url(${imgSrc})`,
         backgroundSize: 'cover',
-        height: '8rem', // 세로 크기를 줄임
+        height: '6rem', // 세로 크기를 줄임
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start', // 텍스트를 왼쪽으로 정렬
@@ -26,7 +26,7 @@ export default function Banner({ imgSrc, title, subTitle }: BannerProps) {
       >
         <div className="flex flex-col">
           <p 
-            className="text-[1.25rem] font-medium text-white leading-[1.875rem]" 
+            className="text-[1.2rem] font-medium text-white leading-[1.875rem]" 
             style={{
               fontFamily: 'Pretendard',
               fontStyle: 'normal',
@@ -38,7 +38,7 @@ export default function Banner({ imgSrc, title, subTitle }: BannerProps) {
             {title}
           </p>
           <p 
-            className="text-[2rem] font-semibold text-white leading-[3.25rem]"
+            className="text-[1.4rem] font-semibold text-white leading-[3.25rem]"
             style={{
               fontFamily: 'Pretendard',
               fontStyle: 'normal',
