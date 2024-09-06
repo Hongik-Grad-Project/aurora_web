@@ -12,8 +12,8 @@ export interface ProjectGalleryInterface {
   data: ProjectWindowData[];
 }
 
-// 프로젝트 갤러리 -> 프로젝트 창
-export interface ProjectGalleryWindow {
+// 프로젝트 갤러리 조회 content 내부 응답
+export interface ProjectGallery {
   projectId: number;
   mainImagePath: string;
   projectTitle: string;

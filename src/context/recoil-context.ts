@@ -51,10 +51,10 @@ export const filteredTeamsState = atom<FindTeamInterface[]>({
 })
 
 
-import { ProjectGalleryWindow } from '@/lib/types'
+import { ProjectGallery } from '@/lib/types'
 
 // 오로라 구현부
-export const filteredProjectGalleryState = atom<ProjectGalleryWindow[]>({
+export const filteredProjectGalleryState = atom<ProjectGallery[]>({
   key: 'filteredProjectGalleryState',
   default: [],
 })

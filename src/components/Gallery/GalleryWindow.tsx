@@ -1,12 +1,12 @@
 'use client'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, authState } from '@/context/recoil-context'
-import { ProjectGalleryWindow } from '@/lib/types'
+import { ProjectGallery } from '@/lib/types'
 
 import ProjectTag from './Tag'
 
 interface ProjectGalleryWindowProps {
-    project: ProjectGalleryWindow
+    project: ProjectGallery
 }
 
 export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
@@ -14,7 +14,7 @@ export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
     const isAuth = useRecoilValue(authState)
 
     return (
-        <div className="flex flex-col w-full max-w-xs items-start gap-4">
+        <div className="flex flex-col w-full max-w-xs items-start gap-0.5">
             <div
                 className="relative w-full h-48 rounded-lg mb-4 border border-purple-500"
                 style={{

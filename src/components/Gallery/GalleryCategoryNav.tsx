@@ -12,6 +12,7 @@ export default function GalleryCategoryNav() {
     const accessToken = useRecoilValue(accessTokenState) || ''
     const isAuth = useRecoilValue(authState)
     const [filteredProjectGallery, setFilteredProjectGallery] = useRecoilState(filteredProjectGalleryState)
+    // 선택한 필터를 저장하는 상태
     const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({
         category: []
     })
@@ -27,14 +28,13 @@ export default function GalleryCategoryNav() {
         const query = queryParams.toString()
 
         if (isAuth) {
-            const url = query ? '/gallery?${query}' : '/gallery'
+            const url = query ? `/gallery?${query}` : `/gallery`
             const response = await GetProjectGalleryFiltering(accessToken, url)
             setFilteredProjectGallery(response.content)
         } else if (!isAuth && !accessToken) {
             const url = query ? '/gallery?${query}' : '/gallery'
             const response = await GetProjectGalleryFiltering(accessToken, url)
             setFilteredProjectGallery(response.content)
-
         }
     }
 
