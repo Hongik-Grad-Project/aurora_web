@@ -5,16 +5,39 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
-import { ChatRoom, Message as AuroraMessage } from '@/lib/types';
+import { authState, accessTokenState } from '@/context/recoil-context';
 import { floatingAnimation2 } from '@/lib/animations';
+import { GetChatHistory } from '@/lib/action';
 
 export default function ChatAurora() {
+    const accessToken = useRecoilValue(accessTokenState) || '';
+    const isAuth = useRecoilValue(authState); // 로그인 여부 확인
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState); // 현재 선택된 채팅방 ID
     const chatHistory = useRecoilValue(selectedChatHistoryState); // 현재 채팅 내역
     const setChatHistory = useSetRecoilState(selectedChatHistoryState); // 채팅 내역 업데이트를 위한 setter
     const chatRooms = useRecoilValue(chatRoomsState); // 채팅방 목록
-    
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // 채팅 내역 불러오기
+    useEffect(() => {
+        const fetchChatHistory = async () => {
+            try {
+                if (selectedChatRoomId !== null) {
+                    const chatHistoryResponse = await GetChatHistory(accessToken, selectedChatRoomId.toString());
+                    if (chatHistoryResponse.ok) {
+                        const historyData = await chatHistoryResponse.json();
+                        setChatHistory(historyData); // 채팅 내역을 상태에 업데이트
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch chat history:', error);
+            }
+        };
+
+        if (selectedChatRoomId && accessToken) {
+            fetchChatHistory();
+        }
+    }, [selectedChatRoomId, accessToken, setChatHistory]);
 
     // 자동 스크롤
     useEffect(() => {
@@ -33,10 +56,9 @@ export default function ChatAurora() {
                         {chatHistory.map((message, index) => (
                             <div
                                 key={index}
-                                className={`relative p-4 rounded-lg ${
-                                    message.senderType === 'AURORA_AI'
-                                        ? 'bg-gray-200 text-gray-800 self-start mr-auto'
-                                        : 'bg-indigo-500 text-white self-end ml-auto'
+                                className={`relative p-4 rounded-lg ${message.senderType === 'AURORA_AI'
+                                    ? 'bg-gray-200 text-gray-800 self-start mr-auto'
+                                    : 'bg-indigo-500 text-white self-end ml-auto'
                                 }`}
                                 style={{
                                     maxWidth: '75%',

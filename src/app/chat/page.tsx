@@ -14,7 +14,6 @@ export default function AuroraChatPage() {
             {/* 채팅 기록과 선택된 채팅방의 내용을 표시하는 영역 */}
             <div className="flex-grow ml-64 flex flex-col relative">
                 <ChatAurora />
-                {/* 채팅 입력 영역을 하단에 고정 */}
                 <ChatInput />
             </div>
         </div>

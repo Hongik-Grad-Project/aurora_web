@@ -2,15 +2,15 @@
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { accessTokenState, authState, selectedChatRoomIdState, chatRoomsState } from '@/context/recoil-context';
+import { accessTokenState, authState, selectedChatRoomIdState, selectedChatHistoryState } from '@/context/recoil-context';
 import { GetChatLocation, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
 
 export default function ChatInput() {
     const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
+    const isAuth = useRecoilValue(authState); // 인증 여부 확인
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState); // 현재 선택된 채팅방 ID 가져오기
-    const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState); // 채팅방 ID 설정 - 새로운 채팅방 생성
+    const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState); // 새로운 채팅방 생성 시 설정
 
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -29,6 +29,12 @@ export default function ChatInput() {
     };
 
     const createChatRoomAndSendMessage = async () => {
+        // 로그인 여부 확인
+        if (!isAuth) {
+            alert('로그인 이후에 채팅을 이용할 수 있습니다.');
+            return;
+        }
+
         if (inputValue.trim() === '' || isSendingRef.current) return; // 빈 메시지나 중복 전송 방지
 
         isSendingRef.current = true;

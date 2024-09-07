@@ -11,8 +11,8 @@ import { GetChatList } from '@/lib/action';
 export default function ChatNav() {
   const accessToken = useRecoilValue(accessTokenState) || '';
   const isAuth = useRecoilValue(authState); // Assumed you use this to verify authentication
-  const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState); // Use Recoil for chat rooms
   const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState); // Use Recoil for selected chat room
+  const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState); // Use Recoil for chat rooms
   const [loading, setLoading] = useState(true); // Local state for loading
   const [error, setError] = useState<string | null>(null); // Local state for errors
 
@@ -51,16 +51,44 @@ export default function ChatNav() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-full w-full">
-        <p>Loading chat rooms...</p>
+      <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
+          <button
+            onClick={onCreateNewChatRoom}
+            title="새 채팅방 추가"
+            className="bg-blue-500 text-white p-2 rounded"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+        <div className="space-y-3 overflow-y-auto">
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
+            <p className="text-gray-500">로그인 이후 확인 가능해요</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-full w-full">
-        <p className="text-red-500">{error}</p>
+      <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
+          <button
+            onClick={onCreateNewChatRoom}
+            title="새 채팅방 추가"
+            className="bg-blue-500 text-white p-2 rounded"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+        <div className="space-y-3 overflow-y-auto">
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
+            <p className="text-red-500">{error}</p>
+          </div>
+        </div>
       </div>
     );
   }
