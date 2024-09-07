@@ -51,10 +51,36 @@ export const filteredTeamsState = atom<FindTeamInterface[]>({
 })
 
 
-import { ProjectGallery } from '@/lib/types'
+import { ProjectGallery, ChatHistory, ChatRoom } from '@/lib/types'
 
 // 오로라 구현부
 export const filteredProjectGalleryState = atom<ProjectGallery[]>({
   key: 'filteredProjectGalleryState',
   default: [],
 })
+
+// 채팅 내역 상태 (selectedChatHistoryState)
+export const selectedChatHistoryState = atom<ChatHistory[]>({
+  key: 'selectedChatHistoryState', // 고유한 키를 설정
+  default: [], // 초기값: 빈 배열
+});
+
+export const selectedChatRoomState = atom<ChatRoom>({
+  key: 'selectedChatRoomState',
+  default: {
+    chatRoomId: 0,
+    chatRoomName: '',
+    isSummarized: false,
+    updatedAt: '',
+  },
+})
+
+export const chatRoomsState = atom<ChatRoom[]>({
+  key: 'chatRoomsState', // unique key for Recoil state
+  default: [], // initial value (empty list)
+});
+
+export const selectedChatRoomIdState = atom<number | null>({
+  key: 'selectedChatRoomIdState', // unique key for Recoil state
+  default: null, // initial value (no selected chat room)
+});

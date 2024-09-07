@@ -1,4 +1,22 @@
 // 오로라 개발 시작부
+
+export type SenderType = 'MEMBER' | 'AURORA_AI';
+
+// 채팅 내역 조회 응답
+export interface ChatHistory {
+  contents: string;
+  senderType: SenderType;
+  createdAt: string;
+}
+
+// 채팅방 목록 조회 응답
+export interface ChatRoom {
+  chatRoomId: number;
+  chatRoomName: string;
+  isSummarized: boolean;
+  updatedAt: string;
+}
+
 export interface ProjectWindowData {
   imagePath: string;
   count: number;
@@ -25,12 +43,7 @@ export interface ProjectGallery {
   likeCount: number;
 }
 
-export interface ChatRoom {
-  chatRoomId: number;
-  chatRoomName: string;
-  isSummarized: boolean;
-  updatedAt: string;
-}
+
 
 // lib/types.ts 파일에서 정확한 Message 타입 정의
 export interface Message {

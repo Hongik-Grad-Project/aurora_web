@@ -1,29 +1,20 @@
 'use client';
 
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { accessTokenState, authState, selectedChatRoomIdState, chatRoomsState } from '@/context/recoil-context';
 import { GetChatLocation, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
 
-interface ChatInputProps {
-    chatRoomId: number | null;
-    setChatRoomId: (id: number | null) => void;
-    chatHistory: AuroraMessage[];
-    setChatHistory: React.Dispatch<React.SetStateAction<AuroraMessage[]>>;
-    accessToken: string;
-    onCreateNewChatRoom: (message: string) => Promise<void>; // Assuming it returns a promise
-}
+export default function ChatInput() {
+    const accessToken = useRecoilValue(accessTokenState) || '';
+    const isAuth = useRecoilValue(authState);
+    const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState); // 현재 선택된 채팅방 ID 가져오기
+    const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState); // 채팅방 ID 설정 - 새로운 채팅방 생성
 
-
-export default function ChatInput({
-    chatRoomId,
-    setChatRoomId,
-    chatHistory,
-    setChatHistory,
-    accessToken,
-}: ChatInputProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const isSendingRef = useRef<boolean>(false);
+    const isSendingRef = useRef<boolean>(false); // 중복 전송 방지 플래그
 
     const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
@@ -38,17 +29,17 @@ export default function ChatInput({
     };
 
     const createChatRoomAndSendMessage = async () => {
-        if (inputValue.trim() === '' || isSendingRef.current) return;
+        if (inputValue.trim() === '' || isSendingRef.current) return; // 빈 메시지나 중복 전송 방지
 
         isSendingRef.current = true;
-        let currentChatRoomId = chatRoomId;
+        let currentChatRoomId = selectedChatRoomId;
 
+        // 새로운 채팅방 생성이 필요한 경우
         if (!currentChatRoomId) {
-            // 새 채팅방 생성
             const location = await GetChatLocation(accessToken);
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
-                setChatRoomId(currentChatRoomId);  // 새 채팅방 ID 설정
+                setSelectedChatRoomId(currentChatRoomId); // 새로운 채팅방 ID 설정
             }
         }
 
@@ -59,7 +50,6 @@ export default function ChatInput({
                 senderType: 'MEMBER',
                 createdAt: new Date().toISOString(),
             };
-            setChatHistory(prev => [...prev, userMessage]); // 로컬 채팅 내역에 추가
 
             const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
             if (response.ok) {
@@ -69,14 +59,13 @@ export default function ChatInput({
                     senderType: 'AURORA_AI',
                     createdAt: new Date().toISOString(),
                 };
-                setChatHistory(prev => [...prev, aiMessage]);  // AI 응답을 채팅 내역에 추가
             } else {
                 console.error('Failed to send message:', response.statusText);
             }
         }
 
-        setInputValue('');
-        isSendingRef.current = false;
+        setInputValue(''); // 입력 필드 초기화
+        isSendingRef.current = false; // 전송 플래그 초기화
     };
 
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
