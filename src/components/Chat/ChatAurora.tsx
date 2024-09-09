@@ -20,24 +20,9 @@ export default function ChatAurora() {
 
     // 채팅 내역 불러오기
     useEffect(() => {
-        const fetchChatHistory = async () => {
-            try {
-                if (selectedChatRoomId !== null) {
-                    const chatHistoryResponse = await GetChatHistory(accessToken, selectedChatRoomId.toString());
-                    if (chatHistoryResponse.ok) {
-                        const historyData = await chatHistoryResponse.json();
-                        setChatHistory(historyData); // 채팅 내역을 상태에 업데이트
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch chat history:', error);
-            }
-        };
-
-        if (selectedChatRoomId && accessToken) {
-            fetchChatHistory();
-        }
+        fetchChatHistory();
     }, [selectedChatRoomId, accessToken, setChatHistory]);
+
 
     // 자동 스크롤
     useEffect(() => {
@@ -48,6 +33,30 @@ export default function ChatAurora() {
 
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
+    useEffect(() => {
+        if (selectedChatRoomId === null) {
+            // 새로운 채팅방을 준비하는 UI 표시
+            // 예를 들어, 초기 화면 또는 오로라 로고 화면을 표시
+            setChatHistory([]); // 채팅 내역을 비워 새로운 대화 준비
+        } else {
+            fetchChatHistory(); // 기존 채팅방의 내역을 불러오는 함수 실행
+        }
+    }, [selectedChatRoomId, setChatHistory]);
+
+    // 기존 채팅방 내역을 불러오는 함수
+    const fetchChatHistory = async () => {
+        try {
+            if (selectedChatRoomId !== null) {
+                const chatHistoryResponse = await GetChatHistory(accessToken, selectedChatRoomId.toString());
+                if (chatHistoryResponse.ok) {
+                    const historyData = await chatHistoryResponse.json();
+                    setChatHistory(historyData);
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch chat history:', error);
+        }
+    };
 
     return (
         <>
@@ -126,6 +135,5 @@ export default function ChatAurora() {
                 </div>
             </div>
         </>
-
     );
 }

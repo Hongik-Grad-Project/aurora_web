@@ -45,8 +45,8 @@ export default function ChatNav() {
 
   // Placeholder for creating a new chat room
   const onCreateNewChatRoom = () => {
-    // Logic to handle creating a new chat room
-    console.log('New chat room created');
+    setSelectedChatRoomId(null); // Clear the selected chat room
+    console.log('Preparing for a new chat room');
   };
 
   if (loading) {
