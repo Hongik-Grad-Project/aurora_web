@@ -48,6 +48,7 @@ export default function ChatAurora() {
 
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
+
     return (
         <div className="flex flex-col w-full h-full bg-gray-100 relative pt-[70px]">
             <div className="flex-grow overflow-y-auto p-6 bg-white">
@@ -59,7 +60,7 @@ export default function ChatAurora() {
                                 className={`relative p-4 rounded-lg ${message.senderType === 'AURORA_AI'
                                     ? 'bg-gray-200 text-gray-800 self-start mr-auto'
                                     : 'bg-indigo-500 text-white self-end ml-auto'
-                                }`}
+                                    }`}
                                 style={{
                                     maxWidth: '75%',
                                     wordWrap: 'break-word',

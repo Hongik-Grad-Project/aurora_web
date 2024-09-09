@@ -11,6 +11,7 @@ export default function ChatInput() {
     const isAuth = useRecoilValue(authState); // 인증 여부 확인
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState); // 현재 선택된 채팅방 ID 가져오기
     const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState); // 새로운 채팅방 생성 시 설정
+    const setChatHistory = useSetRecoilState(selectedChatHistoryState); // 채팅 내역 상태 업데이트
 
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -29,7 +30,6 @@ export default function ChatInput() {
     };
 
     const createChatRoomAndSendMessage = async () => {
-        // 로그인 여부 확인
         if (!isAuth) {
             alert('로그인 이후에 채팅을 이용할 수 있습니다.');
             return;
@@ -49,14 +49,16 @@ export default function ChatInput() {
             }
         }
 
-        // 메시지 전송 로직
         if (currentChatRoomId) {
+            // 사용자 메시지 추가
             const userMessage: AuroraMessage = {
                 contents: inputValue,
                 senderType: 'MEMBER',
                 createdAt: new Date().toISOString(),
             };
+            setChatHistory(prev => [...prev, userMessage]); // 채팅 내역에 사용자 메시지 추가
 
+            // AI 메시지 전송 및 응답 처리
             const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
             if (response.ok) {
                 const data = await response.json();
@@ -65,6 +67,7 @@ export default function ChatInput() {
                     senderType: 'AURORA_AI',
                     createdAt: new Date().toISOString(),
                 };
+                setChatHistory(prev => [...prev, aiMessage]); // 채팅 내역에 AI 응답 추가
             } else {
                 console.error('Failed to send message:', response.statusText);
             }
@@ -82,7 +85,7 @@ export default function ChatInput() {
     };
 
     return (
-        <div className="bg-white p-4 border-t border-gray-200">
+        <div className="bg-white p-4 border-t border-gray-200 fixed bottom-0 left-0 w-full">
             <div className="flex items-end gap-[0.75rem] w-full max-w-[48rem] mx-auto">
                 <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white">
                     <textarea
