@@ -39,11 +39,13 @@ export default function ChatNav() {
   }, [accessToken, isAuth, setChatRooms]);
 
   // Handler for selecting a chat room
+  // ChatNav에서 채팅방 선택
   const onSelectChatRoom = (chatRoomId: number) => {
-    setSelectedChatRoomId(chatRoomId); // Set the selected chat room in the global state
+    setSelectedChatRoomId(chatRoomId); // 선택된 채팅방 ID를 설정하여 ChatAurora가 반응하도록 함
   };
 
-  // Placeholder for creating a new chat room
+
+  // 선택한 채팅방이 없는 상태로 돌림
   const onCreateNewChatRoom = () => {
     setSelectedChatRoomId(null); // Clear the selected chat room
     console.log('Preparing for a new chat room');
@@ -112,7 +114,7 @@ export default function ChatNav() {
         <div className="space-y-3 overflow-y-auto">
           {chatRooms.map((room) => (
             <div
-              key={room.chatRoomId}
+              key={room.chatRoomId} // 고유한 key 값을 지정
               className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
               onClick={() => onSelectChatRoom(room.chatRoomId)}
             >
