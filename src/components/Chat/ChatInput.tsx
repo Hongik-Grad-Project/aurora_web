@@ -85,7 +85,7 @@ export default function ChatInput() {
     };
 
     return (
-        <div className="bg-white p-4 border-t border-gray-200 fixed bottom-0 left-0 w-full">
+        <div className="bg-white p-4 border-t border-gray-200">
             <div className="flex items-end gap-[0.75rem] w-full max-w-[48rem] mx-auto">
                 <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white">
                     <textarea

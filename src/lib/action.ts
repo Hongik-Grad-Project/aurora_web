@@ -11,8 +11,7 @@ export async function GetRecommendProjects(accessToken: string) {
     },
     credentials: 'include',
   })
-  const data = await response.json()
-  return data
+  return response
 }
 
 // 1.2. (access-token 만료 시) 토큰 재발급 (POST /token) 
