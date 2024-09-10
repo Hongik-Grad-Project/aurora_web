@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { accessTokenState, authState, selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
 import { GetChatLocation, GetChatList, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
-import { ChatRoom } from '@/lib/types';
+import { set } from 'date-fns';
 
 export default function ChatInput() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -14,10 +14,16 @@ export default function ChatInput() {
     const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState);
     const setChatHistory = useSetRecoilState(selectedChatHistoryState);
     const [inputValue, setInputValue] = useState<string>('');
-    const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState); // Use Recoil for chat rooms
+    const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // Use Recoil for chat rooms
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
+
+    const userMessage: AuroraMessage = {
+        contents: inputValue,
+        senderType: 'MEMBER',
+        createdAt: new Date().toISOString(),
+    };
 
     const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
@@ -36,30 +42,25 @@ export default function ChatInput() {
             alert('로그인 이후에 채팅을 이용할 수 있습니다.');
             return;
         }
-    
+
         if (inputValue.trim() === '' || isSendingRef.current) return;
-    
+
         isSendingRef.current = true;
+
         let currentChatRoomId = selectedChatRoomId;
-    
-        // 채팅방이 없는 경우 새 채팅방 ID를 가져옵니다.
         if (!currentChatRoomId) {
             const location = await GetChatLocation(accessToken);
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
                 setSelectedChatRoomId(currentChatRoomId);
+                const chatRoomsResponse = await GetChatList(accessToken);
+                setChatRooms(chatRoomsResponse);
             }
         }
-    
+        
+        setChatHistory(prev => [...prev, userMessage]);
+
         if (currentChatRoomId) {
-            const userMessage: AuroraMessage = {
-                contents: inputValue,
-                senderType: 'MEMBER',
-                createdAt: new Date().toISOString(),
-            };
-    
-            setChatHistory(prev => [...prev, userMessage]);
-    
             const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
             if (response.ok) {
                 const data = await response.json();
@@ -68,33 +69,22 @@ export default function ChatInput() {
                     senderType: 'AURORA_AI',
                     createdAt: new Date().toISOString(),
                 };
+                // AI 응답을 채팅 내역에 추가
                 setChatHistory(prev => [...prev, aiMessage]);
             } else {
                 console.error('Failed to send message:', response.statusText);
             }
         }
-    
-        // 채팅방 목록을 새로 가져옵니다.
-        const newRooms = await GetChatList(accessToken);
-        if (newRooms) {
-            setChatRooms(prevRooms => {
-                // 중복을 제거하고 새 목록을 추가합니다.
-                const mergedRooms = [...prevRooms, ...newRooms];
-                return mergedRooms.reduce((acc, current) => {
-                    const x = acc.find((item: ChatRoom) => item.chatRoomId === current.chatRoomId);
-                    if (!x) {
-                        return acc.concat([current]);
-                    } else {
-                        return acc;
-                    }
-                }, []);
-            });
-        }
-    
+
+        updateChatRooms();
         setInputValue('');
         isSendingRef.current = false;
     };
-    
+
+    const updateChatRooms = async () => {
+        const newRooms = await GetChatList(accessToken);
+        setChatRooms(newRooms);
+    };
 
     // Enter 키 입력 시 메시지 전송
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -121,9 +111,9 @@ export default function ChatInput() {
                 </div>
                 <button
                     onClick={createChatRoomAndSendMessage}
-                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#007BFF] text-white font-semibold"
+                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#E2E6EF] text-[#4E525C] font-semibold"
                 >
-                    전송
+                    대화 끝내기
                 </button>
             </div>
         </div>

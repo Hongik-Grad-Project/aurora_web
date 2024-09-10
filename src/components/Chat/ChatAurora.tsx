@@ -3,71 +3,29 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
 import { authState, accessTokenState } from '@/context/recoil-context';
 import { floatingAnimation2 } from '@/lib/animations';
-import { GetChatHistory } from '@/lib/action';
 
 export default function ChatAurora() {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const isAuth = useRecoilValue(authState); // 로그인 여부 확인
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState); // 현재 선택된 채팅방 ID
     const chatHistory = useRecoilValue(selectedChatHistoryState); // 현재 채팅 내역
-    const setChatHistory = useSetRecoilState(selectedChatHistoryState); // 채팅 내역 업데이트를 위한 setter
     const chatRooms = useRecoilValue(chatRoomsState); // 채팅방 목록
     const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    // 채팅 내역 불러오기
-    useEffect(() => {
-        fetchChatHistory();
-    }, [selectedChatRoomId, accessToken, setChatHistory]);
-
-
-    // 자동 스크롤
-    useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, [chatHistory]);
-
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
+    
+    // 자동 스크롤
+    // useEffect(() => {
+    //     console.log('useEffect가 사용된다');
+    //     if (messagesEndRef.current) {
+    //         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    //     }
+    // }, [selectedChatRoomId, chatHistory]);
 
-    useEffect(() => {
-        if (selectedChatRoomId !== null) {
-            const fetchChatHistory = async () => {
-                try {
-                    const response = await GetChatHistory(accessToken, selectedChatRoomId.toString());
-                    if (response.ok) {
-                        const historyData = await response.json();
-                        setChatHistory(historyData);
-                    } else {
-                        console.error("Failed to fetch chat history:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Error fetching chat history:", error);
-                }
-            };
-            fetchChatHistory();
-        } else {
-            setChatHistory([]);
-        }
-    }, [selectedChatRoomId, setChatHistory]);
-
-    // 기존 채팅방 내역을 불러오는 함수
-    const fetchChatHistory = async () => {
-        if (accessToken && selectedChatRoomId !== null) {
-            try {
-                const chatHistoryResponse = await GetChatHistory(accessToken, selectedChatRoomId.toString());
-                if (chatHistoryResponse.ok) {
-                    const historyData = await chatHistoryResponse.json();
-                    setChatHistory(historyData);
-                }
-            } catch (error) {
-                console.error('Failed to fetch chat history:', error);
-            }
-        }
-    };
+    console.log('currentChatRoom:', currentChatRoom);
 
     return (
         <>
