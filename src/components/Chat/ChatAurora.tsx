@@ -16,14 +16,14 @@ export default function ChatAurora() {
     const chatRooms = useRecoilValue(chatRoomsState); // 채팅방 목록
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
-    
+
     // 자동 스크롤
-    // useEffect(() => {
-    //     console.log('useEffect가 사용된다');
-    //     if (messagesEndRef.current) {
-    //         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    //     }
-    // }, [selectedChatRoomId, chatHistory]);
+    useEffect(() => {
+        console.log('useEffect가 사용된다');
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [selectedChatRoomId, chatHistory]);
 
     console.log('currentChatRoom:', currentChatRoom);
 
@@ -96,7 +96,7 @@ export default function ChatAurora() {
                                 />
                             </motion.div>
                             <div className="flex flex-col justify-center items-center mt-4">
-                                <h2 className="text-3xl font-extrabold text-gray-800">Aurora Chat AI</h2>
+                                <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">Aurora Chat AI</h2>
                                 <p className="text-gray-500 text-base mt-2">To Solve Social Problems</p>
                             </div>
                         </div>
