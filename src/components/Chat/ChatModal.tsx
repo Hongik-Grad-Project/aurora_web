@@ -1,0 +1,54 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+
+interface ChatModalProps {
+    isOpen: boolean
+    onClose: () => void
+}
+
+export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
+
+    if (!isOpen) return null
+
+    const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (event.target === event.currentTarget) {
+            onClose()
+        }
+    }
+
+    return (
+        <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-50"
+            onClick={handleBackgroundClick}
+        >
+            <motion.div
+                initial={{ y: '5vh', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '100vh', opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg max-w-[400px] w-full mx-2"
+            >
+                <h1 className="text-xl font-semibold text-gray-800 mb-8">대화 내용을 요약하시겠습니까?</h1>
+                <div className="flex w-full justify-center gap-[1.5rem]">
+                    <button
+                        onClick={() => onClose()}
+                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400 transition-colors"
+                    >
+                        아니오
+                    </button>
+                    <button
+                        onClick={() => {
+                            // 여기에 예 버튼 클릭시의 로직 추가
+                            console.log('예 선택됨');
+                            onClose();
+                        }}
+                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors"
+                    >
+                        예
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    )
+}

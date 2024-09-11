@@ -63,7 +63,7 @@ export default function ChatNav() {
       }
     };
 
-    if(isAuth && accessToken) {
+    if (isAuth && accessToken) {
       fetchChatHistory();
     }
   }, [selectedChatRoomId, setChatHistory]);
@@ -90,10 +90,11 @@ export default function ChatNav() {
           <button
             onClick={onCreateNewChatRoom}
             title="새 채팅방 추가"
-            className="bg-blue-500 text-white p-2 rounded"
+            className="p-2 rounded bg-transparent" // 배경을 투명하게 설정
           >
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faPlus} className="text-black" />
           </button>
+
         </div>
         <div className="space-y-3 overflow-y-auto">
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
@@ -133,10 +134,11 @@ export default function ChatNav() {
         <button
           onClick={onCreateNewChatRoom}
           title="새 채팅방 추가"
-          className="bg-blue-500 text-white p-2 rounded"
+          className="p-2 rounded bg-transparent"
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} className="text-black" />
         </button>
+
       </div>
 
       {chatRooms.length === 0 ? (

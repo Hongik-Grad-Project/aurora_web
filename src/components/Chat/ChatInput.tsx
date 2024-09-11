@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { accessTokenState, authState, selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
 import { GetChatLocation, GetChatList, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
-import { set } from 'date-fns';
+import ChatModal from './ChatModal';
 
 export default function ChatInput() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -15,9 +15,11 @@ export default function ChatInput() {
     const setChatHistory = useSetRecoilState(selectedChatHistoryState);
     const [inputValue, setInputValue] = useState<string>('');
     const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // Use Recoil for chat rooms
+    const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
+
 
     const userMessage: AuroraMessage = {
         contents: inputValue,
@@ -57,7 +59,7 @@ export default function ChatInput() {
                 setChatRooms(chatRoomsResponse);
             }
         }
-        
+
         setChatHistory(prev => [...prev, userMessage]);
 
         if (currentChatRoomId) {
@@ -110,12 +112,15 @@ export default function ChatInput() {
                     />
                 </div>
                 <button
-                    onClick={createChatRoomAndSendMessage}
-                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#E2E6EF] text-[#4E525C] font-semibold"
+                    onClick={() => setIsChatModalOpen(true)}
+                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
                 >
                     대화 끝내기
                 </button>
+
             </div>
+            <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
+
         </div>
     );
 }
