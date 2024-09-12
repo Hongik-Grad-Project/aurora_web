@@ -50,12 +50,16 @@ export default function ChatInput() {
         isSendingRef.current = true;
 
         let currentChatRoomId = selectedChatRoomId;
+
         if (!currentChatRoomId) {
             const location = await GetChatLocation(accessToken);
+            
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
+                console.log('currentChatRoomId:', currentChatRoomId);
                 setSelectedChatRoomId(currentChatRoomId);
                 const chatRoomsResponse = await GetChatList(accessToken);
+                console.log('chatRoomsResponse:', chatRoomsResponse);
                 setChatRooms(chatRoomsResponse);
             }
         }
@@ -120,7 +124,6 @@ export default function ChatInput() {
 
             </div>
             <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
-
         </div>
     );
 }

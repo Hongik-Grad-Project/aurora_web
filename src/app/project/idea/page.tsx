@@ -1,20 +1,16 @@
 'use client'
 
-import ProjectSummary from '@/components/Project/ProjectSummary';
 import SummaryNav from '@/components/Summary/SummaryNav';
-import { accessTokenState } from '@/context/recoil-context'
-import { useRecoilValue } from 'recoil'
+import IdeaNote from '@/components/Summary/IdeaNote';
 
 export default function ProjectIdeaPage() {
-  const accessToken = useRecoilValue(accessTokenState) || ''
-
   return (
     <div className="flex w-full h-screen">
-      <div className="fixed left-0 top-0 h-full w-[16.25rem] pt-[70px]">
+      <div className="fixed left-0 top-0 h-full w-64 pt-[70px] border-r border-gray-300">
         <SummaryNav />
       </div>
-      <div className="flex-grow ml-[16.25rem] flex flex-col">
-        <ProjectSummary />
+      <div className="flex-grow ml-64 mt-[70px] mb-[84px]">
+        <IdeaNote />
       </div>
     </div>
   )

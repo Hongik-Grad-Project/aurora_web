@@ -18,10 +18,7 @@ export default function ChatNav() {
   const [loading, setLoading] = useState(true); // Local state for loading
   const [error, setError] = useState<string | null>(null); // Local state for errors
 
-
-  // Fetch chat rooms when the component mounts or when the accessToken changes
   useEffect(() => {
-    console.log('ChatNav의 useEffect 실행');
     const fetchChatRooms = async () => {
       setLoading(true);
       setError(null); // Reset error before fetching
@@ -71,16 +68,14 @@ export default function ChatNav() {
   // ChatNav에서 채팅방 선택
   const onSelectChatRoom = (chatRoomId: number) => {
     console.log('Chat room selected:', chatRoomId);
-    setSelectedChatRoomId(chatRoomId); // 선택된 채팅방 ID를 설정하여 ChatAurora가 반응하도록 함
+    setSelectedChatRoomId(chatRoomId);
   };
 
   // 선택한 채팅방이 없는 상태로 돌림
   const onCreateNewChatRoom = () => {
-    setSelectedChatRoomId(null); // Clear the selected chat room
+    setSelectedChatRoomId(null);
     console.log('Preparing for a new chat room');
   };
-
-
 
   if (loading) {
     return (
@@ -94,7 +89,6 @@ export default function ChatNav() {
           >
             <FontAwesomeIcon icon={faPlus} className="text-black" />
           </button>
-
         </div>
         <div className="space-y-3 overflow-y-auto">
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm">
@@ -138,7 +132,6 @@ export default function ChatNav() {
         >
           <FontAwesomeIcon icon={faPlus} className="text-black" />
         </button>
-
       </div>
 
       {chatRooms.length === 0 ? (
@@ -147,7 +140,7 @@ export default function ChatNav() {
         <div className="space-y-3 overflow-y-auto">
           {chatRooms.map((room) => (
             <div
-              key={room.chatRoomId} // 고유한 key 값을 지정
+              key={room.chatRoomId}
               className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
               onClick={() => onSelectChatRoom(room.chatRoomId)}
             >
@@ -155,11 +148,6 @@ export default function ChatNav() {
                 <div className="text-md font-medium text-gray-800">
                   {room.chatRoomName}
                 </div>
-                {room.isSummarized && (
-                  <span className="text-xs font-semibold text-blue-500 bg-blue-100 px-2 py-1 rounded">
-                    Summarized
-                  </span>
-                )}
               </div>
               <div className="text-xs text-gray-400">
                 {new Date(room.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

@@ -17,6 +17,21 @@ export interface ChatRoom {
   updatedAt: string;
 }
 
+export interface SummaryRoom {
+  noteId: number,
+  title: string,
+  createdAt: string,
+}
+
+export interface SummaryContent {
+  noteId: number,
+  target: string,
+  problem: string,
+  title: string,
+  openTitleList: string[],
+  openSummaryList: string[]
+}
+
 export interface ProjectWindowData {
   imagePath: string;
   count: number;

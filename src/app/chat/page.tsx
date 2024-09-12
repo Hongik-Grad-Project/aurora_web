@@ -3,6 +3,7 @@
 import ChatAurora from '@/components/Chat/ChatAurora';
 import ChatInput from '@/components/Chat/ChatInput';
 import ChatNav from '@/components/Chat/ChatNav';
+import { useEffect } from 'react';
 
 export default function AuroraChatPage() {
     return (

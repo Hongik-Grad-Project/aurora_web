@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
 import { authState, accessTokenState } from '@/context/recoil-context';
 import { floatingAnimation2 } from '@/lib/animations';
@@ -17,7 +17,7 @@ export default function ChatAurora() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
-    // 자동 스크롤
+    
     useEffect(() => {
         console.log('useEffect가 사용된다');
         if (messagesEndRef.current) {

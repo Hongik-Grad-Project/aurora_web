@@ -78,17 +78,17 @@ export async function GetChatList(accessToken: string) {
 // 2.4. 새로운 채팅방 생성 (POST /chat/v2)
 export async function GetChatLocation(accessToken: string): Promise<string | null> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/v2`, {
-      method: 'POST',
-      headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-      },
-      credentials: 'include',
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
   });
 
   if (response.status === 201) {
-      // Location 헤더에서 URL 추출
-      return response.headers.get('Location');
+    // Location 헤더에서 URL 추출
+    return response.headers.get('Location');
   }
 
   return null;
@@ -110,6 +110,32 @@ export async function SendMessage(accessToken: string, chatRoomId: string, messa
   return response
 }
 
+// 2.6. 요약 노트 생성
+export async function CreateSummaryNote(accessToken: string, chatRoomId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/summary`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return response
+}
+
+// 2.7. 채팅방 삭제
+export async function DeleteChatRoom(accessToken: string, chatRoomId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return response
+}
+
 // 2.8. 채팅 내역 조회 ( GET /chat/:chatRoomId/history )
 export async function GetChatHistory(accessToken: string, chatRoomId: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/history`, {
@@ -123,7 +149,50 @@ export async function GetChatHistory(accessToken: string, chatRoomId: string) {
   return response
 }
 
-// 3.1. 프로젝트 개요 저장 (POST /project/outline/save)
+// 3.1. 요약 노트 목록 조회 (GET /note)
+export async function GetSummaryNoteList(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  if(!response.ok) {
+    throw new Error('Failed to fetch chat list');
+  }
+
+  return response.json();
+}
+
+// 3.2. 요약 노트 상세 조회 (GET /note/:noteId)
+export async function GetSummaryNoteContent(accessToken: string, noteId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note/${noteId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return response
+}
+
+// 3.3. 요약 노트 삭제 (DELETE /note/:noteId)
+export async function DeleteSummaryNote(accessToken: string, noteId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note/${noteId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return response
+}
+
+// 4.1. 프로젝트 개요 저장 (POST /project/outline/save)
 export async function PostProjectOutlineData(accessToken: string, payload: any, projectRepresentImage: File | null) {
   const formData = new FormData()
   formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
