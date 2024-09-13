@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { accessTokenState, authState, summaryRoomsState, selectedSummaryContentState, selectedSummaryRoomIdState } from '@/context/recoil-context';
 import Image from 'next/image';
+import SummaryModal from './SummaryModal';
+import SummaryDeleteModal from './SummaryDeleteModal';
 
 export default function IdeaNote() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -13,6 +15,8 @@ export default function IdeaNote() {
     const summaryRooms = useRecoilValue(summaryRoomsState);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const currentSummaryRoom = summaryRooms.find((sumRoom) => sumRoom.noteId === selectedSummaryRoomId);
+    const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
+    const [isSummaryDeleteModalOpen, setIsSummaryDeleteModalOpen] = useState(false);
 
     return (
         <div className="flex flex-col w-full h-full bg-gray-100 relative">
@@ -61,8 +65,15 @@ export default function IdeaNote() {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-end self-stretch">
-                                    <button className="flex h-[3.14813rem] min-w-[5.39675rem] p-[1.01188rem_1.57406rem] justify-center items-center gap-[0.56219rem] rounded-[0.44975rem] bg-[#776BFF] text-[#FEFEFE] text-center align-middle font-pretendard text-[1.01188rem] font-normal font-medium leading-[1.51781rem]">
+                                <div className="flex justify-between items-center">
+                                    <button
+                                        onClick={() => setIsSummaryDeleteModalOpen(true)}
+                                        className="flex h-[3.14813rem] min-w-[5.39675rem] p-[1.01188rem_1.57406rem] justify-center items-center gap-[0.56219rem] rounded-[0.44975rem] bg-[#FEFEFE] text-[#776BFF] border border-[#776BFF] text-center align-middle font-pretendard text-[1.01188rem] font-normal font-medium leading-[1.51781rem]">
+                                        삭제하기
+                                    </button>
+                                    <button 
+                                        onClick={() => setIsSummaryModalOpen(true)}
+                                        className="flex h-[3.14813rem] min-w-[5.39675rem] p-[1.01188rem_1.57406rem] justify-center items-center gap-[0.56219rem] rounded-[0.44975rem] bg-[#776BFF] text-[#FEFEFE] text-center align-middle font-pretendard text-[1.01188rem] font-normal font-medium leading-[1.51781rem]">
                                         기획서 작성하기
                                     </button>
                                 </div>
@@ -79,6 +90,8 @@ export default function IdeaNote() {
                     </div>
                 )}
             </div>
+            <SummaryModal isOpen={isSummaryModalOpen} onClose={() => setIsSummaryModalOpen(false)} />
+            <SummaryDeleteModal isOpen={isSummaryDeleteModalOpen} onClose={() => setIsSummaryDeleteModalOpen(false)} />
         </div>
     );
 }

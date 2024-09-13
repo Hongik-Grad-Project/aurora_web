@@ -16,6 +16,7 @@ export default function ChatInput() {
     const [inputValue, setInputValue] = useState<string>('');
     const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // Use Recoil for chat rooms
     const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+    const [buttonHeight, setButtonHeight] = useState('3.2rem'); // 버튼 높이 상태
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
@@ -36,6 +37,7 @@ export default function ChatInput() {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+            setButtonHeight(`${textareaRef.current.scrollHeight}px`);  // 버튼 높이도 같게 조정
         }
     };
 
@@ -53,7 +55,7 @@ export default function ChatInput() {
 
         if (!currentChatRoomId) {
             const location = await GetChatLocation(accessToken);
-            
+
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
                 console.log('currentChatRoomId:', currentChatRoomId);
@@ -102,7 +104,7 @@ export default function ChatInput() {
 
     return (
         <div className="bg-white p-4 border-t border-gray-200">
-            <div className="flex items-end gap-[0.75rem] w-full max-w-[48rem] mx-auto">
+            <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto"> {/* 너비 조정 */}
                 <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white">
                     <textarea
                         ref={textareaRef}
@@ -117,11 +119,11 @@ export default function ChatInput() {
                 </div>
                 <button
                     onClick={() => setIsChatModalOpen(true)}
-                    className="flex h-[3.2rem] px-[1.5rem] py-[0.5rem] justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
+                    className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
+                    style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}  // 버튼 높이 동적 조정
                 >
                     대화 끝내기
                 </button>
-
             </div>
             <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
         </div>

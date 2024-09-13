@@ -64,7 +64,7 @@ export default function SummaryNav() {
 
     return (
         <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center h-[40px]">
                 <h2 className="text-xl font-semibold text-gray-800">아이디어 노트</h2>
             </div>
 
