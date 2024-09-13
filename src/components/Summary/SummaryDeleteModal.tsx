@@ -35,7 +35,7 @@ export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteMod
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-50"
             onClick={handleBackgroundClick}
         >
-                        <motion.div
+            <motion.div
                 initial={{ y: '5vh', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100vh', opacity: 0 }}
