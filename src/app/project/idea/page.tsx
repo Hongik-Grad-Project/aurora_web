@@ -9,7 +9,7 @@ export default function ProjectIdeaPage() {
       <div className="fixed left-0 top-0 h-full w-64 pt-[70px] border-r border-gray-300">
         <SummaryNav />
       </div>
-      <div className="flex-grow ml-64 mt-[70px] mb-[84px]">
+      <div className="flex-grow ml-64 mt-[70px]">
         <IdeaNote />
       </div>
     </div>

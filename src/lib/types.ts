@@ -29,7 +29,8 @@ export interface SummaryContent {
   problem: string,
   title: string,
   openTitleList: string[],
-  openSummaryList: string[]
+  openSummaryList: string[],
+  solution: string,
 }
 
 export interface ProjectWindowData {

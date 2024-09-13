@@ -144,13 +144,13 @@ export default function ChatNav() {
               className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
               onClick={() => onSelectChatRoom(room.chatRoomId)}
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex flex-col space-y-1">
                 <div className="text-md font-medium text-gray-800">
                   {room.chatRoomName}
                 </div>
-              </div>
-              <div className="text-xs text-gray-400">
-                {new Date(room.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                <div className="text-xs text-gray-400 text-left">
+                  {new Date(room.updatedAt).toLocaleString()}
+                </div>
               </div>
             </div>
           ))}

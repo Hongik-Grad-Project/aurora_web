@@ -115,7 +115,15 @@ export const summaryRoomsState = atom<SummaryRoom[]>({
 });
 
 // 선택한 요약 내용 상태
-export const selectedSummaryContentState = atom<SummaryContent[]>({
+export const selectedSummaryContentState = atom<SummaryContent | null>({
   key: 'selectedSummaryContentState',
-  default: [],
+  default: {
+    noteId: 0,
+    target: '',
+    problem: '',
+    title: '',
+    openTitleList: [],
+    openSummaryList: [],
+    solution: '',
+  },
 });

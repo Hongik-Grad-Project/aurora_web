@@ -1,26 +1,22 @@
-'use client'
-
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenState, authState, summaryRoomsState, selectedSummaryRoomState, selectedSummaryRoomIdState, selectedSummaryContentState } from '@/context/recoil-context';
+import { accessTokenState, authState, summaryRoomsState, selectedSummaryRoomIdState, selectedSummaryContentState } from '@/context/recoil-context';
 import { SummaryRoom } from '@/lib/types';
 import { GetSummaryNoteList, GetSummaryNoteContent } from '@/lib/action';
 
 export default function SummaryNav() {
-    const accessToken = useRecoilValue(accessTokenState) || ''
-    const isAuth = useRecoilValue(authState); // Assumed you use this to verify authentication
+    const accessToken = useRecoilValue(accessTokenState) || '';
+    const isAuth = useRecoilValue(authState);
     const [selectedSummaryRoomId, setSelectedSummaryRoomId] = useRecoilState(selectedSummaryRoomIdState);
-
-    const setSummaryContents = useSetRecoilState(selectedSummaryContentState); // 채팅 내역 업데이트를 위한 setter
-    const [summaryRooms, setSummaryRooms] = useRecoilState<SummaryRoom[]>(summaryRoomsState); // Use Recoil for chat rooms
-    const [loading, setLoading] = useState(true); // Local state for loading
-    const [error, setError] = useState<string | null>(null); // Local state for errors    
+    const setSummaryContents = useSetRecoilState(selectedSummaryContentState);
+    const [summaryRooms, setSummaryRooms] = useRecoilState<SummaryRoom[]>(summaryRoomsState);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log('SummaryNav의 useEffect 실행');
         const fetchSummaryRooms = async () => {
             setLoading(true);
-            setError(null); // Reset error before fetching
+            setError(null);
 
             try {
                 const summaryRoomsResponse = await GetSummaryNoteList(accessToken);
@@ -29,9 +25,9 @@ export default function SummaryNav() {
                 console.error('Error fetching summary rooms:', err);
                 setError('Failed to load chat rooms.');
             } finally {
-                setLoading(false); // Stop loading once request finishes
+                setLoading(false);
             }
-        }
+        };
 
         if (isAuth && accessToken) {
             fetchSummaryRooms();
@@ -40,13 +36,11 @@ export default function SummaryNav() {
 
     useEffect(() => {
         const fetchSummaryContent = async () => {
-            console.log('fetchSummaryContent 실행');
             if (selectedSummaryRoomId !== null) {
                 try {
                     const response = await GetSummaryNoteContent(accessToken, selectedSummaryRoomId.toString());
                     if (response.ok) {
                         const contentData = await response.json();
-                        console.log('Summary content fetched:', contentData);
                         setSummaryContents(contentData);
                     } else {
                         console.error("Failed to fetch summary content:", response.statusText);
@@ -55,16 +49,15 @@ export default function SummaryNav() {
                     console.error("Error fetching summary content:", error);
                 }
             } else {
-                setSummaryContents([]);
+                setSummaryContents(null);
             }
         };
 
         if (isAuth && accessToken) {
             fetchSummaryContent();
         }
-    }, [selectedSummaryRoomIdState, setSummaryContents]);
+    }, [selectedSummaryRoomId, setSummaryContents]);
 
-    // ChatNav에서 채팅방 선택
     const onSelectSummaryRoom = (noteId: number) => {
         setSelectedSummaryRoomId(noteId);
     };
@@ -82,16 +75,16 @@ export default function SummaryNav() {
                     {summaryRooms.map((sumRoom) => (
                         <div
                             key={sumRoom.noteId}
-                            className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
+                            className="flex flex-col p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
                             onClick={() => onSelectSummaryRoom(sumRoom.noteId)}
                         >
-                            <div className="flex items-center space-x-3">
+                            <div className="flex flex-col space-y-1">
                                 <div className="text-md font-medium text-gray-800">
                                     {sumRoom.title}
                                 </div>
-                            </div>
-                            <div className="text-xs text-gray-400">
-                                {new Date(sumRoom.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                <div className="text-xs text-gray-400 text-left">
+                                    {new Date(sumRoom.createdAt).toLocaleString()}
+                                </div>
                             </div>
                         </div>
                     ))}
