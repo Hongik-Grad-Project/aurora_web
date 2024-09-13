@@ -141,7 +141,10 @@ export default function ChatNav() {
           {chatRooms.map((room) => (
             <div
               key={room.chatRoomId}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out"
+              className={`flex items-center justify-between p-4 
+                rounded-lg shadow-sm cursor-pointer transition duration-200 
+                ease-in-out ${selectedChatRoomId === room.chatRoomId ? "bg-[#EFEDFF] hover:bg-[#CEC6FF]" : "bg-gray-50 hover:bg-gray-100"
+                }`}
               onClick={() => onSelectChatRoom(room.chatRoomId)}
             >
               <div className="flex flex-col space-y-1">
