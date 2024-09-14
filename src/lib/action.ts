@@ -237,7 +237,7 @@ export async function PostProjectBodyData(accessToken: string, projectId: number
 }
 
 
-// 4.1. 프로젝트 갤러리 상세 조회 (GET /gallery/{projectId})
+// 5.1. 프로젝트 갤러리 상세 조회 (GET /gallery/{projectId})
 export async function GetProjectGalleryDetail(accessToken: string, projectId: number) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery/${projectId}`, {
     method: 'GET',
@@ -246,8 +246,7 @@ export async function GetProjectGalleryDetail(accessToken: string, projectId: nu
     },
     credentials: 'include',
   })
-  const data = await response.json()
-  return data
+  return response
 }
 
 // 6.1. 마이페이지 조회 API (GET /mypage)

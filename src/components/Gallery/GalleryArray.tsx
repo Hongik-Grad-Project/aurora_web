@@ -3,6 +3,7 @@
 import GalleryWindow from "./GalleryWindow"
 import { useRecoilValue } from "recoil"
 import { filteredProjectGalleryState } from '@/context/recoil-context'
+import Link from 'next/link'
 
 export default function GalleryArray() {
     const galleryData = useRecoilValue(filteredProjectGalleryState)
@@ -10,8 +11,11 @@ export default function GalleryArray() {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center"> {/* 여백 및 가운데 정렬 추가 */}
+
             {galleryData?.map((project) => (
-                <GalleryWindow key={project.projectId} project={project} />
+                <Link key={project.projectId} href={`/project/${project.projectId}`}>
+                    <GalleryWindow key={project.projectId} project={project} />
+                </Link>
             ))}
         </div>
     )
