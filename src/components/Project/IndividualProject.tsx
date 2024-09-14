@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '@/context/recoil-context'
 import Image from 'next/image'
 import UnderpinList from '@/components/MyPage/UnderpinList'
+import { da } from 'date-fns/locale'
 
 export default function IndividualProject() {
     const accessToken = useRecoilValue(accessTokenState)
@@ -55,11 +56,11 @@ export default function IndividualProject() {
                             <div className="flex justify-between items-center self-stretch">
                                 <div className="flex h-[1.8125rem] px-[0.75rem] py-[0.1875rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-[rgba(225,220,255,0.40)]">
                                     <span className="text-[#776BFF] font-medium text-[0.875rem] leading-[1.3125rem]">
-                                        어려운 이웃
+                                        {data?.projectTarget}
                                     </span>
                                 </div>
                                 <span className="text-[#6A6F7A] font-medium text-[0.875rem] leading-[1.3125rem]">
-                                    작성일자  |  2024.02.11
+                                    작성일자  |  {data?.startDate}
                                 </span>
                             </div>
                             <span className="text-[#0F1011] font-semibold text-2xl leading-loose self-stretch">
@@ -83,30 +84,24 @@ export default function IndividualProject() {
 
                     {/* 태그 */}
                     <div className="flex items-start gap-[0.4375rem]">
-                        <div className="flex self-stretch h-[2.4375rem] px-5 justify-center items-center gap-2 rounded-full border border-[#AEA0FF] bg-[#FEFEFE]">
-                            <span className="text-[#776BFF] font-pretendard font-medium text-sm leading-[1.3125rem]">
-                                #고령화
-                            </span>
-                        </div>
-                        <div className="flex self-stretch h-[2.4375rem] px-5 justify-center items-center gap-2 rounded-full border border-[#AEA0FF] bg-[#FEFEFE]">
-                            <span className="text-[#776BFF] font-pretendard font-medium text-sm leading-[1.3125rem]">
-                                #일자리 부족
-                            </span>
-                        </div>
-                        <div className="flex self-stretch h-[2.4375rem] px-5 justify-center items-center gap-2 rounded-full border border-[#AEA0FF] bg-[#FEFEFE]">
-                            <span className="text-[#776BFF] font-pretendard font-medium text-sm leading-[1.3125rem]">
-                                #세대 갈등
-                            </span>
-                        </div>
+                        {data?.tagList.map((tag, index) => (
+                            <div key={index} className="flex self-stretch h-[2.4375rem] px-5 justify-center items-center gap-2 rounded-full border border-[#AEA0FF] bg-[#FEFEFE]">
+                                <span className="text-[#776BFF] font-pretendard font-medium text-sm leading-[1.3125rem]">
+                                    #{tag}
+                                </span>
+                            </div>
+                        ))}
                     </div>
+
+                    {data?.subtitleList.map((subtitle, index) => (
+                        <div key={index} className="self-stretch">
+                            <h3 className="text-xl font-semibold mb-2">{subtitle}</h3>
+                            <p className="text-base text-[#4E525C] mb-4">{data.contentList[index]}</p>
+                        </div>
+                    ))}
                 </div>
 
-                <span className="self-stretch text-[#0F1011] font-pretendard font-medium text-base leading-[1.55] tracking-tight">
-                       
-                </span>
-
                 {/* 응원하기 컴포넌트 */}
-
                 <div className="flex flex-col items-start gap-[1.25rem]">
                     <div className="flex flex-col w-[45.25rem] p-4 items-start gap-[0.875rem] rounded-xl border border-[#E2E6EF] bg-[#FEFEFE]">
                         <div className="flex items-center gap-[0.875rem]">
