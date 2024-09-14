@@ -6,8 +6,6 @@ import { ProjectGalleryDetailResponse } from '@/lib/types'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '@/context/recoil-context'
 import Image from 'next/image'
-import UnderpinList from '@/components/MyPage/UnderpinList'
-import { da } from 'date-fns/locale'
 
 export default function IndividualProject() {
     const accessToken = useRecoilValue(accessTokenState)
@@ -102,6 +100,17 @@ export default function IndividualProject() {
                 </div>
 
                 {/* 응원하기 컴포넌트 */}
+                {/* Cheer button */}
+                <button
+                    className="mb-4 p-3 bg-[#776BFF] text-white rounded-full hover:bg-[#6A6F7A]"
+                >
+                    응원하기
+                </button>
+
+
+                {/* Existing elements continue here */}
+
+                {/* 제안자 */}
                 <div className="flex flex-col items-start gap-[1.25rem]">
                     <div className="flex flex-col w-[45.25rem] p-4 items-start gap-[0.875rem] rounded-xl border border-[#E2E6EF] bg-[#FEFEFE]">
                         <div className="flex items-center gap-[0.875rem]">
