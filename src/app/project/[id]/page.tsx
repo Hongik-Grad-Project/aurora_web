@@ -7,4 +7,4 @@ export default function PrivateProject() {
             <IndividualProject />
         </div>
     )
-}
+}   
