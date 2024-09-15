@@ -75,9 +75,17 @@ export default function IndividualProject() {
                         </div>
                     </div>
 
-                    {/* 메인 이미지 */}
-                    <div className="h-[21.6875rem] self-stretch rounded-sm bg-[#EBEFFF]">
-                        {data?.mainImagePath}
+                    {/* // 메인 이미지 */}
+                    <div className="relative w-full h-[21.6875rem] rounded-sm overflow-hidden">
+                        {data?.mainImagePath && (
+                            <Image
+                                src={data.mainImagePath}
+                                alt={data.projectTitle}
+                                layout="fill"
+                                objectFit="cover"
+                                className="rounded-sm"
+                            />
+                        )}
                     </div>
 
                     {/* 태그 */}
