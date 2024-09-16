@@ -249,7 +249,20 @@ export async function GetProjectGalleryDetail(accessToken: string, projectId: nu
   return response
 }
 
-// 6.1. 마이페이지 조회 API (GET /mypage)
+// 6.1. 프로젝트 좋아요 상태 변경 (POST /project/{projectId}/like)
+export async function ToggleProjectLike(accessToken: string, projectId: number) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/like`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return response
+}
+
+// 7.1. 마이페이지 조회 API (GET /mypage)
 export async function GetMyPage(accessToken: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/mypage`, {
     method: 'GET',
@@ -263,7 +276,8 @@ export async function GetMyPage(accessToken: string) {
   return data
 }
 
-// 6.2. 마이페이지 수정 API (POST /mypage/update)
+
+// 7.2. 마이페이지 수정 API (POST /mypage/update)
 export async function UpdateMyPage(accessToken: string, payload: any, profileImage: File | null) {
   const formData = new FormData()
   formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }))

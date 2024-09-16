@@ -1,14 +1,14 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { GetProjectGalleryDetail } from '@/lib/action'
+import { GetProjectGalleryDetail, ToggleProjectLike } from '@/lib/action'
 import { ProjectGalleryDetailResponse } from '@/lib/types'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '@/context/recoil-context'
 import Image from 'next/image'
 
 export default function IndividualProject() {
-    const accessToken = useRecoilValue(accessTokenState)
+    const accessToken = useRecoilValue(accessTokenState) || '';
     const router = useRouter()
     const [data, setData] = useState<ProjectGalleryDetailResponse | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
@@ -38,6 +38,13 @@ export default function IndividualProject() {
             fetchData()
         }
     }, [accessToken, projectId])
+
+    const toggleLike = async () => {
+        const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10));
+        if (response.ok) {
+            setData(prev => prev ? { ...prev, like: !prev.like } : null);
+        }
+    }
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -108,11 +115,11 @@ export default function IndividualProject() {
                 </div>
 
                 {/* 응원하기 컴포넌트 */}
-                {/* Cheer button */}
                 <button
-                    className="mb-4 p-3 bg-[#776BFF] text-white rounded-full hover:bg-[#6A6F7A]"
+                    className={`mb-4 p-3 rounded-full hover:bg-[#6A6F7A] ${data?.like ? 'bg-[#776BFF] text-white' : 'bg-gray-300 text-gray-600'}`}
+                    onClick={toggleLike}
                 >
-                    응원하기
+                    {data?.like ? '응원하기 취소' : '응원하기'}
                 </button>
 
 
