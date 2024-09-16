@@ -1,10 +1,12 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { GetProjectGalleryDetail, ToggleProjectLike } from '@/lib/action'
 import { ProjectGalleryDetailResponse } from '@/lib/types'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '@/context/recoil-context'
+import CheerButton from './CheerButton'
 import Image from 'next/image'
 
 export default function IndividualProject() {
@@ -114,13 +116,11 @@ export default function IndividualProject() {
                     ))}
                 </div>
 
-                {/* 응원하기 컴포넌트 */}
-                <button
-                    className={`mb-4 p-3 rounded-full hover:bg-[#6A6F7A] ${data?.like ? 'bg-[#776BFF] text-white' : 'bg-gray-300 text-gray-600'}`}
-                    onClick={toggleLike}
-                >
-                    {data?.like ? '응원하기 취소' : '응원하기'}
-                </button>
+                <CheerButton
+                    isLiked={data?.like || false}
+                    likeCount={data?.likeCount || 0}
+                    onToggleLike={toggleLike}
+                />
 
 
                 {/* Existing elements continue here */}
