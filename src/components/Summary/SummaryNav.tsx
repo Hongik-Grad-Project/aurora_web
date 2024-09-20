@@ -38,13 +38,8 @@ export default function SummaryNav() {
         const fetchSummaryContent = async () => {
             if (selectedSummaryRoomId !== null) {
                 try {
-                    const response = await GetSummaryNoteContent(accessToken, selectedSummaryRoomId.toString());
-                    if (response.ok) {
-                        const contentData = await response.json();
-                        setSummaryContents(contentData);
-                    } else {
-                        console.error("Failed to fetch summary content:", response.statusText);
-                    }
+                    const contentData = await GetSummaryNoteContent(accessToken, selectedSummaryRoomId.toString());
+                    setSummaryContents(contentData);
                 } catch (error) {
                     console.error("Error fetching summary content:", error);
                 }

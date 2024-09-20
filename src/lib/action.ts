@@ -143,7 +143,7 @@ export async function GetChatHistory(accessToken: string, chatRoomId: string) {
     credentials: 'include',
   })
 
-  return response;
+  return await response.json();
 }
 
 // 3.1. 요약 노트 목록 조회 (GET /note)
@@ -184,8 +184,6 @@ export async function DeleteSummaryNote(accessToken: string, noteId: string) {
     },
     credentials: 'include',
   })
-
-  return await response.json();
 }
 
 // 3.4. 기획서 자동 완성하기 (GET /note/{noteId}/completion)

@@ -22,7 +22,6 @@ export default function ChatNav() {
     const fetchChatRooms = async () => {
       setLoading(true);
       setError(null); // Reset error before fetching
-
       try {
         const chatRoomsResponse = await GetChatList(accessToken);
         setChatRooms(chatRoomsResponse);
@@ -44,13 +43,12 @@ export default function ChatNav() {
       console.log('fetchChatHistory 실행');
       if (selectedChatRoomId !== null) {
         try {
-          const response = await GetChatHistory(accessToken, selectedChatRoomId.toString());
-          if (response.ok) {
-            const historyData = await response.json();
+          const historyData = await GetChatHistory(accessToken, selectedChatRoomId.toString());
+          if (historyData) {
             console.log('Chat history fetched:', historyData);
-            setChatHistory(historyData);
+            setChatHistory(historyData); // JSON 데이터를 채팅 내역 상태로 설정
           } else {
-            console.error("Failed to fetch chat history:", response.statusText);
+            console.error("Failed to fetch chat history: No data received");
           }
         } catch (error) {
           console.error("Error fetching chat history:", error);

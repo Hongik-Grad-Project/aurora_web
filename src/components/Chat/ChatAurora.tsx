@@ -17,7 +17,6 @@ export default function ChatAurora() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
-    
     useEffect(() => {
         console.log('useEffect가 사용된다');
         if (messagesEndRef.current) {

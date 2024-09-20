@@ -21,7 +21,6 @@ export default function ChatInput() {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
 
-
     const userMessage: AuroraMessage = {
         contents: inputValue,
         senderType: 'MEMBER',
@@ -69,23 +68,16 @@ export default function ChatInput() {
         setChatHistory(prev => [...prev, userMessage]);
 
         if (currentChatRoomId) {
-            const response = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
-            if (response.ok) {
-                const data = await response.json();
-                const aiMessage: AuroraMessage = {
-                    contents: data.responseMessage,
-                    senderType: 'AURORA_AI',
-                    createdAt: new Date().toISOString(),
-                };
-                // AI 응답을 채팅 내역에 추가
-                setChatHistory(prev => [...prev, aiMessage]);
-            } else {
-                console.error('Failed to send message:', response.statusText);
+            const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
+            const aiMessage: AuroraMessage = {
+                contents: messageData.responseMessage,
+                senderType: 'AURORA_AI',
+                createdAt: new Date().toISOString(),
             }
+            setChatHistory(prev => [...prev, aiMessage]);
         }
 
         updateChatRooms();
-        setInputValue('');
         isSendingRef.current = false;
     };
 
@@ -98,6 +90,7 @@ export default function ChatInput() {
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
+            setInputValue('');  // Enter를 누른 후 텍스트를 즉시 삭제
             await createChatRoomAndSendMessage();
         }
     };

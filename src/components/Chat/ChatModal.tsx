@@ -72,7 +72,6 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
                     <button
                         onClick={() => {
                             handleYes();
-                            onClose();
                         }}
                         className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors"
                     >
