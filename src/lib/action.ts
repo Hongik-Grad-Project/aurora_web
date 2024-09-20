@@ -143,7 +143,7 @@ export async function GetChatHistory(accessToken: string, chatRoomId: string) {
     credentials: 'include',
   })
 
-  return await response.json();
+  return response;
 }
 
 // 3.1. 요약 노트 목록 조회 (GET /note)
