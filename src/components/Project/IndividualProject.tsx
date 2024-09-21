@@ -25,12 +25,7 @@ export default function IndividualProject() {
             const fetchData = async () => {
                 try {
                     const result = await GetProjectGalleryDetail(accessToken, parseInt(projectId, 10))
-                    if (result.ok) {
-                        const resultData = await result.json()
-                        setData(resultData)
-                    } else {
-                        const resultData = await result.json()
-                    }
+                    setData(result)
                 } catch (error) {
                     setError(error as Error)
                 } finally {
