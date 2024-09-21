@@ -10,6 +10,7 @@ interface ProfileEditProps {
         nickname: string;
         email: string;
         introduction: string;
+        profileImage: string | null;
     } | null;
     accessToken: string;
 }
@@ -19,7 +20,7 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
     const [nickname, setNickname] = useState(profileData?.nickname || '');
     const [introduction, setIntroduction] = useState(profileData?.introduction || '');
     const [profileImage, setProfileImage] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview, setImagePreview] = useState(profileData?.profileImage || '');
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     // Early return must come after all hooks
@@ -39,10 +40,8 @@ export default function ProfileEdit({ isOpen, onClose, profileData, accessToken 
             introduction
         };
         const response = await UpdateMyPage(accessToken, payload, profileImage);
-        if (response.ok) {
-            onClose();
-            window.location.reload(); // Optionally reload the page to reflect changes
-        }
+        onClose();
+        window.location.reload(); // Optionally reload the page to reflect changes
     };
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
