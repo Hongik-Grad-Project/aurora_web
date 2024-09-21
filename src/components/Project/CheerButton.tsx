@@ -22,21 +22,27 @@ export default function CheerButton({ isLiked, likeCount, onToggleLike }: CheerB
             </span>
         </div>
     ) : (
-        <div className="flex flex-col items-start gap-3 w-[113px] shrink-0">
+        <div className="flex flex-col items-center gap-3 w-[113px] shrink-0">
             <button
                 className="flex items-center justify-center w-[113px] h-[51px] rounded-full border bg-[#f4f6fa] text-black border-[#E2E6EF]"
                 onClick={onToggleLike}
             >
-                <Image 
+                <Image
                     src="/assets/icons/cheer_button.svg"
-                    width={20}
-                    height={20}
+                    width={24}
+                    height={30}
                     alt="Cheer icon"
                     className="mr-2" // Right margin to space icon and text
                 />
-                {likeCount}
+                <span
+                    className="text-[#0F1011] font-pretendard font-bold text-[19px] leading-[28.5px]"
+                >
+                    {likeCount}
+                </span>
             </button>
-            응원하기
+            <span className="w-full text-center text-[#0F1011] font-pretendard font-semibold text-[16px] leading-[24px]">
+                응원하기
+            </span>
         </div>
     );
 }

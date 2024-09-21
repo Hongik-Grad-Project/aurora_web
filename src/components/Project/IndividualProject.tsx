@@ -37,10 +37,8 @@ export default function IndividualProject() {
     }, [accessToken, projectId])
 
     const toggleLike = async () => {
-        const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10));
-        if (response.ok) {
-            setData(prev => prev ? { ...prev, like: !prev.like } : null);
-        }
+        const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10), !data?.like || false);
+        setData(prev => prev ? { ...prev, like: !prev.like } : null);
     }
 
     if (error) {
@@ -116,9 +114,6 @@ export default function IndividualProject() {
                     likeCount={data?.likeCount || 0}
                     onToggleLike={toggleLike}
                 />
-
-
-                {/* Existing elements continue here */}
 
                 {/* 제안자 */}
                 <div className="flex flex-col items-start gap-[1.25rem]">

@@ -12,13 +12,15 @@ export default function ChatInput() {
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
     const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState);
     const setChatHistory = useSetRecoilState(selectedChatHistoryState);
+    const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // 현재 채팅방 리스트 상태
     const [inputValue, setInputValue] = useState<string>('');
-    const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState);
     const [isChatModalOpen, setIsChatModalOpen] = useState(false);
     const [buttonHeight, setButtonHeight] = useState('3.2rem');
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
+
+    const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
     const userMessage: AuroraMessage = {
         contents: inputValue,
@@ -53,18 +55,16 @@ export default function ChatInput() {
 
         if (!currentChatRoomId) {
             const location = await GetChatLocation(accessToken);
-
+            
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
-                console.log('currentChatRoomId:', currentChatRoomId);
                 setSelectedChatRoomId(currentChatRoomId);
                 const chatRoomsResponse = await GetChatList(accessToken);
-                console.log('chatRoomsResponse:', chatRoomsResponse);
                 setChatRooms(chatRoomsResponse);
             }
         }
 
-        setChatHistory(prev => [...prev, userMessage]);
+        setChatHistory((prev) => [...prev, userMessage]);
 
         if (currentChatRoomId) {
             const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
@@ -73,7 +73,7 @@ export default function ChatInput() {
                 senderType: 'AURORA_AI',
                 createdAt: new Date().toISOString(),
             };
-            setChatHistory(prev => [...prev, aiMessage]);
+            setChatHistory((prev) => [...prev, aiMessage]);
         }
 
         updateChatRooms();
@@ -85,7 +85,6 @@ export default function ChatInput() {
         setChatRooms(newRooms);
     };
 
-    // Enter 키 입력 시 메시지 전송
     const handleKeyDown = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -96,39 +95,40 @@ export default function ChatInput() {
 
     return (
         <div className="bg-white p-4 border-t border-gray-200">
-            <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
-                <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
-                    <textarea
-                        ref={textareaRef}
-                        className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] resize-none outline-none overflow-hidden"
-                        placeholder="메시지를 입력하세요..."
-                        value={inputValue}
-                        onInput={handleInput}
-                        onKeyDown={handleKeyDown}
-                        rows={1}
-                        style={{ minHeight: '1.5rem', maxHeight: '6rem', padding: '0.5rem 0' }}
-                    />
-                    {/* SVG 전송 버튼 */}
-                    <button
-                        onClick={createChatRoomAndSendMessage}
-                        className="absolute right-[10px] bottom-[7px] w-[35px] h-[35px] cursor-pointer"
-                    >
-                        <Image
-                            src="/assets/icons/chat_send_button.svg"
-                            alt="Send"
-                            width={35}
-                            height={35}
+            {currentChatRoom?.isSummarized ? (
+                <div className="flex justify-center h-[51px] items-center text-center text-gray-500">
+                    요약이 완료된 채팅입니다.
+                </div>
+            ) : (
+                // 요약이 완료되지 않은 경우 ChatInput 표시
+                <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
+                    <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
+                        <textarea
+                            ref={textareaRef}
+                            className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] resize-none outline-none overflow-hidden"
+                            placeholder="메시지를 입력하세요..."
+                            value={inputValue}
+                            onInput={handleInput}
+                            onKeyDown={handleKeyDown}
+                            rows={1}
+                            style={{ minHeight: '1.5rem', maxHeight: '6rem', padding: '0.5rem 0' }}
                         />
+                        <button
+                            onClick={createChatRoomAndSendMessage}
+                            className="absolute right-[10px] bottom-[7px] w-[35px] h-[35px] cursor-pointer"
+                        >
+                            <Image src="/assets/icons/chat_send_button.svg" alt="Send" width={35} height={35} />
+                        </button>
+                    </div>
+                    <button
+                        onClick={() => setIsChatModalOpen(true)}
+                        className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
+                        style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
+                    >
+                        대화 끝내기
                     </button>
                 </div>
-                <button
-                    onClick={() => setIsChatModalOpen(true)}
-                    className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
-                    style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
-                >
-                    대화 끝내기
-                </button>
-            </div>
+            )}
             <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
         </div>
     );

@@ -10,18 +10,18 @@ import { GetChatList, GetChatHistory } from '@/lib/action';
 
 export default function ChatNav() {
   const accessToken = useRecoilValue(accessTokenState) || '';
-  const isAuth = useRecoilValue(authState); // Assumed you use this to verify authentication
-  const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState); // Use Recoil for selected chat room
-
-  const setChatHistory = useSetRecoilState(selectedChatHistoryState); // 채팅 내역 업데이트를 위한 setter
-  const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState); // Use Recoil for chat rooms
-  const [loading, setLoading] = useState(true); // Local state for loading
-  const [error, setError] = useState<string | null>(null); // Local state for errors
+  const isAuth = useRecoilValue(authState);
+  const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState);
+  const setChatHistory = useSetRecoilState(selectedChatHistoryState);
+  const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchChatRooms = async () => {
       setLoading(true);
-      setError(null); // Reset error before fetching
+      setError(null);
+
       try {
         const chatRoomsResponse = await GetChatList(accessToken);
         setChatRooms(chatRoomsResponse);
@@ -29,7 +29,7 @@ export default function ChatNav() {
         console.error('Error fetching chat rooms:', err);
         setError('Failed to load chat rooms.');
       } finally {
-        setLoading(false); // Stop loading once request finishes
+        setLoading(false);
       }
     };
 
@@ -40,13 +40,11 @@ export default function ChatNav() {
 
   useEffect(() => {
     const fetchChatHistory = async () => {
-      console.log('fetchChatHistory 실행');
       if (selectedChatRoomId !== null) {
         try {
           const historyData = await GetChatHistory(accessToken, selectedChatRoomId.toString());
           if (historyData) {
-            console.log('Chat history fetched:', historyData);
-            setChatHistory(historyData); // JSON 데이터를 채팅 내역 상태로 설정
+            setChatHistory(historyData);
           } else {
             console.error("Failed to fetch chat history: No data received");
           }
@@ -63,16 +61,12 @@ export default function ChatNav() {
     }
   }, [selectedChatRoomId, setChatHistory]);
 
-  // ChatNav에서 채팅방 선택
   const onSelectChatRoom = (chatRoomId: number) => {
-    console.log('Chat room selected:', chatRoomId);
     setSelectedChatRoomId(chatRoomId);
   };
 
-  // 선택한 채팅방이 없는 상태로 돌림
   const onCreateNewChatRoom = () => {
     setSelectedChatRoomId(null);
-    console.log('Preparing for a new chat room');
   };
 
   if (loading) {
@@ -80,11 +74,7 @@ export default function ChatNav() {
       <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
-          <button
-            onClick={onCreateNewChatRoom}
-            title="새 채팅방 추가"
-            className="p-2 rounded bg-transparent" // 배경을 투명하게 설정
-          >
+          <button onClick={onCreateNewChatRoom} title="새 채팅방 추가" className="p-2 rounded bg-transparent">
             <FontAwesomeIcon icon={faPlus} className="text-black" />
           </button>
         </div>
@@ -102,11 +92,7 @@ export default function ChatNav() {
       <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
-          <button
-            onClick={onCreateNewChatRoom}
-            title="새 채팅방 추가"
-            className="bg-blue-500 text-white p-2 rounded"
-          >
+          <button onClick={onCreateNewChatRoom} title="새 채팅방 추가" className="bg-blue-500 text-white p-2 rounded">
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
@@ -123,11 +109,7 @@ export default function ChatNav() {
     <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
-        <button
-          onClick={onCreateNewChatRoom}
-          title="새 채팅방 추가"
-          className="p-2 rounded bg-transparent"
-        >
+        <button onClick={onCreateNewChatRoom} title="새 채팅방 추가" className="p-2 rounded bg-transparent">
           <FontAwesomeIcon icon={faPlus} className="text-black" />
         </button>
       </div>
@@ -139,19 +121,13 @@ export default function ChatNav() {
           {chatRooms.map((room) => (
             <div
               key={room.chatRoomId}
-              className={`flex items-center justify-between p-4 
-                rounded-lg shadow-sm cursor-pointer transition duration-200 
-                ease-in-out ${selectedChatRoomId === room.chatRoomId ? "bg-[#EFEDFF] hover:bg-[#CEC6FF]" : "bg-gray-50 hover:bg-gray-100"
+              className={`flex items-center justify-between p-4 rounded-lg shadow-sm cursor-pointer transition duration-200 ease-in-out ${selectedChatRoomId === room.chatRoomId ? "bg-[#EFEDFF] hover:bg-[#CEC6FF]" : "bg-gray-50 hover:bg-gray-100"
                 }`}
               onClick={() => onSelectChatRoom(room.chatRoomId)}
             >
               <div className="flex flex-col space-y-1">
-                <div className="text-md font-medium text-gray-800">
-                  {room.chatRoomName}
-                </div>
-                <div className="text-xs text-gray-400 text-left">
-                  {new Date(room.updatedAt).toLocaleString()}
-                </div>
+                <div className="text-md font-medium text-gray-800">{room.chatRoomName || "채팅방 이름 없음"}</div>
+                <div className="text-xs text-gray-400 text-left">{new Date(room.updatedAt).toLocaleString()}</div>
               </div>
             </div>
           ))}
