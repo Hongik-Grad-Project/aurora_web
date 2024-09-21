@@ -25,11 +25,6 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
     const handleYes = async () => {
         if (selectedChatRoomId) {
             const response = await CreateSummaryNote(accessToken, selectedChatRoomId.toString());
-            if (response.ok) {
-                console.log('요약 생성 성공');
-            } else {
-                console.error('요약 생성 실패');
-            }
         }
         onClose();
     }
