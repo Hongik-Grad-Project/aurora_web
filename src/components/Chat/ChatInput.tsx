@@ -55,7 +55,7 @@ export default function ChatInput() {
 
         if (!currentChatRoomId) {
             const location = await GetChatLocation(accessToken);
-            
+
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
                 setSelectedChatRoomId(currentChatRoomId);
@@ -96,8 +96,28 @@ export default function ChatInput() {
     return (
         <div className="bg-white p-4 border-t border-gray-200">
             {currentChatRoom?.isSummarized ? (
-                <div className="flex justify-center h-[51px] items-center text-center text-gray-500">
-                    요약이 완료된 채팅입니다.
+                <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
+                    <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
+                        <div
+                            className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] overflow-hidden"
+                            style={{ minHeight: '1.5rem', maxHeight: '6rem', padding: '0.5rem 0' }}
+                        >
+                            요약이 완료된 채팅입니다
+                        </div>
+                        <button
+                            onClick={createChatRoomAndSendMessage}
+                            className="absolute right-[10px] bottom-[7px] w-[35px] h-[35px] cursor-pointer"
+                        >
+                            <Image src="/assets/icons/chat_not_send_button.svg" alt="Send" width={35} height={35} />
+                        </button>
+                    </div>
+                    <button
+                        onClick={() => setIsChatModalOpen(true)}
+                        className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
+                        style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
+                    >
+                        요약으로 이동
+                    </button>
                 </div>
             ) : (
                 // 요약이 완료되지 않은 경우 ChatInput 표시
