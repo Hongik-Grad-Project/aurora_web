@@ -43,6 +43,7 @@ export default function ProjectSummarizedOutlinePage() {
 
             try {
                 if (selectedSummaryRoomId) {
+                    console.log('selectedSummaryRoomId:', selectedSummaryRoomId);
                     const completionData = await CompleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
                     if (completionData) {
                         setTarget(completionData.target);
@@ -58,8 +59,7 @@ export default function ProjectSummarizedOutlinePage() {
                         setValue("projectTitle", completionData.projectTitle || "");
                     }
                 }
-
-
+                console.log("Note completion data fetched successfully");
 
             } catch (error) {
                 console.error("Error fetching note completion data:", error);

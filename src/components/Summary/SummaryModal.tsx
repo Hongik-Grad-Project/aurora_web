@@ -50,7 +50,7 @@ export default function SummaryModal({ isOpen, onClose }: SummaryModalProps) {
                     </div>
 
                     <div className="flex-1">
-                        <Link href={`/project/outline`}>
+                        <Link href={`/project/outline/summarized`}>
                             <button
                                 onClick={onClose}
                                 className="w-full h-12 justify-center items-center rounded-lg bg-[#776BFF] text-white font-semibold hover:bg-[#AEA0FF] transition-colors"
