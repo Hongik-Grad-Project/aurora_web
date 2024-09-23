@@ -176,6 +176,17 @@ export default function IndividualProject() {
                         </div>
                     </div>
                 </div>
+
+                {/* 목록으로 가기 버튼 */}
+                <div className="flex flex-col items-center gap-[2.125rem] self-stretch mb-[3.5rem]">
+                    <button
+                        onClick={() => router.push('/project/gallery')}
+                        className="flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#F4F6FA]">
+                        <span className="text-center text-[#4E525C] font-pretendard text-[1.125rem] font-medium leading-[1.6875rem]">
+                            목록으로 돌아가기
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     )

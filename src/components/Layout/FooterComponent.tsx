@@ -26,8 +26,9 @@ export default function FooterComponent() {
         </Link>
         <div className="flex flex-col pt-[0.57rem]">
           <div className="flex gap-4">
-            <span className="text-grey100">
-              봉우리 ㅣ 대표 : 신유나 ㅣ 개인정보관리책임자 : 윤제민 ㅣ 주소 : 경기 수원시 ㅣ메일 :
+            <span className="text-grey100 leading-[1.5rem]">
+              Trackers ㅣ 대표 : 신유나 ㅣ 개인정보관리책임자 : 윤제민
+              <br/>주소 : 경기 용인시 수지구 광교중앙로 296번길 10 ㅣ 메일 : youna010808@gmail.com
             </span>
           </div>
           <div className="flex gap-x-6 pt-[0.44rem]">
