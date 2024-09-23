@@ -108,7 +108,19 @@ export default function IndividualProject() {
                         </div>
                     ))}
                 </div>
-
+                <div className="flex overflow-x-auto gap-2 pb-2">
+                    {data?.projectImageList.map((image, index) => (
+                        <div key={index} className="relative w-60 h-60">
+                            <Image
+                                src={image}
+                                alt={`Project Image ${index + 1}`}
+                                layout="fill"
+                                objectFit="cover"
+                                className="rounded-md"
+                            />
+                        </div>
+                    ))}
+                </div>
                 <CheerButton
                     isLiked={data?.like || false}
                     likeCount={data?.likeCount || 0}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -13,11 +13,14 @@ import { motion } from 'framer-motion'
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const router = useRouter()
   const [token, setToken] = useRecoilState(accessTokenState)
   const resetAccessTokenState = useResetRecoilState(accessTokenState)
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const pathname = usePathname()
+
+  const dropdownRef = useRef<HTMLDivElement>(null) // 드롭다운을 참조하는 ref
 
   const hiddenPaths = [
     'project/idea',
@@ -53,15 +56,36 @@ export default function Header() {
     if (!token) return
     try {
       const response = await Logout(token)
-      if (response.ok) {
-        setIsAuth(false)
-        resetAccessTokenState()
-        window.location.href = '/'
-      }
+      setIsAuth(false)
+      resetAccessTokenState()
+      window.location.href = '/'
+
     } catch (error) {
       console.error('Failed to logout', error)
     }
   }
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false)
+  }
+
+  // 드롭다운 바깥을 클릭했을 때 닫히도록 설정
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        closeDropdown()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dropdownRef])
 
   if (hiddenPaths.includes(pathname)) {
     return null
@@ -80,16 +104,48 @@ export default function Header() {
               </Link>
             </div>
             <div className="hidden lg:flex gap-[1.88rem] items-center justify-between flex-1">
-              <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main">
-                오로라 채팅하기
-              </Link>
-              <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main">
-                아이디어 노트
-              </Link>
-              <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main">
+              {/* 프로젝트 기획 탭 */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={toggleDropdown}
+                  className="font-medium leading-5 text-grey90 hover:text-main flex items-center gap-1"
+                >
+                  프로젝트 기획
+                </button>
+
+                {/* 드롭다운 메뉴 */}
+                {isDropdownOpen && (
+                  <motion.div
+                    className="absolute mt-1 bg-white shadow-lg rounded-lg w-[150px] py-4 dropdown-content"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    <div className="flex flex-col space-y-2 items-center">
+                      {/* 각 Link를 div로 감싸고 hover 효과 추가 */}
+                      <div className="hover:bg-[#E1DCFF] rounded-md">
+                        <Link href="/chat" className="block font-medium leading-5 text-grey90 hover:text-main px-4 py-2">
+                          오로라 채팅하기
+                        </Link>
+                      </div>
+                      <div className="hover:bg-[#E1DCFF] rounded-md">
+                        <Link href="/project/idea" className="block font-medium leading-5 text-grey90 hover:text-main px-4 py-2">
+                          아이디어 노트
+                        </Link>
+                      </div>
+                      <div className="hover:bg-[#E1DCFF] rounded-md">
+                        <Link href="/project/outline" className="block font-medium leading-5 text-grey90 hover:text-main px-4 py-2">
+                          기획서 생성
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+              <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 프로젝트 갤러리
               </Link>
-              <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main">
+              <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 마이페이지
               </Link>
             </div>

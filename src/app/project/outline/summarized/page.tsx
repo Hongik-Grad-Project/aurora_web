@@ -115,11 +115,13 @@ export default function ProjectSummarizedOutlinePage() {
         };
 
         try {
-            const response = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
-            router.push('/project/body')
+            await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
         } catch (error) {
             console.error('Error in POST request:', error)
+        } finally {
+            router.push('/project/body')
         }
+
     }
 
     if(loading) {
