@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { useRouter } from 'next/navigation'; // useRouter 가져오기
+import { useRouter, usePathname } from 'next/navigation'; // useRouter, usePathname 가져오기
 import { accessTokenState, authState, summaryRoomsState, selectedSummaryRoomIdState, selectedSummaryContentState } from '@/context/recoil-context';
 import { SummaryRoom } from '@/lib/types';
 import { GetSummaryNoteList, GetSummaryNoteContent } from '@/lib/action';
 
-export default function SummaryNav() {
+export default function SelectedSummaryNav() {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const isAuth = useRecoilValue(authState);
     const [selectedSummaryRoomId, setSelectedSummaryRoomId] = useRecoilState(selectedSummaryRoomIdState);
@@ -15,6 +15,7 @@ export default function SummaryNav() {
     const [error, setError] = useState<string | null>(null);
 
     const router = useRouter(); // useRouter 사용
+    const pathname = usePathname(); // usePathname 사용하여 현재 경로 가져오기
 
     useEffect(() => {
         const fetchSummaryRooms = async () => {
@@ -55,6 +56,14 @@ export default function SummaryNav() {
             fetchSummaryContent();
         }
     }, [selectedSummaryRoomId, setSummaryContents]);
+
+    useEffect(() => {
+        // URL에서 ID 추출하여 selectedSummaryRoomId 상태 설정
+        const idFromPath = pathname.split('/').pop(); // 경로의 마지막 부분에서 ID 추출
+        if (idFromPath) {
+            setSelectedSummaryRoomId(Number(idFromPath)); // 추출한 ID를 선택된 상태로 설정
+        }
+    }, [pathname, setSelectedSummaryRoomId]);
 
     // 경로 이동 함수
     const onSelectSummaryRoom = (noteId: number) => {

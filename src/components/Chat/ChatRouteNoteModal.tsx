@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, selectedChatRoomIdState } from '@/context/recoil-context'
-import { DeleteChatRoom, CreateSummaryNote } from '@/lib/action'
+import { useRouter } from 'next//navigation'
 
 interface ChatModalProps {
     isOpen: boolean
@@ -13,6 +13,8 @@ interface ChatModalProps {
 export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
+
+    const router = useRouter();
 
     if (!isOpen) return null
 
@@ -24,6 +26,9 @@ export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) 
 
     // 완성된 요약 노트로 이동하기
     const handleYes = async () => {
+        if (selectedChatRoomId) {
+            router.push(`/project/idea/${selectedChatRoomId}`);
+        }
         onClose();
     }
 

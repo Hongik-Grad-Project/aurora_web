@@ -1,26 +1,26 @@
-'use client'
+'use client';
 
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import Image from "next/image";
 
 interface DropdownProps {
     name: string;
     options: { value: string; label: string }[]; // 옵션 배열 추가
-    placeholder?: string; // placeholder 추가
+    value: string; // 부모 컴포넌트에서 받아온 선택된 값
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void; // 부모 컴포넌트에서 받아온 onChange 함수
+    placeholder?: string;
     required?: boolean;
     className?: string;
     disabled?: boolean;
-    width?: string; // width 속성 추가
+    width?: string;
     [x: string]: any;
 }
 
 const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
     (
-        { name, options, placeholder, required, className, disabled, width, ...rest },
+        { name, options, value, onChange, placeholder, required, className, disabled, width, ...rest },
         ref
     ) => {
-        const [selectedValue, setSelectedValue] = useState("");
-
         return (
             <div className="relative flex w-[20.375rem] flex-col items-start gap-[1.3125rem]">
                 <select
@@ -29,10 +29,10 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
                     ref={ref}
                     disabled={disabled}
                     required={required}
-                    style={{ width: width }} // width 스타일 추가
+                    style={{ width: width }}
                     className={`mt-2 rounded-[0.31rem] border border-grey40 px-[0.88rem] py-3 pr-10 text-sm outline-none appearance-none hover:ring hover:ring-grey30 ${className}`}
-                    value={selectedValue} // value를 상태로 관리
-                    onChange={(e) => setSelectedValue(e.target.value)} // 값이 변경되면 상태를 업데이트
+                    value={value} // 부모로부터 받은 value 사용
+                    onChange={onChange} // 부모로부터 받은 onChange 사용
                     {...rest}
                 >
                     {placeholder && (
@@ -50,16 +50,14 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
                         </option>
                     ))}
                 </select>
-                {/* SVG 아이콘을 추가하여 드롭다운 버튼으로 사용 */}
                 <div className="absolute right-3 top-1/2 transform translate-y-[10%] pointer-events-none">
                     <Image
                         src="/assets/icons/select_button.svg"
                         alt="Select button"
-                        width={10} // 원하는 크기로 설정
-                        height={8} // 원하는 크기로 설정
+                        width={10}
+                        height={8}
                     />
                 </div>
-
             </div>
         );
     }

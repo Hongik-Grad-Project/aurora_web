@@ -12,6 +12,7 @@ import Dropdown from "@/components/common/component/Basic/Dropdown";
 import TextLayout from "@/components/common/component/Basic/TextLayout";
 import DatePicker from "@/components/common/component/Basic/DatePicker";
 import { PostProjectOutlineData, CompleteSummaryNote } from "@/lib/action";
+import LoadingSkeleton from "@/components/common/component/Skeleton/LoadingSkeleton";
 
 interface FormInputs {
     target: string
@@ -26,7 +27,8 @@ export default function ProjectSummarizedOutlinePage() {
     const { register, handleSubmit, setValue } = useForm<FormInputs>()
     const accessToken = useRecoilValue(accessTokenState) || ''
 
-    const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState);
+    const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState)
+    const [loading, setLoading] = useState<boolean>(true)
 
     const [target, setTarget] = useState("");
     const [summaryValue, setSummaryValue] = useState("");
@@ -37,41 +39,35 @@ export default function ProjectSummarizedOutlinePage() {
     const [projectRepresentImageUrl, setProjectRepresentImageUrl] = useState<string | null>(null)
 
     // API 호출하여 빈칸 채우기
+    // API 호출하여 빈칸 채우기
     useEffect(() => {
         const fetchNoteCompletion = async () => {
-            if (!accessToken) return;
+            if (!accessToken || !selectedSummaryRoomId) return;
 
             try {
-                if (selectedSummaryRoomId) {
-                    console.log('selectedSummaryRoomId:', selectedSummaryRoomId);
-                    const completionData = await CompleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
-                    if (completionData) {
-                        setTarget(completionData.target);
-                        setSummaryValue(completionData.summary || ""); // undefined일 때 빈 문자열로 처리
-                        setStartDate(new Date(completionData.startDate));
-                        setEndDate(new Date(completionData.endDate));
-                        setProjectTitle(completionData.projectTitle || ""); // undefined일 때 빈 문자열로 처리
+                const completionData = await CompleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
+                if (completionData) {
+                    setTarget(completionData.target || "");
+                    setSummaryValue(completionData.summary || "");
+                    setProjectTitle(completionData.projectTitle || "");
 
-                        setValue("target", completionData.target);
-                        setValue("summary", completionData.summary || "");
-                        setValue("startDate", completionData.startDate);
-                        setValue("endDate", completionData.endDate);
-                        setValue("projectTitle", completionData.projectTitle || "");
-                    }
+                    setValue("target", completionData.target || "");
+                    setValue("summary", completionData.summary || "");
+                    setValue("projectTitle", completionData.projectTitle || "");
                 }
-                console.log("Note completion data fetched successfully");
-
             } catch (error) {
                 console.error("Error fetching note completion data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchNoteCompletion();
-    }, [accessToken, setValue]);
+    }, [accessToken, selectedSummaryRoomId, setValue]);
 
-    const handleTargetChange = (value: string) => {
-        setTarget(value);
-        setValue("target", value); // react-hook-form에 값 설정
+    const handleTargetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setTarget(e.target.value);
+        setValue("target", e.target.value); // react-hook-form에 값 설정
     };
 
     const handleSummaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,15 +116,14 @@ export default function ProjectSummarizedOutlinePage() {
 
         try {
             const response = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
-
-            if (response.ok) {
-                router.push('/project/body')
-            } else {
-                console.error('프로젝트 개요 데이터 저장 실패', response)
-            }
+            router.push('/project/body')
         } catch (error) {
             console.error('Error in POST request:', error)
         }
+    }
+
+    if(loading) {
+        return <LoadingSkeleton />
     }
 
     return (
@@ -162,11 +157,11 @@ export default function ProjectSummarizedOutlinePage() {
                                 }
                             />
                             <Dropdown
-                                value={target}
-                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleTargetChange(e.target.value)}
                                 name="target"
-                                placeholder="대상 선택"
+                                value={target} // 부모 컴포넌트에서 상태 관리
+                                onChange={handleTargetChange} // 부모 컴포넌트에서 onChange 처리
                                 options={TargetObject.map(target => ({ value: target, label: target }))}
+                                placeholder="대상 선택"
                                 required
                                 className="w-full"
                             />
