@@ -5,6 +5,7 @@ import { GetChatLocation, GetChatList, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
 import ChatModal from './ChatModal';
 import Image from 'next/image';
+import ChatRouteNoteModal from './ChatRouteNoteModal';
 
 export default function ChatInput() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -15,6 +16,7 @@ export default function ChatInput() {
     const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // 현재 채팅방 리스트 상태
     const [inputValue, setInputValue] = useState<string>('');
     const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+    const [isChatRouteNoteModalOpen, setIsChatRouteNoteModalOpen] = useState(false);
     const [buttonHeight, setButtonHeight] = useState('3.2rem');
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -112,7 +114,7 @@ export default function ChatInput() {
                         </button>
                     </div>
                     <button
-                        onClick={() => setIsChatModalOpen(true)}
+                        onClick={() => setIsChatRouteNoteModalOpen(true)}
                         className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
                         style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
                     >
@@ -150,6 +152,7 @@ export default function ChatInput() {
                 </div>
             )}
             <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
+            <ChatRouteNoteModal isOpen={isChatRouteNoteModalOpen} onClose={() => setIsChatRouteNoteModalOpen(false)} />
         </div>
     );
 }
