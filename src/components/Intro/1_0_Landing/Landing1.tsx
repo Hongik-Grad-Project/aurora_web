@@ -18,13 +18,13 @@ export default function Landing1() {
           delay: 0.1,
           duration: 0.8,
         }}
-        className="pt-[6.56rem]"
+        className="pt-[4rem] md:pt-[6.56rem]" // 모바일과 노트북의 패딩 차이
       >
         <h1
           className="text-center"
           style={{
             fontFamily: 'var(--font-museomoderno)',
-            fontSize: '6.13rem', // 고정 크기
+            fontSize: 'clamp(2rem, 5vw, 6.13rem)', // 화면 크기에 따라 유동적으로 변화
             fontWeight: '400',
           }}
         >
@@ -33,12 +33,13 @@ export default function Landing1() {
         <p
           className="text-center pt-4"
           style={{
-            fontSize: '1.25rem', // 고정 크기
+            fontSize: 'clamp(1rem, 2vw, 1.25rem)', // 화면 크기에 따라 유동적으로 변화
             color: '#6A6F7A',
           }}
         >
           세상은 복잡하고, 우리 주변에는 아직 해결되지 않은 수많은 문제들이 존재해요
-          <br /> 만약 이러한 문제들을 바라만 보고 있었다면, 이제는 행동할 시간입니다.
+          <br /> {/* 모든 화면에서 줄바꿈 유지 */}
+          만약 이러한 문제들을 바라만 보고 있었다면, 이제는 행동할 시간입니다.
         </p>
       </motion.div>
 
@@ -49,7 +50,7 @@ export default function Landing1() {
           delay: 0.2,
           duration: 0.8,
         }}
-        className="pt-20"
+        className="pt-12 md:pt-20" // 모바일과 노트북의 패딩 차이
       >
         <motion.img
           src="/assets/intro/section1_float_btn.png"
@@ -62,7 +63,7 @@ export default function Landing1() {
             repeatType: 'loop',
             duration: 2.5,
           }}
-          className="w-64 h-64 object-contain" // 고정 크기 이미지
+          className="w-32 h-32 object-contain md:w-64 md:h-64" // 모바일은 작은 크기, 노트북은 큰 크기
         />
       </motion.div>
     </div>

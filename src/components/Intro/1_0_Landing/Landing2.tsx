@@ -21,7 +21,7 @@ export default function Landing2() {
                 <p className="self-stretch text-center text-[#4E525C] text-[1.25rem] font-medium leading-[1.875rem]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
                     긍정적인 사회 변화를 위한 공익 프로젝트를 진행할 수 있어요!
                 </p>
-                <Link href="/chat/aurora">
+                <Link href="/chat">
                     <div className="flex w-[13.75rem] h-[3.31138rem] flex-row justify-center items-center gap-[0.5rem] rounded-[0.3125rem] bg-[#776BFF] cursor-pointer hover:bg-[#6659e6] transition-colors">
                         <p className="text-white text-center w-[5.5rem] ml-[1.3rem]">
                             AI와 채팅하기
