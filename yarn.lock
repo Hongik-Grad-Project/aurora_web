@@ -2624,6 +2624,7 @@ __metadata:
     react-redux: "npm:^9.1.2"
     react-select: "npm:^5.8.0"
     react-spinners: "npm:^0.14.1"
+    react-toastify: "npm:^10.0.5"
     recoil: "npm:^0.7.7"
     recoil-persist: "npm:^5.1.0"
     tailwindcss: "npm:^3.4.1"
@@ -5978,6 +5979,18 @@ __metadata:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/5b3c101f789716331a0b6afad156293fb9aa05620e65494753001afcdb611788057f379b5979b34d570d527fa978003293266b59db505bf2d243ebab899ceeda
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
+  dependencies:
+    clsx: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10c0/66c68ec3d6c017d9f32652d73bb925224921c6a80b629b9d481430d5b4fd504abb7a99995a64b9aef0fc31326c74f3cbe088b3287b978dd0c355079c4bbf4158
   languageName: node
   linkType: hard
 

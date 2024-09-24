@@ -1,6 +1,7 @@
 'use client'
 
 import UnderpinList from "./UnderpinList"
+import { useRouter } from 'next/navigation'
 
 interface LikeProjectProps {
     likeProjectData: {
@@ -12,6 +13,14 @@ interface LikeProjectProps {
 }
 
 export default function MyUnderpinProject({ likeProjectData }: LikeProjectProps) {
+    
+    const router = useRouter();
+
+    // likeProjectData가 비어있을 경우 대비
+    if (!likeProjectData || !Array.isArray(likeProjectData)) {
+        return <div>프로젝트 데이터가 없습니다.</div>;
+    }
+
     return (
         <div className="flex flex-col items-center gap-[2.1875rem] self-stretch">
             <div className="flex items-center gap-[3.6875rem] self-stretch">
@@ -26,8 +35,14 @@ export default function MyUnderpinProject({ likeProjectData }: LikeProjectProps)
                     ))}
                 </div>
             </div>
-            <div className="flex w-[56.25rem] h-[2.8125rem] p-[0.5rem] px-[0.625rem] justify-center items-center gap-[0.625rem] rounded-[0.3125rem] bg-[#F4F6FA]">
-                <div className="text-[#0F1011] text-center text-[1rem] font-medium leading-[1.5rem]">
+            <div 
+                className="flex w-[56.25rem] h-[2.8125rem] p-[0.5rem] px-[0.625rem] justify-center items-center gap-[0.625rem] rounded-[0.3125rem] bg-[#F4F6FA] cursor-pointer"
+                onClick={() => router.push('/mypage/project')} 
+                >
+                <div 
+                    className="text-[#0F1011] text-center text-[1rem] font-medium leading-[1.5rem]"
+                    
+                    >
                     더보기
                 </div>
             </div>

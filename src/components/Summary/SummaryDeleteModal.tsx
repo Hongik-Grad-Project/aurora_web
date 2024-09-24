@@ -1,9 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { accessTokenState, selectedSummaryRoomIdState } from '@/context/recoil-context'
 import { DeleteSummaryNote } from '@/lib/action'
+import { useRouter } from 'next/navigation'
 
 interface SummaryDeleteModalProps {
     isOpen: boolean
@@ -13,6 +14,8 @@ interface SummaryDeleteModalProps {
 export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState);
+    const resetSelectedSummaryRoomId = useResetRecoilState(selectedSummaryRoomIdState); // 상태 초기화를 위한 훅
+    const router = useRouter();
 
     if (!isOpen) return null
 
@@ -26,6 +29,8 @@ export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteMod
         if (selectedSummaryRoomId) {
             console.log('selectedSummaryRoomId:', selectedSummaryRoomId);
             await DeleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
+            resetSelectedSummaryRoomId(); // selectedSummaryRoomId 초기화
+            router.push('/project/idea'); // '/project/idea'로 이동
         }
         onClose();
     }
@@ -55,7 +60,6 @@ export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteMod
                     <button
                         onClick={() => {
                             handleYes();
-                            onClose();
                         }}
                         className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-[#776BFF] text-white font-semibold hover:bg-[#AEA0FF] transition-colors"
                     >

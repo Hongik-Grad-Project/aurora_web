@@ -2,6 +2,7 @@
 
 import ProjectWindow from "@/components/Gallery/Window"
 import { ProjectWindowData } from '@/lib/types'
+import { useRouter } from 'next/navigation'
 
 interface MyProjectProps {
     projectData: {
@@ -18,13 +19,21 @@ interface MyProjectProps {
 }
 
 export default function MyProject({ projectData }: MyProjectProps) {
+
+    const router = useRouter();
+
+    // projectData가 비어있을 경우 대비
+    if (!projectData || !Array.isArray(projectData)) {
+        return <div>프로젝트 데이터가 없습니다.</div>;
+    }
+
     const myProjects: ProjectWindowData[] = projectData.map(project => ({
-        imagePath: project.mainImagePath,
-        count: project.likeCount,
-        title: project.projectTitle,
-        problemAndTarget: project.target,  // 예: 문제 및 대상 필드 매핑
-        date: project.endDate,
-        tag: project.target  // 예: 태그 필드 매핑
+        imagePath: project.mainImagePath || '', // 데이터가 없을 경우 기본값 처리
+        count: project.likeCount || 0,
+        title: project.projectTitle || '제목 없음',
+        problemAndTarget: project.target || '대상 없음',  // 예: 문제 및 대상 필드 매핑
+        date: project.endDate || '날짜 없음',
+        tag: project.target || '태그 없음'  // 예: 태그 필드 매핑
     }));
 
     return (
@@ -33,7 +42,10 @@ export default function MyProject({ projectData }: MyProjectProps) {
                 <div className="text-black text-[2rem] font-semibold leading-[3rem]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
                     나의 프로젝트
                 </div>
-                <div className="text-[#6A6F7A] text-[1rem] font-medium leading-[1.5rem]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
+                <div 
+                    className="text-[#6A6F7A] text-[1rem] font-medium leading-[1.5rem] cursor-pointer"
+                    onClick={() => router.push('/mypage/project')}  // onClick 이벤트 핸들러 추가
+                >
                     더보기
                 </div>
             </div>

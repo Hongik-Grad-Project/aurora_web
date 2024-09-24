@@ -430,3 +430,29 @@ export async function UpdateMyPage(accessToken: string, payload: any, profileIma
     body: formData,
   })
 }
+
+// 7.3. 내 프로젝트 모두 조회 API (GET /mypage/project)
+export async function GetMyProjects(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/mypage/project`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return await response.json();
+}
+
+// 7.4. 응원한 프로젝트 모두 조회 API (GET /mypage/like)
+export async function GetLikedProjects(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/mypage/like`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return await response.json();
+}
