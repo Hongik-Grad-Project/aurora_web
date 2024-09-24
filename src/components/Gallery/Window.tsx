@@ -17,7 +17,7 @@ interface ProjectWindowProps {
     data: ProjectWindowData;
 }
 
-export default function projectWindow({ data }: ProjectWindowProps) {
+export default function ProjectWindow({ data }: ProjectWindowProps) {
     
     const router = useRouter();
 

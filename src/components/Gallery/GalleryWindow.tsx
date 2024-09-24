@@ -10,9 +10,6 @@ interface ProjectGalleryWindowProps {
 }
 
 export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
-
     return (
         <div className="flex flex-col w-72 max-w-xs items-start gap-0.5">
             <div
