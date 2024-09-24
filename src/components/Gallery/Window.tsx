@@ -1,8 +1,10 @@
 'use client'
 
 import ProjectTag from './Tag'
+import { useRouter } from 'next/navigation';
 
 interface ProjectWindowData {
+    projectId: number;
     imagePath: string;
     count: number;
     title: string;
@@ -16,11 +18,21 @@ interface ProjectWindowProps {
 }
 
 export default function projectWindow({ data }: ProjectWindowProps) {
+    
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/project/${data.projectId}`);  // projectId를 사용해 동적으로 경로 이동
+    };
+
     if (!data) {
         return <div>Loading...</div>; // Or return null or a skeleton component
     }
+    
     return (
-        <div className="flex flex-col items-start mb-[4.38rem]">
+        <div className="flex flex-col items-start mb-[4.38rem] cursor-pointer"
+            onClick={handleClick}  // 클릭 이벤트 핸들러 추가
+        >
             <div
                 className="flex w-[18.25rem] h-[12.5rem] rounded-[0.625rem] mb-[0.75rem] relative"
                 style={{

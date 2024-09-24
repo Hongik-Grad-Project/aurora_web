@@ -28,6 +28,7 @@ export default function MyProject({ projectData }: MyProjectProps) {
     }
 
     const myProjects: ProjectWindowData[] = projectData.map(project => ({
+        projectId: project.projectId,  // 데이터가 없을 경우 기본값 처리
         imagePath: project.mainImagePath || '', // 데이터가 없을 경우 기본값 처리
         count: project.likeCount || 0,
         title: project.projectTitle || '제목 없음',

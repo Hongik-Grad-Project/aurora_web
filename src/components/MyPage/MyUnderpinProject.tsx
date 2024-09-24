@@ -41,7 +41,6 @@ export default function MyUnderpinProject({ likeProjectData }: LikeProjectProps)
                 >
                 <div 
                     className="text-[#0F1011] text-center text-[1rem] font-medium leading-[1.5rem]"
-                    
                     >
                     더보기
                 </div>

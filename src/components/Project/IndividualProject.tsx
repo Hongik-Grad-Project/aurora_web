@@ -18,7 +18,6 @@ export default function IndividualProject() {
     const pathname = usePathname()
     const pathSegments = pathname.split('/')
     const projectId = pathSegments[pathSegments.length - 1]
-    const isAuth = useRecoilValue(accessTokenState)
 
     useEffect(() => {
         if (accessToken && projectId) {
@@ -76,23 +75,22 @@ export default function IndividualProject() {
                             </div>
                         </div>
                     </div>
-
-                    {/* // 메인 이미지 */}
-                    <div className="relative w-full h-[21.6875rem] rounded-sm overflow-hidden">
+                    <div className="relative w-full rounded-sm overflow-hidden" style={{ aspectRatio: '16/9' }}>
                         {data?.mainImagePath && (
                             <Image
                                 src={data.mainImagePath}
                                 alt={data.projectTitle}
-                                layout="fill"
-                                objectFit="cover"
+                                fill
+                                style={{ objectFit: 'cover' }}
                                 className="rounded-sm"
                             />
                         )}
                     </div>
 
+
                     {/* 태그 */}
                     <div className="flex items-start gap-[0.4375rem]">
-                        {data?.tagList.map((tag, index) => (
+                        {data?.tagList?.map((tag, index) => (  // null 또는 undefined 확인
                             <div key={index} className="flex self-stretch h-[2.4375rem] px-5 justify-center items-center gap-2 rounded-full border border-[#AEA0FF] bg-[#FEFEFE]">
                                 <span className="text-[#776BFF] font-pretendard font-medium text-sm leading-[1.3125rem]">
                                     #{tag}
@@ -101,15 +99,16 @@ export default function IndividualProject() {
                         ))}
                     </div>
 
-                    {data?.subtitleList.map((subtitle, index) => (
+                    {data?.subtitleList?.map((subtitle, index) => (  // null 또는 undefined 확인
                         <div key={index} className="self-stretch">
                             <h3 className="text-xl font-semibold mb-2">{subtitle}</h3>
-                            <p className="text-base text-[#4E525C] mb-4">{data.contentList[index]}</p>
+                            <p className="text-base text-[#4E525C] mb-4">{data?.contentList?.[index]}</p>  {/* contentList 확인 */}
                         </div>
                     ))}
                 </div>
+
                 <div className="flex overflow-x-auto gap-2 pb-2">
-                    {data?.projectImageList.map((image, index) => (
+                    {data?.projectImageList?.map((image, index) => (  // null 또는 undefined 확인
                         <div key={index} className="relative w-60 h-60">
                             <Image
                                 src={image}
@@ -121,6 +120,7 @@ export default function IndividualProject() {
                         </div>
                     ))}
                 </div>
+                
                 <CheerButton
                     isLiked={data?.like || false}
                     likeCount={data?.likeCount || 0}
@@ -190,4 +190,4 @@ export default function IndividualProject() {
             </div>
         </div>
     )
-} 
+}

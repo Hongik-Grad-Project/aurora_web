@@ -34,6 +34,7 @@ export interface SummaryContent {
 }
 
 export interface ProjectWindowData {
+  projectId: number;
   imagePath: string;
   count: number;
   title: string;
