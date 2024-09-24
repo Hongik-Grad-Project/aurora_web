@@ -43,36 +43,44 @@ export default function ProjectGalleryPage() {
             </div>
 
             {/* 페이지네이션 UI */}
-            <div className="flex justify-center items-center mt-8 gap-2">
+            <div className="flex justify-center items-center mt-8 gap-4">
                 <button
-                    className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-white' : 'bg-blue-500 text-white'}`}
+                    className={`px-4 py-2 rounded-full transition-colors duration-300 ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
+                        }`}
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                 >
                     이전
                 </button>
 
-                {[...Array(totalPages)].map((_, index) => {
-                    const page = index + 1;
-                    return (
-                        <button
-                            key={page}
-                            className={`px-4 py-2 rounded ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
-                            onClick={() => handlePageChange(page)}
-                        >
-                            {page}
-                        </button>
-                    );
-                })}
+                <div className="flex gap-2">
+                    {[...Array(totalPages)].map((_, index) => {
+                        const page = index + 1;
+                        const isActive = currentPage === page;
+
+                        return (
+                            <button
+                                key={page}
+                                className={`px-3 py-1 rounded-full transition-all duration-300 ${isActive ? 'bg-[#AEA0FF] text-white scale-110' : 'bg-gray-200 text-gray-800 hover:bg-[#776BFF] hover:text-white'
+                                    }`}
+                                onClick={() => handlePageChange(page)}
+                            >
+                                {page}
+                            </button>
+                        );
+                    })}
+                </div>
 
                 <button
-                    className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300 text-white' : 'bg-blue-500 text-white'}`}
+                    className={`px-4 py-2 rounded-full transition-colors duration-300 ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
+                        }`}
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                 >
                     다음
                 </button>
             </div>
+
 
             <Footer />
         </div>
