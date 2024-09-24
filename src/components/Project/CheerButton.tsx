@@ -22,9 +22,7 @@ export default function CheerButton({ isLiked, likeCount, onToggleLike }: CheerB
                     alt="Cheer icon"
                     className="mr-2" // Right margin to space icon and text
                 />
-                <span
-                    className="flex w-[34px] h-[38px] flex-col justify-center text-[#776BFF] font-pretendard font-bold text-[19px] leading-[28.5px]"
-                >
+                <span className="flex w-[34px] h-[38px] flex-col justify-center text-[#776BFF] font-pretendard font-bold text-[19px] leading-[28.5px]">
                     {likeCount}
                 </span>
             </button>
@@ -45,9 +43,7 @@ export default function CheerButton({ isLiked, likeCount, onToggleLike }: CheerB
                     alt="Cheer icon"
                     className="mr-2" // Right margin to space icon and text
                 />
-                <span
-                    className="flex w-[34px] h-[38px] flex-col justify-center text-[#0F1011] font-pretendard font-bold text-[19px] leading-[28.5px]"
-                >
+                <span className="flex w-[34px] h-[38px] flex-col justify-center text-[#0F1011] font-pretendard font-bold text-[19px] leading-[28.5px]">
                     {likeCount}
                 </span>
             </button>

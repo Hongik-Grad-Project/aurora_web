@@ -97,6 +97,11 @@ export interface MyLikeProjectData {
   endDate: string
 }
 
+export interface LikeResponse {
+  like: boolean
+  likeCount: number
+}
+
 export interface MyPageResponse {
   myProfile: MyProfileData
   myProjects: MyProjectData[]

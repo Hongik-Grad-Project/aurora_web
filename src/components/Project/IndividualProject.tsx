@@ -9,6 +9,11 @@ import { accessTokenState } from '@/context/recoil-context'
 import CheerButton from './CheerButton'
 import Image from 'next/image'
 
+interface LikeResponse {
+    likeCount: number;
+    like: boolean;
+}
+
 export default function IndividualProject() {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const router = useRouter()
@@ -18,6 +23,9 @@ export default function IndividualProject() {
     const pathname = usePathname()
     const pathSegments = pathname.split('/')
     const projectId = pathSegments[pathSegments.length - 1]
+
+    const [isLiked, setIsLiked] = useState<boolean>(false);
+    const [likeCount, setLikeCount] = useState<number>(0);
 
     useEffect(() => {
         if (accessToken && projectId) {
@@ -36,8 +44,13 @@ export default function IndividualProject() {
     }, [accessToken, projectId])
 
     const toggleLike = async () => {
-        const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10), !data?.like || false);
-        setData(prev => prev ? { ...prev, like: !prev.like } : null);
+        try {
+            const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10), !isLiked);
+            setIsLiked(response.like);
+            setLikeCount(response.likeCount);
+        } catch (error) {
+            console.error('Failed to toggle like:', error);
+        }
     }
 
     if (error) {
@@ -120,10 +133,11 @@ export default function IndividualProject() {
                         </div>
                     ))}
                 </div>
-                
+
+                {/* 응원하기 버튼 */}
                 <CheerButton
-                    isLiked={data?.like || false}
-                    likeCount={data?.likeCount || 0}
+                    isLiked={isLiked}
+                    likeCount={likeCount}
                     onToggleLike={toggleLike}
                 />
 

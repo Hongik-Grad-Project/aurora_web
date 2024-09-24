@@ -1,5 +1,5 @@
 import {
-
+  LikeResponse,
 } from './types'
 
 // 0.1. 추천 프로젝트 조회 (GET /recommends)
@@ -154,7 +154,7 @@ export async function GetSummaryNoteList(accessToken: string) {
     credentials: 'include',
   })
 
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error('Failed to fetch chat list');
   }
 
@@ -386,16 +386,20 @@ export async function SearchProjectGalleryByTag(accessToken: string, tag: string
 }
 
 // 6.1. 프로젝트 좋아요 상태 변경 (POST /project/{projectId}/like)
-export async function ToggleProjectLike(accessToken: string, projectId: number, isLike: boolean) {
+// ToggleProjectLike 함수 수정
+export async function ToggleProjectLike(accessToken: string, projectId: number, like: boolean): Promise<LikeResponse> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/like`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',  // JSON 데이터를 보내기 위한 헤더 설정
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: `Bearer ${accessToken}`,
     },
     credentials: 'include',
-    body: JSON.stringify({ isLike }),  // JSON 데이터를 문자열로 변환하여 body에 추가
+    body: JSON.stringify({ like }),
   });
+
+  // 반환된 데이터를 JSON으로 변환하고 반환 타입을 LikeResponse로 추론
+  return await response.json();
 }
 
 // 7.1. 마이페이지 조회 API (GET /mypage)
