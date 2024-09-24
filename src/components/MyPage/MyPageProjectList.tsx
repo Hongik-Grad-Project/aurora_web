@@ -58,7 +58,7 @@ export default function MyPageProjectList() {
             {/* 기획 중인 프로젝트 */}
             <div className="flex flex-col w-[56.25rem]">
                 <div className="flex justify-between items-center self-stretch mb-[1.88rem]">
-                    <div className="text-black text-[2rem] font-semibold leading-[3rem]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
+                    <div className="text-black text-[2rem] font-semibold leading-[3rem]">
                         기획 중인 프로젝트
                     </div>
                     {/* 더보기 버튼 */}

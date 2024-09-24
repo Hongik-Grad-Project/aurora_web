@@ -10,6 +10,11 @@ interface ProjectGalleryWindowProps {
 }
 
 export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
+
+    const isWriting = project.completedStatusType === 'NOT_COMPLETED';
+    const isCompleted = project.completedStatusType === 'COMPLETED';
+    const isClosed = project.completedStatusType === 'CLOSED';
+
     return (
         <div className="flex flex-col w-72 max-w-xs items-start gap-0.5">
             <div
@@ -31,7 +36,14 @@ export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
                 </div>
             </div>
 
-            <ProjectTag text={project.target} />
+            {isWriting || isClosed || project.target ? (
+                <div className="flex flex-row gap-2">
+                    {isWriting && <ProjectTag text="작성중" />}
+                    {isClosed && <ProjectTag text="종료" />}
+                    <ProjectTag text={project.target} />
+                </div>
+            ) : null}
+
             <p className="text-[#0F1011] text-[1.125rem] font-semibold mb-1">
                 {project.projectTitle}
             </p>

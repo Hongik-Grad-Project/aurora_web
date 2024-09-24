@@ -40,7 +40,7 @@ export default function MyPage() {
 
     return (
         <div className="flex w-full flex-col justify-center items-center pt-[70px] bg-[#fff]">
-            <div className="flex w-[56.25rem] flex-col items-start gap-[5rem] pt-[5.91rem]">
+            <div className="flex w-[56.25rem] flex-col items-start gap-[5rem] pt-[2.91rem]">
                 <MyProfile profileData={myProfile} />
                 <MyProject projectData={myProjects} />
                 <MyUnderpinProject likeProjectData={likeProjects} />
