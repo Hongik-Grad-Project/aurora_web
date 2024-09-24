@@ -6,7 +6,7 @@ export default function Landing1() {
     <div
       style={{
         backgroundImage: `linear-gradient(180deg, #FEFEFE 0%, rgba(254, 254, 254, 0.00) 100%), url("/assets/intro/section1bg.png")`,
-        backgroundColor: '#F0F2F6', // 폴백 배경색
+        backgroundColor: '#F0F2F6',
         backgroundBlendMode: 'normal',
       }}
       className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center snap-start overflow-hidden bg-opacity-50 bg-cover bg-no-repeat pt-20"
@@ -37,9 +37,13 @@ export default function Landing1() {
             color: '#6A6F7A',
           }}
         >
-          세상은 복잡하고, 우리 주변에는 아직 해결되지 않은 수많은 문제들이 존재해요
-          <br /> {/* 모든 화면에서 줄바꿈 유지 */}
-          만약 이러한 문제들을 바라만 보고 있었다면, 이제는 행동할 시간입니다.
+          세상은 복잡하고, 우리 주변에는 아직 해결되지 않은 
+          <br className="block lg:hidden" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}
+          수많은 문제들이 존재해요
+          <br className="block" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}
+          만약 이러한 문제들을 바라만 보고 있었다면, 
+          <br className="block lg:hidden" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}
+          이제는 행동할 시간입니다.
         </p>
       </motion.div>
 
@@ -50,7 +54,7 @@ export default function Landing1() {
           delay: 0.2,
           duration: 0.8,
         }}
-        className="pt-12 md:pt-20" // 모바일과 노트북의 패딩 차이
+        className="pt-12 md:pt-20"
       >
         <motion.img
           src="/assets/intro/section1_float_btn.png"
@@ -63,7 +67,7 @@ export default function Landing1() {
             repeatType: 'loop',
             duration: 2.5,
           }}
-          className="w-32 h-32 object-contain md:w-64 md:h-64" // 모바일은 작은 크기, 노트북은 큰 크기
+          className="w-32 h-32 object-contain md:w-64 md:h-64"
         />
       </motion.div>
     </div>
