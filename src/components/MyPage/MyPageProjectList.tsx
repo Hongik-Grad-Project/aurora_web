@@ -6,6 +6,7 @@ import { accessTokenState } from '@/context/recoil-context'
 import { GetMyProjects } from '@/lib/action'
 import { MyProjectData } from '@/lib/types'
 import MyPageProjectWindow from '@/components/Gallery/GalleryWindow'
+import Link from 'next/link'
 
 export default function MyPageProjectList() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -58,7 +59,7 @@ export default function MyPageProjectList() {
                         기획 중인 프로젝트
                     </div>
                     {/* 더보기 버튼 */}
-                    <div 
+                    <div
                         className="text-[#6A6F7A] text-[1rem] font-medium leading-[1.5rem] cursor-pointer"
                         onClick={() => setShowAll(prev => !prev)}  // '더보기' 클릭 시 상태 변경
                     >
@@ -68,10 +69,12 @@ export default function MyPageProjectList() {
                 {/* 프로젝트를 3개씩 한 줄에 표시하고 더보기를 눌렀을 때 아래로 확장 */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-[0.75rem]">
                     {displayedProjects.map((project) => (
-                        <MyPageProjectWindow key={project.projectId} project={project} />
+                        <Link key={project.projectId} href={`/project/${project.projectId}`}>
+                            <MyPageProjectWindow key={project.projectId} project={project} />
+                        </Link>
                     ))}
                 </div>
-            </div>            
+            </div>
         </div>
     );
 }

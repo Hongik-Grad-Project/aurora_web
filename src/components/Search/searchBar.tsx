@@ -22,7 +22,6 @@ export default function SearchBar() {
                 <p className="font-[1rem] font-normal font-[#000000] mb-[1rem]">
                     태그로 찾기
                 </p>
-                <GalleryCategoryNav />
             </div>
         </div>
     )
