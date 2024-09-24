@@ -1,16 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useState } from 'react';
 
 interface LableBtnProps {
     text: string;
+    onClick: (value: string, isActive: boolean) => void; // onClick 핸들러를 prop으로 추가
 }
 
-export default function LableBtn({ text }: LableBtnProps) {
+export default function LableBtn({ text, onClick }: LableBtnProps) {
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
-        setIsActive(!isActive);
+        setIsActive(prev => {
+            const newActive = !prev;
+            onClick(text, newActive); // 부모 컴포넌트에게 변경된 상태를 전달
+            return newActive;
+        });
     };
 
     return (

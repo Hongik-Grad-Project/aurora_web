@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, authState, filteredProjectGalleryState } from '@/context/recoil-context'
-
 import LableBtn from "./Lable"
 import { TargetObject } from '@/lib/data'
 
@@ -19,20 +18,16 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
     const isAuth = useRecoilValue(authState)
     const [filteredProjectGallery, setFilteredProjectGallery] = useRecoilState(filteredProjectGalleryState)
 
-    // 필터 상태 관리
-    const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({
-        targets: [] // 필터 선택 (예: 실버세대, 청소년 등)
-    })
+    // 필터 상태 관리 (필터의 타겟 리스트를 관리)
+    const [selectedTargets, setSelectedTargets] = useState<string[]>([])
 
     // 필터링된 프로젝트 갤러리 데이터 가져오기
     const fetchFilteredProjectGallery = async () => {
         const queryParams = new URLSearchParams()
 
-        // 필터 선택 항목을 쿼리 파라미터에 추가
-        Object.entries(selectedFilters).forEach(([key, values]) => {
-            values.forEach((value) => {
-                queryParams.append(key, value)
-            })
+        // 타겟 필터를 쿼리 파라미터에 추가
+        selectedTargets.forEach((target) => {
+            queryParams.append('targets', target)
         })
 
         // 페이지, 사이즈, 정렬 정보 추가
@@ -51,10 +46,23 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
         }
     }
 
-    // 필터, 페이지, 정렬 변경될 때마다 데이터 가져오기
+    // 필터, 페이지, 정렬이 변경될 때마다 데이터 다시 가져오기
     useEffect(() => {
         fetchFilteredProjectGallery()
-    }, [selectedFilters, currentPage, pageSize, sortType])
+    }, [selectedTargets, currentPage, pageSize, sortType])
+
+    // 타겟 필터를 선택하거나 해제하는 함수
+    const handleFilterSelect = (target: string) => {
+        setSelectedTargets((prevTargets) => {
+            if (prevTargets.includes(target)) {
+                // 이미 선택된 타겟이면 필터 해제
+                return prevTargets.filter((t) => t !== target)
+            } else {
+                // 선택되지 않은 타겟이면 필터 추가
+                return [...prevTargets, target]
+            }
+        })
+    }
 
     return (
         <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
@@ -64,26 +72,12 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
                     <LableBtn
                         key={target}
                         text={target}
+                        onClick={() => handleFilterSelect(target)}
                     />
                 ))}
             </div>
         </div>
     )
-
-    // 필터 선택 처리
-    function handleFilterSelect(key: string, value: string) {
-        setSelectedFilters((prevFilters) => {
-            const newFilters = { ...prevFilters }
-            if (newFilters[key]?.includes(value)) {
-                // 필터에서 제거
-                newFilters[key] = newFilters[key].filter((item) => item !== value)
-            } else {
-                // 필터 추가
-                newFilters[key] = [...(newFilters[key] || []), value]
-            }
-            return newFilters
-        })
-    }
 }
 
 export async function GetProjectGalleryFiltering(accessToken: string, url: string) {
