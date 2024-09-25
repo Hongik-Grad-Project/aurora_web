@@ -3,8 +3,8 @@
 import Image from 'next/image';
 
 interface CheerButtonProps {
-    isLiked: boolean;
-    likeCount: number;
+    isLiked: boolean | null;
+    likeCount: number | null;
     onToggleLike: () => void;
 }
 

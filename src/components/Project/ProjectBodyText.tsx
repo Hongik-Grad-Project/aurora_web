@@ -21,7 +21,7 @@ export default function ProjectBodyText({ index, onChange }: ProjectBodyTextProp
         const newContent = e.target.value;
         setContent(newContent);
         onChange(index, subtitle, newContent);
-    };
+    };    
 
     return (
         <div className="flex flex-col w-[58.75rem] items-start gap-[1.1875rem]">

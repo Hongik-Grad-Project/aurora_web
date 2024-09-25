@@ -216,6 +216,11 @@ export async function PostProjectOutlineData(accessToken: string, payload: any, 
     credentials: 'include',
     body: formData,
   })
+
+  if(response.status === 201) {
+    return response.headers.get('Location');  
+  }
+
   return await response.json();
 }
 
@@ -253,7 +258,7 @@ export async function EditProjectOutlineData(accessToken: string, projectId: num
 }
 
 // 4.4. 프로젝트 본문 저장 (POST /project/{projectId}/body/save)
-export async function PostProjectBodyData(accessToken: string, projectId: number, payload: any, files: File[]) {
+export async function PostProjectBodyData(accessToken: string, projectId: string, payload: any, files: File[]) {
   const formData = new FormData();
 
   // JSON 데이터를 문자열로 변환하여 formData에 추가
@@ -314,16 +319,25 @@ export async function EditProjectBodyData(accessToken: string, projectId: number
 }
 
 // 4.7. 프로젝트 등록 (POST /project/{projectId}/register)
-export async function RegisterProject(accessToken: string, projectId: number) {
+export async function RegisterProject(accessToken: string, projectId: string, payload: any, files: File[]) {
+  const formData = new FormData();
+
+  // JSON 데이터를 문자열로 변환하여 formData에 추가
+  formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+
+  // 파일 데이터를 formData에 추가
+  files.forEach((file) => {
+    formData.append('files', file);
+  });
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/register`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     credentials: 'include',
+    body: formData,
   })
-
-  return await response.json();
 }
 
 // 4.8. 프로젝트 삭제 (DELETE /project/{projectId})
@@ -421,6 +435,7 @@ export async function GetMyPage(accessToken: string) {
 // 7.2. 프로필 수정 API (POST /mypage/update)
 export async function UpdateMyPage(accessToken: string, payload: any, profileImage: File | null) {
   const formData = new FormData()
+  
   formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
 
   if (profileImage) {

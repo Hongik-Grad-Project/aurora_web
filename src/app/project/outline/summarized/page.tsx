@@ -114,17 +114,18 @@ export default function ProjectSummarizedOutlinePage() {
         };
 
         try {
-            await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
+            const projectIdLocation = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
+            if(location) {
+                const projectId = parseInt(projectIdLocation.split('/').pop()!);
+                router.push(`/project/body/${projectId}`);
+            } 
         } catch (error) {
             console.error('Error in POST request:', error)
-        } finally {
-            router.push('/project/body')
         }
-
     }
 
     if(loading) {
-        return <LoadingSkeleton />
+        return <LoadingSkeleton text="기획서 자동 완성 중입니다."/>
     }
 
     return (

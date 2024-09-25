@@ -41,7 +41,7 @@ export default function LoadingSkeleton({text = "로딩 중입니다"}: LoadingS
         {/* 로딩 텍스트 */}
         <div className="mt-6 text-center">
           <p className="text-2xl font-medium text-gray-500">
-            기획서가 자동 완성 중입니다
+            {text}
           </p>
         </div>
       </div>
