@@ -39,7 +39,6 @@ export default function ProjectSummarizedOutlinePage() {
     const [projectRepresentImageUrl, setProjectRepresentImageUrl] = useState<string | null>(null)
 
     // API 호출하여 빈칸 채우기
-    // API 호출하여 빈칸 채우기
     useEffect(() => {
         const fetchNoteCompletion = async () => {
             if (!accessToken || !selectedSummaryRoomId) return;

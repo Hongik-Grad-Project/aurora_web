@@ -2,7 +2,11 @@
 
 import { motion } from 'framer-motion'
 
-export default function LoadingSkeleton() {
+interface LoadingSkeletonProps {
+  text?: string;
+}
+
+export default function LoadingSkeleton({text = "로딩 중입니다"}: LoadingSkeletonProps) {
   return (
     <div className="flex items-center justify-center h-screen bg-white">
       {/* 로딩 스피너 */}

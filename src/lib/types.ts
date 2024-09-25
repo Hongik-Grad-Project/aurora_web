@@ -9,6 +9,11 @@ export interface ChatHistory {
   createdAt: string;
 }
 
+export interface CreateChatRoomResponse {
+  noteId: number;
+  success: boolean;
+}
+
 // 채팅방 목록 조회 응답
 export interface ChatRoom {
   chatRoomId: number;

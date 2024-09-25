@@ -1,5 +1,5 @@
 import {
-  LikeResponse,
+  LikeResponse, CreateChatRoomResponse
 } from './types'
 
 // 0.1. 추천 프로젝트 조회 (GET /recommends)
@@ -108,7 +108,7 @@ export async function SendMessage(accessToken: string, chatRoomId: string, messa
 }
 
 // 2.6. 요약 노트 생성
-export async function CreateSummaryNote(accessToken: string, chatRoomId: string) {
+export async function CreateSummaryNote(accessToken: string, chatRoomId: string): Promise<CreateChatRoomResponse> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/summary`, {
     method: 'POST',
     headers: {
@@ -116,6 +116,8 @@ export async function CreateSummaryNote(accessToken: string, chatRoomId: string)
     },
     credentials: 'include',
   })
+
+  return await response.json();
 }
 
 // 2.7. 채팅방 삭제

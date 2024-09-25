@@ -1,9 +1,12 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, selectedChatRoomIdState } from '@/context/recoil-context'
 import { DeleteChatRoom, CreateSummaryNote } from '@/lib/action'
+import LoadingSkeleton from '@/components/common/component/Skeleton/LoadingSkeleton'
+import { useRouter } from 'next/navigation'
 
 interface ChatModalProps {
     isOpen: boolean
@@ -13,32 +16,55 @@ interface ChatModalProps {
 export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
+    const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
+    const router = useRouter();
 
-    if (!isOpen) return null
+    if (!isOpen) return null;
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.target === event.currentTarget) {
-            onClose()
+            onClose();
         }
     }
 
     const handleYes = async () => {
         if (selectedChatRoomId) {
-            const response = await CreateSummaryNote(accessToken, selectedChatRoomId.toString());
+            setLoading(true); // 로딩 시작
+            try {
+                const response = await CreateSummaryNote(accessToken, selectedChatRoomId.toString());
+                
+                // 성공적으로 응답을 받으면 noteId를 활용해서 경로로 이동
+                if (response?.noteId) {
+                    router.push(`/project/idea/${response.noteId}`);
+                } else {
+                    console.error('Invalid response: noteId is missing');
+                }
+            } catch (error) {
+                console.error('Failed to create summary:', error);
+            } finally {
+                setLoading(false); // 로딩 종료
+                onClose();
+            }
         }
-        onClose();
-    }
+    };
+    
 
     const handleNo = async () => {
         if (selectedChatRoomId) {
-            const response = await DeleteChatRoom(accessToken, selectedChatRoomId.toString());
-            if (response.ok) {
-                console.log('채팅방 삭제 성공');
-            } else {
-                console.error('채팅방 삭제 실패');
+            setLoading(true); // 로딩 시작
+            try {
+                const response = await DeleteChatRoom(accessToken, selectedChatRoomId.toString());
+            } catch (error) {
+                console.error('Failed to delete chat room:', error);
+            } finally {
+                setLoading(false); // 로딩 종료
+                onClose();
             }
         }
-        onClose();
+    }
+
+    if (loading) {
+        return <LoadingSkeleton text="아이디어 노트가 자동 완성 중입니다"/>; // 로딩 중일 때 로딩 컴포넌트 표시
     }
 
     return (
@@ -56,18 +82,13 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
                 <h1 className="text-xl font-semibold text-gray-800 mb-8">대화 내용을 요약하시겠습니까?</h1>
                 <div className="flex w-full justify-center gap-[1.5rem]">
                     <button
-                        onClick={() => {
-                            handleNo();
-                            onClose();
-                        }}
+                        onClick={handleNo}
                         className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400 transition-colors"
                     >
                         아니오
                     </button>
                     <button
-                        onClick={() => {
-                            handleYes();
-                        }}
+                        onClick={handleYes}
                         className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors"
                     >
                         예
@@ -75,5 +96,5 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
                 </div>
             </motion.div>
         </div>
-    )
+    );
 }
