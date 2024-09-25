@@ -387,7 +387,7 @@ export async function SearchProjectGalleryByTag(accessToken: string, tag: string
 
 // 6.1. 프로젝트 좋아요 상태 변경 (POST /project/{projectId}/like)
 // ToggleProjectLike 함수 수정
-export async function ToggleProjectLike(accessToken: string, projectId: number, like: boolean): Promise<LikeResponse> {
+export async function ToggleProjectLike(accessToken: string, projectId: number, isLike: boolean): Promise<LikeResponse> {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/like`, {
     method: 'POST',
     headers: {
@@ -395,7 +395,7 @@ export async function ToggleProjectLike(accessToken: string, projectId: number, 
       Authorization: `Bearer ${accessToken}`,
     },
     credentials: 'include',
-    body: JSON.stringify({ like }),
+    body: JSON.stringify({ isLike }),
   });
 
   // 반환된 데이터를 JSON으로 변환하고 반환 타입을 LikeResponse로 추론
