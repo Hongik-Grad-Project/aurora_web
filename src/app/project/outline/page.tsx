@@ -84,13 +84,11 @@ export default function ProjectOutlinePage() {
     };
 
     try {
-      const response = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
-
-      if (response.ok) {
-        router.push('/project/body')
-      } else {
-        console.error('프로젝트 개요 데이터 저장 실패', response)
-      }
+      const projectIdLocation = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
+      if(location) {
+        const projectId = parseInt(projectIdLocation.split('/').pop()!);
+        router.push(`/project/body/${projectId}`);
+    } 
     } catch (error) {
       console.error('Error in POST request:', error)
     }
@@ -98,7 +96,7 @@ export default function ProjectOutlinePage() {
 
   return (
     <>
-      <div className="flex w-full flex-col justify-center items-center pt-[70px]">
+      <div className="flex w-full flex-col justify-center items-center mt-[70px]">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-[0.9375rem] pt-[2.94rem] pb-[12rem]">
           <div className="flex w-[62.5rem] items-center gap-[1.75rem]">
             <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
@@ -106,7 +104,7 @@ export default function ProjectOutlinePage() {
             </div>
             <div className="flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
-                <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]"/>
+                <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
               </svg>
             </div>
             <div className="text-[#9DA1AD] font-medium text-[2.5rem] leading-[3.75rem] opacity-80">
@@ -271,7 +269,6 @@ export default function ProjectOutlinePage() {
                 </button>
               </div>
             </div>
-
           </div>
         </form>
       </div>

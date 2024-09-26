@@ -186,10 +186,10 @@ export async function DeleteSummaryNote(accessToken: string, noteId: string) {
   })
 }
 
-// 3.4. 기획서 자동 완성하기 (GET /note/{noteId}/completion)
+// 3.4. 기획서 자동 완성하기 (POST /note/{noteId}/completion)
 export async function CompleteSummaryNote(accessToken: string, noteId: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note/${noteId}/completion`, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -238,7 +238,7 @@ export async function GetProjectOutlineData(accessToken: string, projectId: numb
 }
 
 // 4.3. 프로젝트 개요 수정 (POST /project/{projectId}/outline/edit)
-export async function EditProjectOutlineData(accessToken: string, projectId: number, payload: any, projectRepresentImage: File | null) {
+export async function EditProjectOutlineData(accessToken: string, projectId: string, payload: any, projectRepresentImage: File | null) {
   const formData = new FormData()
   formData.append('dto', new Blob([JSON.stringify(payload)], { type: 'application/json' }))
 

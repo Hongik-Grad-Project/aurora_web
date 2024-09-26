@@ -12,7 +12,7 @@ interface GalleryArrayProps {
 
 export default function GalleryArray({ currentPage, pageSize }: GalleryArrayProps) {
     // Recoil에서 페이지당 데이터를 받아옴
-    const galleryData = useRecoilValue(filteredProjectGalleryState); 
+    const galleryData = useRecoilValue(filteredProjectGalleryState);
 
     if (!galleryData || galleryData.length === 0) {
         return <div>Loading...</div>; // 데이터를 불러오는 동안 또는 데이터가 없을 때 로딩 표시
@@ -22,7 +22,10 @@ export default function GalleryArray({ currentPage, pageSize }: GalleryArrayProp
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center">
             {galleryData.map((project) => (
-                <Link key={project.projectId} href={`/project/${project.projectId}`}>
+                <Link
+                    key={project.projectId}
+                    href={`/project/${project.projectId}`}
+                >
                     <GalleryWindow project={project} />
                 </Link>
             ))}

@@ -38,7 +38,29 @@ export default function ProjectGalleryPage() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-start gap-[4.375rem] self-stretch">
+            {/* 정렬 버튼 그룹 추가 */}
+            <div className="flex w-full justify-start gap-4 mb-8 px-4 md:justify-center lg:justify-end lg:pr-[6%]"> {/* 오른쪽 간격을 비율로 변경 */}
+                <button
+                    className={`text-lg font-semibold ${sortType === 'likeCount' ? 'text-blue-500' : 'text-gray-500'}`}
+                    onClick={() => setSortType('likeCount')}
+                >
+                    인기순
+                </button>
+                <button
+                    className={`text-lg font-semibold ${sortType === 'recentTime' ? 'text-blue-500' : 'text-gray-500'}`}
+                    onClick={() => setSortType('recentTime')}
+                >
+                    최신순
+                </button>
+                <button
+                    className={`text-lg font-semibold ${sortType === 'closingTime' ? 'text-blue-500' : 'text-gray-500'}`}
+                    onClick={() => setSortType('closingTime')}
+                >
+                    종료임박순
+                </button>
+            </div>
+
+            <div className="flex flex-col items-start gap-[1.375rem] self-stretch">
                 <GalleryArray currentPage={currentPage} pageSize={pageSize} />
             </div>
 
@@ -80,7 +102,6 @@ export default function ProjectGalleryPage() {
                     다음
                 </button>
             </div>
-
 
             <Footer />
         </div>

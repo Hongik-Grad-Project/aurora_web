@@ -12,7 +12,7 @@ import { PostProjectBodyData, RegisterProject } from '@/lib/action'
 
 interface FormInputs { }
 
-export default function ProjectBodyPage() {
+export default function SummarizedProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
     const { handleSubmit } = useForm<FormInputs>()

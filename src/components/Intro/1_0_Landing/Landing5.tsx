@@ -48,7 +48,7 @@ export default function Landing5() {
                     </motion.div>
                 </motion.div>
                 <motion.div
-                    initial={{ opacity: 0, x: 50 }}
+                    initial={{ opacity: 0, x: 0 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{
                         delay: 1,

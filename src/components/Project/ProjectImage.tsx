@@ -25,7 +25,11 @@ export default function ProjectImage({ onFileChange }: { onFileChange: (file: Fi
             ) : (
                 <div className="flex flex-col items-center">
                     <p className="text-gray-600 mb-2">이미지 업로드</p>
-                    <button onClick={handleButtonClick} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
+                    <button 
+                        type="button" // 버튼 타입을 명시적으로 button으로 설정
+                        onClick={handleButtonClick} 
+                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                    >
                         이미지 선택
                     </button>
                 </div>

@@ -11,7 +11,7 @@ import Image from "next/image";
 import Dropdown from "@/components/common/component/Basic/Dropdown";
 import TextLayout from "@/components/common/component/Basic/TextLayout";
 import DatePicker from "@/components/common/component/Basic/DatePicker";
-import { PostProjectOutlineData, CompleteSummaryNote } from "@/lib/action";
+import { CompleteSummaryNote, EditProjectOutlineData } from "@/lib/action";
 import LoadingSkeleton from "@/components/common/component/Skeleton/LoadingSkeleton";
 
 interface FormInputs {
@@ -30,6 +30,7 @@ export default function ProjectSummarizedOutlinePage() {
     const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState)
     const [loading, setLoading] = useState<boolean>(true)
 
+    const [projectId, setProjectId] = useState("");
     const [target, setTarget] = useState("");
     const [summaryValue, setSummaryValue] = useState("");
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -46,6 +47,7 @@ export default function ProjectSummarizedOutlinePage() {
             try {
                 const completionData = await CompleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
                 if (completionData) {
+                    setProjectId(completionData.projectId || "");
                     setTarget(completionData.target || "");
                     setSummaryValue(completionData.summary || "");
                     setProjectTitle(completionData.projectTitle || "");
@@ -114,9 +116,8 @@ export default function ProjectSummarizedOutlinePage() {
         };
 
         try {
-            const projectIdLocation = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
+            const projectIdLocation = await EditProjectOutlineData(accessToken, projectId, dto, projectRepresentImage);
             if(location) {
-                const projectId = parseInt(projectIdLocation.split('/').pop()!);
                 router.push(`/project/body/${projectId}`);
             } 
         } catch (error) {

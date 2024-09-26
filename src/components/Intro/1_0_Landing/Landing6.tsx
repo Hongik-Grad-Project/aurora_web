@@ -21,13 +21,7 @@ export default function Landing6() {
         try {
             const response = await GetRecommendProjects(accessToken);
             console.log(response);
-            if (response.ok) {
-                const data = await response.json(); // 응답을 JSON으로 파싱
-                console.log(data);
-                setProjects(data); // 프로젝트 리스트 상태 업데이트
-            } else {
-                setError('Failed to fetch recommended projects');
-            }
+            setProjects(response); // 프로젝트 리스트 상태 업데이트
         } catch (err) {
             console.error('Error fetching recommended projects:', err);
             setError('An error occurred while fetching the projects.');
