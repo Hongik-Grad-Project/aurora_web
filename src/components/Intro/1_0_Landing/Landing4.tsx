@@ -10,12 +10,13 @@ export default function Landing4() {
         overflow-hidden overflow-x-auto bg-[#FFFFFF] 
         bg-cover bg-no-repeat pt-[5rem]"
         >
-            <div className="flex w-full flex-row justify-between items-start ml-[6.87rem]">
+            <div className="flex w-full flex-row justify-between items-start
+            ml-[6.87rem]">
                 <motion.div
                     className="inline-flex flex-col items-start gap-[1.1875rem] mt-[9.03rem]"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.5 }}
+                    transition={{ delay: 0.1, duration: 0.8 }}
                 >
                     <div className="flex flex-col items-start gap-[0.375rem]">
                         <motion.div

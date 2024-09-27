@@ -18,9 +18,12 @@ export default function Landing6() {
     // 추천 프로젝트 조회 함수
     const fetchRecommendsProject = async () => {
         try {
-            const response = await GetRecommendProjects();
-            console.log(response);
-            setProjects(response); // 프로젝트 리스트 상태 업데이트
+            const response = await GetRecommendProjects(accessToken);
+            if (response && Array.isArray(response)) {
+                setProjects(response); // 프로젝트 리스트 상태 업데이트
+            } else {
+                setError('Invalid response format');
+            }
         } catch (err) {
             console.error('Error fetching recommended projects:', err);
             setError('An error occurred while fetching the projects.');
@@ -56,9 +59,14 @@ export default function Landing6() {
                     사회문제를 해결하기 위한 다양한 프로젝트를 만나보세요.
                 </p>
                 <div className="flex flex-row gap-[0.75rem]">
-                    {projects.map((project) => (
-                        <GalleryWindow key={project.projectId} project={project} />
-                    ))}
+                    {/* projects 배열이 있을 때만 map 함수 실행 */}
+                    {Array.isArray(projects) && projects.length > 0 ? (
+                        projects.map((project) => (
+                            <GalleryWindow key={project.projectId} project={project} />
+                        ))
+                    ) : (
+                        <p>프로젝트가 없습니다.</p>
+                    )}
                 </div>
             </div>
         </div>

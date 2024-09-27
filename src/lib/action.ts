@@ -3,9 +3,12 @@ import {
 } from './types'
 
 // 0.1. 추천 프로젝트 조회 (GET /recommends)
-export async function GetRecommendProjects() {
+export async function GetRecommendProjects(accessToken: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/recommends`, {
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     credentials: 'include',
   })
   return await response.json();
