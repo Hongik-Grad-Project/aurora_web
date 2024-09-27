@@ -10,7 +10,6 @@ import { accessTokenState, authState } from '@/context/recoil-context';
 
 export default function Landing6() {
     const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
 
     const [projects, setProjects] = useState<ProjectGalleryType[]>([]); // 프로젝트 리스트 상태
     const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
@@ -19,7 +18,7 @@ export default function Landing6() {
     // 추천 프로젝트 조회 함수
     const fetchRecommendsProject = async () => {
         try {
-            const response = await GetRecommendProjects(accessToken);
+            const response = await GetRecommendProjects();
             console.log(response);
             setProjects(response); // 프로젝트 리스트 상태 업데이트
         } catch (err) {
