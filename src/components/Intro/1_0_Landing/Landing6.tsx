@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import GalleryWindow from '@/components/Gallery/GalleryWindow';
@@ -9,7 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { accessTokenState, authState } from '@/context/recoil-context';
 
 export default function Landing6() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState) || ''; // accessToken이 없는 경우 빈 문자열 사용
 
     const [projects, setProjects] = useState<ProjectGalleryType[]>([]); // 프로젝트 리스트 상태
     const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
@@ -25,7 +25,6 @@ export default function Landing6() {
                 setError('Invalid response format');
             }
         } catch (err) {
-            console.error('Error fetching recommended projects:', err);
             setError('An error occurred while fetching the projects.');
         } finally {
             setLoading(false); // 로딩 완료
@@ -33,9 +32,7 @@ export default function Landing6() {
     };
 
     useEffect(() => {
-        if (accessToken) {
-            fetchRecommendsProject(); // 컴포넌트가 마운트될 때 데이터 요청
-        }
+        fetchRecommendsProject(); // 컴포넌트가 마운트될 때 데이터 요청
     }, [accessToken]);
 
     if (loading) {
