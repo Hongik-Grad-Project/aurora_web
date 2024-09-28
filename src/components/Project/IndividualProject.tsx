@@ -15,7 +15,7 @@ interface LikeResponse {
 }
 
 export default function IndividualProject() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState) || '';  // accessToken 초기값을 빈 문자열로 유지
     const router = useRouter();
     const [data, setData] = useState<ProjectGalleryDetailResponse | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -30,12 +30,11 @@ export default function IndividualProject() {
 
     // 서버에서 프로젝트 상세 정보 및 초기 좋아요 상태 가져오기
     useEffect(() => {
-        if (accessToken && projectId) {
+        if (projectId) { // accessToken이 없어도 조회할 수 있도록 수정
             const fetchData = async () => {
                 try {
                     const result = await GetProjectGalleryDetail(accessToken, parseInt(projectId, 10));
                     setData(result);
-
                     // 초기 좋아요 상태 및 카운트 설정
                     setIsLiked(result.like);
                     setLikeCount(result.likeCount);
@@ -47,10 +46,15 @@ export default function IndividualProject() {
             };
             fetchData();
         }
-    }, [accessToken, projectId]);
+    }, [projectId, accessToken]);  // accessToken 의존성 추가
 
     // 좋아요 토글 함수
     const toggleLike = async () => {
+        if (!accessToken) {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+
         try {
             const response = await ToggleProjectLike(accessToken, parseInt(projectId, 10), !isLiked);
             setIsLiked(response.like);
@@ -60,8 +64,12 @@ export default function IndividualProject() {
         }
     };
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     if (error) {
-        return <div>Error: {error.message}</div>
+        return <div>Error: {error.message}</div>;
     }
 
     return (
