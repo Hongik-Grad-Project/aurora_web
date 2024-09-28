@@ -5,7 +5,7 @@ import {
 // 0.1. 추천 프로젝트 조회 (GET /recommends)
 export async function GetRecommendProjects(accessToken: string) {
   // accessToken이 없는 경우 Authorization 및 credentials 설정하지 않음
-  const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  const headers: HeadersInit = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
   const options: RequestInit = {
     method: 'GET',
     headers,
