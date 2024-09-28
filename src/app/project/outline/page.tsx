@@ -70,8 +70,6 @@ export default function ProjectOutlinePage() {
     }
   };
 
-
-
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     if (!accessToken) return;
 

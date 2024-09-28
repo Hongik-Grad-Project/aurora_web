@@ -153,6 +153,18 @@ export async function GetChatHistory(accessToken: string, chatRoomId: string) {
   return await response.json();
 }
 
+export async function GetSummaryNoteByChatRoomId(accessToken: string, chatRoomId: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/note`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+
+  return await response.json();
+}
+
 // 3.1. 요약 노트 목록 조회 (GET /note)
 export async function GetSummaryNoteList(accessToken: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note`, {
@@ -261,7 +273,7 @@ export async function EditProjectOutlineData(accessToken: string, projectId: str
     credentials: 'include',
     body: formData,
   })
-  return await response.json();
+    return response.headers.get('Location');
 }
 
 // 4.4. 프로젝트 본문 저장 (POST /project/{projectId}/body/save)
@@ -374,7 +386,7 @@ export async function GetProjectGalleryDetail(accessToken: string, projectId: nu
   if (!response.ok) {
     throw new Error('Failed to fetch recommended projects');
   }
-  
+
   return await response.json();
 }
 

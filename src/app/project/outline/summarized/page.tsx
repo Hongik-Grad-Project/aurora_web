@@ -117,16 +117,14 @@ export default function ProjectSummarizedOutlinePage() {
 
         try {
             const projectIdLocation = await EditProjectOutlineData(accessToken, projectId, dto, projectRepresentImage);
-            if(location) {
-                router.push(`/project/body/${projectId}`);
-            } 
+            router.push(`/project/body/summarized/${projectId}`);
         } catch (error) {
             console.error('Error in POST request:', error)
         }
     }
 
-    if(loading) {
-        return <LoadingSkeleton text="기획서 자동 완성 중입니다."/>
+    if (loading) {
+        return <LoadingSkeleton text="기획서 자동 완성 중입니다." />
     }
 
     return (
