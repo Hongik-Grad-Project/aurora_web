@@ -81,14 +81,13 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
 }
 
 export async function GetProjectGalleryFiltering(accessToken: string, url: string) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}${url}`, {
+    const headers: HeadersInit = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+    const options: RequestInit = {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: 'include',
-    })
+        headers,
+        credentials: accessToken ? 'include' : 'omit', // 토큰이 없으면 쿠키 전송을 생략
+      };
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}${url}`, options)
 
     if (!response.ok) {
         throw new Error('Failed to fetch filtered project gallery')

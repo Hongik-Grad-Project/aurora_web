@@ -21,8 +21,6 @@ export async function GetRecommendProjects(accessToken: string) {
   return await response.json();
 }
 
-
-
 // 1.2. (access-token 만료 시) 토큰 재발급 (POST /token) 
 export const RefreshAccessToken = async (accessToken: string) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/token`, {
@@ -376,13 +374,18 @@ export async function GetProjectGalleryDetail(accessToken: string, projectId: nu
 
 // 5.2. 프로젝트 갤러리 조회 (GET /gallery)
 export async function GetProjectGallery(accessToken: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery`, {
+  const headers: HeadersInit = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  const options: RequestInit = {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    credentials: 'include',
-  })
+    headers,
+    credentials: accessToken ? 'include' : 'omit', // 토큰이 없으면 쿠키 전송을 생략
+  };
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery`, options)
+  if (!response.ok) {
+    throw new Error('Failed to fetch recommended projects');
+  }
+
   return await response.json();
 }
 
