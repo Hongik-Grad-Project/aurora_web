@@ -23,7 +23,7 @@ export default function SelectedIdeaNote() {
             <div className="flex-grow overflow-y-auto p-6 bg-white">
                 {currentSummaryRoom ? (
                     <div className="space-y-4">
-                        {summaryContent !== null ? (
+                        {summaryContent ? (
                             <div className="space-y-6">
                                 <div className="flex items-center gap-1.5 self-stretch rounded-md bg-[#776BFF] p-[0.5rem_1rem]">
                                     <Image src="/assets/icons/magic_wand_white.svg" width={24} height={24} alt="Aurora AI" />
@@ -45,12 +45,16 @@ export default function SelectedIdeaNote() {
                                     </div>
 
                                     {/* 대제목-소제목 구조 */}
-                                    {summaryContent.openTitleList.map((title, index) => (
-                                        <div key={index} className="mb-4">
-                                            <h2 className="text-lg font-semibold mb-1">{title}</h2>
-                                            <p className="pl-4">• {summaryContent.openSummaryList[index]}</p>
-                                        </div>
-                                    ))}
+                                    {Array.isArray(summaryContent.openTitleList) && Array.isArray(summaryContent.openSummaryList) ? (
+                                        summaryContent.openTitleList.map((title, index) => (
+                                            <div key={index} className="mb-4">
+                                                <h2 className="text-lg font-semibold mb-1">{title}</h2>
+                                                <p className="pl-4">• {summaryContent.openSummaryList[index]}</p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-gray-500">대제목 및 소제목 데이터가 없습니다.</p>
+                                    )}
 
                                     <div>
                                         <h2 className="text-xl font-semibold mb-2">해결책</h2>

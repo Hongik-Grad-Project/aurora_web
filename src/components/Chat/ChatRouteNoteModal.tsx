@@ -1,9 +1,10 @@
 'use client'
 
+import { useState } from 'react';
 import { motion } from 'framer-motion'
 import { useRecoilValue } from 'recoil'
-import { accessTokenState, selectedChatRoomIdState } from '@/context/recoil-context'
 import { useRouter } from 'next//navigation'
+import { accessTokenState, selectedChatRoomIdState } from '@/context/recoil-context'
 
 interface ChatModalProps {
     isOpen: boolean
@@ -13,8 +14,10 @@ interface ChatModalProps {
 export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
-
     const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     if (!isOpen) return null
 
@@ -24,13 +27,37 @@ export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) 
         }
     }
 
-    // 완성된 요약 노트로 이동하기
+    // 예 버튼을 눌렀을 때 note 데이터를 가져와 project 페이지로 이동
     const handleYes = async () => {
-        if (selectedChatRoomId) {
-            router.push(`/project/idea/${selectedChatRoomId}`);
+        setLoading(true);
+        try {
+            // GET 요청으로 noteId 정보 가져오기
+            const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${selectedChatRoomId}/note`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch note data');
+            }
+
+            const noteData = await response.json();
+            const noteId = noteData.noteId;
+
+            // noteId를 기반으로 project/idea/{noteId} 경로로 이동
+            router.push(`/project/idea/${noteId}`);
+            onClose();
+        } catch (err) {
+            console.error('Failed to fetch note and redirect:', err);
+            setError('노트 데이터를 가져오는 데 실패했습니다.');
+        } finally {
+            setLoading(false);
         }
-        onClose();
-    }
+    };
 
     const handleNo = async () => {
         onClose();
