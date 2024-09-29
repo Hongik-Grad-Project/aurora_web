@@ -9,11 +9,13 @@ import { accessTokenState, authState } from '@/context/recoil-context'
 import { Logout, RefreshAccessToken } from '@/lib/action'
 import LoginModal from '../Login/LoginModal'
 import { motion } from 'framer-motion'
+import { is } from 'date-fns/locale'
 
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isProfileButtonDropdown, setIsProfileButtonDropdown] = useState(false)
   const router = useRouter()
   const [token, setToken] = useRecoilState(accessTokenState)
   const resetAccessTokenState = useResetRecoilState(accessTokenState)
@@ -71,6 +73,10 @@ export default function Header() {
 
   const closeDropdown = () => {
     setIsDropdownOpen(false)
+  }
+
+  const profileButtonDropdown = () => {
+    setIsProfileButtonDropdown(!isProfileButtonDropdown)  
   }
 
   // 드롭다운 바깥을 클릭했을 때 닫히도록 설정
@@ -162,15 +168,35 @@ export default function Header() {
 
           <div className="hidden lg:flex flex-1 justify-end gap-10">
             {isAuth ? (
+              // 로그인 상태
               <>
                 <Link href="/search" className="font-medium leading-5 text-grey80">
                   <Image src="/assets/icons/search_icon.svg" alt="search" width={25} height={25} />
                 </Link>
-                <Link href="/mypage" className="text-sm font-medium leading-5 text-grey80 hover:text-main">
+                <button onClick={profileButtonDropdown} className="text-sm font-medium leading-5 text-grey80 hover:text-main relative">
                   <Image src="/assets/icons/my_profile_icon.svg" alt="mypage" width={25} height={25} />
-                </Link>
+                </button>
+                {isProfileButtonDropdown && (
+                  <motion.div
+                    className="absolute right-0 top-10 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6"
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 100 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="flex flex-col space-y-2 items-end">
+                      <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                        마이페이지
+                      </Link>
+                      <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                        로그아웃
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </>
             ) : (
+              // 로그인 이전 보여질 버튼
               <>
                 <Link href="/search" className="font-medium leading-5 text-grey80">
                   <Image src="/assets/icons/search_icon.svg" alt="search" width={24} height={24} />
