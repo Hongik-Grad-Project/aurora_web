@@ -1,8 +1,10 @@
 'use client'
-import Image from 'next/image'
-import { motion } from "framer-motion";
+
+import { useRouter } from 'next/navigation';
 
 export default function Landing8() {
+    const router = useRouter();
+
     return (
         <div className="relative flex justify-center h-screen min-h-screen w-full snap-mandatory snap-start snap-always flex-row overflow-hidden overflow-x-auto bg-cover bg-no-repeat pt-[5rem]"
             style={{
@@ -23,7 +25,10 @@ export default function Landing8() {
 
                     </div>
                 </div>
-                <button className="flex py-[1.75rem] px-[3.3125rem] justify-center items-center gap-[0.625rem] rounded-[0.625rem] bg-[#776BFF] shadow-[0px_30px_59.9px_-28px_#8684A2] hover:bg-[#9B8AFF] hover:scale-105 transition-transform duration-200">
+                <button
+                    className="flex py-[1.75rem] px-[3.3125rem] justify-center items-center gap-[0.625rem] rounded-[0.625rem] bg-[#776BFF] shadow-[0px_30px_59.9px_-28px_#8684A2] hover:bg-[#9B8AFF] hover:scale-105 transition-transform duration-200"
+                    onClick={() => router.push('/project/gallery')} // 버튼 클릭 시 /project/gallery로 이동
+                >
                     <span
                         className="text-white text-[1.5rem] font-semibold leading-[2.25rem]"
                         style={{ fontFamily: 'Pretendard, sans-serif' }}
@@ -31,7 +36,6 @@ export default function Landing8() {
                         프로젝트 둘러보기
                     </span>
                 </button>
-
             </div >
         </div >
     )

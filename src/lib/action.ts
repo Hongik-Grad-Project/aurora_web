@@ -314,7 +314,7 @@ export async function GetProjectBodyData(accessToken: string, projectId: number)
 }
 
 // 4.6. 프로젝트 본문 수정 (POST /project/{projectId}/outline/edit)
-export async function EditProjectBodyData(accessToken: string, projectId: number, payload: any, files: File[]) {
+export async function EditProjectBodyData(accessToken: string, projectId: string, payload: any, files: File[]) {
   const formData = new FormData();
 
   // JSON 데이터를 문자열로 변환하여 formData에 추가
@@ -325,7 +325,7 @@ export async function EditProjectBodyData(accessToken: string, projectId: number
     formData.append('files', file);
   });
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/body/edit`, {
+  await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/project/${projectId}/body/edit`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -333,8 +333,6 @@ export async function EditProjectBodyData(accessToken: string, projectId: number
     credentials: 'include',
     body: formData, // FormData 객체를 body로 설정
   });
-
-  return await response.json();
 }
 
 // 4.7. 프로젝트 등록 (POST /project/{projectId}/register)

@@ -8,7 +8,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
-import { PostProjectBodyData, RegisterProject } from '@/lib/action'
+import { EditProjectBodyData, PostProjectBodyData, RegisterProject } from '@/lib/action'
 
 interface FormInputs { }
 
@@ -82,7 +82,7 @@ export default function SummarizedProjectBodyPage() {
         };
 
         try {
-            const response = await PostProjectBodyData(accessToken, projectId, payload, imageFiles);  // projectId를 실제로 교체
+            const response = await EditProjectBodyData(accessToken, projectId, payload, imageFiles);  // projectId를 실제로 교체
             console.log("프로젝트가 저장되었습니다.");
         } catch (error) {
             console.error('프로젝트 저장 오류:', error);
