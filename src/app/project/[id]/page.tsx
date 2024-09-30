@@ -7,7 +7,6 @@ export default function PrivateProject() {
     return (
         <div>
             <IndividualProject />
-            <Footer />
         </div>
     )
 }   

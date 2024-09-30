@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { accessTokenState, authState, selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
@@ -17,7 +19,6 @@ export default function ChatInput() {
     const [inputValue, setInputValue] = useState<string>('');
     const [isChatModalOpen, setIsChatModalOpen] = useState(false);
     const [isChatRouteNoteModalOpen, setIsChatRouteNoteModalOpen] = useState(false);
-    const [buttonHeight, setButtonHeight] = useState('3.2rem');
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const isSendingRef = useRef<boolean>(false);
@@ -39,7 +40,6 @@ export default function ChatInput() {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-            setButtonHeight(`${textareaRef.current.scrollHeight}px`);
         }
     };
 
@@ -116,13 +116,12 @@ export default function ChatInput() {
                     <button
                         onClick={() => setIsChatRouteNoteModalOpen(true)}
                         className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
-                        style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
+                        style={{ height: '3.2rem', padding: '0.5rem 1.5rem' }} // 높이 고정
                     >
                         요약으로 이동
                     </button>
                 </div>
             ) : (
-                // 요약이 완료되지 않은 경우 ChatInput 표시
                 <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
                     <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
                         <textarea
@@ -145,7 +144,7 @@ export default function ChatInput() {
                     <button
                         onClick={() => setIsChatModalOpen(true)}
                         className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
-                        style={{ height: buttonHeight, padding: '0.5rem 1.5rem' }}
+                        style={{ height: '3.2rem', padding: '0.5rem 1.5rem' }} // 높이 고정
                     >
                         대화 끝내기
                     </button>

@@ -65,7 +65,7 @@ export default function ProjectGalleryPage() {
             </div>
 
             {/* 페이지네이션 UI */}
-            <div className="flex justify-center items-center mt-8 gap-4">
+            <div className="flex justify-center items-center mt-8 mb-[4rem] gap-4">
                 <button
                     className={`px-4 py-2 rounded-full transition-colors duration-300 ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
                         }`}
