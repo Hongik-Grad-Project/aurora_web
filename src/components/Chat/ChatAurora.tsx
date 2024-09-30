@@ -96,7 +96,10 @@ export default function ChatAurora() {
                             </motion.div>
                             <div className="flex flex-col justify-center items-center mt-4">
                                 <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">Aurora Chat AI</h2>
-                                <p className="text-gray-500 text-base mt-2">To Solve Social Problems</p>
+                                <p className="text-center text-gray-500 text-base mt-2">
+                                    어떤 사회 문제를 해결하고 싶나요?
+                                    <br />ex{' )'} 요즘 노인 일자리 문제가 심각한 것 같아
+                                </p>
                             </div>
                         </div>
                     )}

@@ -128,7 +128,7 @@ export default function ChatInput() {
                         <textarea
                             ref={textareaRef}
                             className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] resize-none outline-none overflow-hidden"
-                            placeholder="메시지를 입력하세요..."
+                            placeholder="오로라와 얘기해보세요"
                             value={inputValue}
                             onInput={handleInput}
                             onKeyDown={handleKeyDown}
