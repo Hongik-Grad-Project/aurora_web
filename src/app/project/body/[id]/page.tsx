@@ -19,12 +19,12 @@ interface FormInputs {
 export default function ProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const { handleSubmit, setValue, watch, formState: { isValid } } = useForm<FormInputs>({
+    const { handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
         mode: 'onChange'
     })
     const accessToken = useRecoilValue(accessTokenState) || ''
 
-    const [textSections, setTextSections] = useState<{ subtitle: string; content: string }[]>([{ subtitle: '', content: '' }])
+    const [textSections, setTextSections] = useState([{ subtitle: '', content: '' }])
     const [imageFiles, setImageFiles] = useState<File[]>([])
     const [imagePreviews, setImagePreviews] = useState<string[]>([])
     const [tags, setTags] = useState<string[]>([])
@@ -91,14 +91,24 @@ export default function ProjectBodyPage() {
     const handleTagInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            const tag = (event.target as HTMLInputElement).value.trim();
+
+            const input = event.target as HTMLInputElement;
+            const tag = input.value.trim(); // 앞뒤 공백 제거
+
+            // 유효한 태그인지 확인하고 태그 목록에 추가
             if (tag && !tags.includes(tag)) {
-                setTags([...tags, tag]);
-                setValue("tags", tags.join(','));
+                setTags((prevTags) => {
+                    const updatedTags = [...prevTags, tag];
+                    setValue('tags', updatedTags.join(', ')); // 폼 값 업데이트
+                    return updatedTags;
+                });
             }
-            (event.target as HTMLInputElement).value = '';
+
+            // 입력 필드 초기화
+            input.value = '';
         }
-    }
+    };
+
     const onSubmit: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
 
@@ -110,7 +120,6 @@ export default function ProjectBodyPage() {
 
         try {
             const response = await PostProjectBodyData(accessToken, projectId, payload, imageFiles);
-            console.log("프로젝트가 저장되었습니다.");
             router.push(`/project/body/${projectId}`);
         } catch (error) {
             console.error('프로젝트 저장 오류:', error);
@@ -175,11 +184,18 @@ export default function ProjectBodyPage() {
 
                         {/* 태그 입력 */}
                         <div className="flex flex-col items-start gap-[1rem] self-stretch">
-                            <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">태그 등록</div>
+                            <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">
+                                태그 등록
+                            </div>
                             <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
                                 후원자들이 프로젝트를 쉽게 검색할 수 있도록 프로젝트와 관련된 검색 키워드를 입력해주세요! (최대 10개)
                                 <div className="flex h-[2.75rem] px-[0.875rem] pr-[15.5625rem] py-[0.625rem] items-center gap-[0.625rem] self-stretch rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC]">
-                                    <input type="text" placeholder="프로젝트의 태그를 입력하고 엔터해주세요" className="flex-grow bg-transparent text-[#0F1011] outline-none" onKeyDown={handleTagInput} />
+                                    <input
+                                        type="text"
+                                        placeholder="프로젝트의 태그를 입력하고 엔터해주세요"
+                                        className="flex-grow bg-transparent text-[#0F1011] outline-none"
+                                        onKeyPress={handleTagInput} // 변경된 부분
+                                    />
                                 </div>
                             </div>
                         </div>
