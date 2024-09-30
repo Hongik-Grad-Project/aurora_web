@@ -21,9 +21,19 @@ interface FormInputs {
   projectTitle: string
 }
 
+interface FormInputs {
+  target: string
+  summary: string
+  startDate: string
+  endDate: string
+  projectTitle: string
+}
+
 export default function ProjectOutlinePage() {
   const router = useRouter()
-  const { register, handleSubmit, setValue } = useForm<FormInputs>()
+  const { register, handleSubmit, setValue, formState: { isValid }, watch } = useForm<FormInputs>({
+    mode: 'onChange' // 사용자가 입력할 때마다 유효성 검사
+  })
   const accessToken = useRecoilValue(accessTokenState) || ''
 
   const [target, setTarget] = useState("");
@@ -34,6 +44,10 @@ export default function ProjectOutlinePage() {
   const [projectRepresentImage, setProjectRepresentImage] = useState<File | null>(null)
   const [projectRepresentImageUrl, setProjectRepresentImageUrl] = useState<string | null>(null)
 
+  // react-hook-form에서 모든 필드의 값과 이미지를 감시하여 폼 유효성 확인
+  const watchFields = watch();
+  const isImageUploaded = projectRepresentImage !== null;
+
   const handleTargetChange = (value: string) => {
     setTarget(value);
     setValue("target", value); // react-hook-form에 값 설정
@@ -41,10 +55,12 @@ export default function ProjectOutlinePage() {
 
   const handleSummaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSummaryValue(e.target.value);
+    setValue("summary", e.target.value); // react-hook-form에 값 설정
   };
 
   const handleStartDateChange = (date: Date | null) => {
     setStartDate(date);
+    setValue("startDate", date ? date.toISOString() : ''); // react-hook-form에 값 설정
     if (date) {
       setEndDate(addDays(date, 100));
     }
@@ -52,6 +68,7 @@ export default function ProjectOutlinePage() {
 
   const handleProjectTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProjectTitle(e.target.value);
+    setValue("projectTitle", e.target.value); // react-hook-form에 값 설정
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,10 +100,10 @@ export default function ProjectOutlinePage() {
 
     try {
       const projectIdLocation = await PostProjectOutlineData(accessToken, dto, projectRepresentImage);
-      if(location) {
+      if (projectIdLocation) {
         const projectId = parseInt(projectIdLocation.split('/').pop()!);
         router.push(`/project/body/${projectId}`);
-    } 
+      }
     } catch (error) {
       console.error('Error in POST request:', error)
     }
@@ -96,6 +113,8 @@ export default function ProjectOutlinePage() {
     <>
       <div className="flex w-full flex-col justify-center items-center mt-[70px]">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-[0.9375rem] pt-[2.94rem] pb-[12rem]">
+          {/* 기타 입력 필드들 ... */}
+          {/* 기타 입력 필드들 ... */}
           <div className="flex w-[62.5rem] items-center gap-[1.75rem]">
             <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
               프로젝트 개요
@@ -255,17 +274,22 @@ export default function ProjectOutlinePage() {
                 </label>
               </div>
             </div>
+          </div>
 
-            <div className="flex pl-[51.8125rem] justify-end items-center self-stretch">
-              <div className="flex items-start gap-[0.625rem]">
-                <button
-                  type="submit"
-                  className="flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#776BFF]">
-                  <span className="text-[#FEFEFE] text-center font-medium text-[1.125rem] leading-[1.6875rem]">
-                    다음
-                  </span>
-                </button>
-              </div>
+          {/* 제출 버튼 */}
+          <div className="flex pl-[51.8125rem] justify-end items-center self-stretch">
+            <div className="flex items-start gap-[0.625rem]">
+              <button
+                type="submit"
+                disabled={!isValid || !isImageUploaded} // 모든 입력값이 유효하지 않거나 이미지가 없으면 비활성화
+                className={`flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${isValid && isImageUploaded ? 'bg-[#776BFF] cursor-pointer' : 'bg-[#E2E6EF] cursor-not-allowed'
+                  }`}
+              >
+                <span className={`text-center text-[1.125rem] leading-[1.6875rem] ${isValid && isImageUploaded ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'
+                  }`}>
+                  다음
+                </span>
+              </button>
             </div>
           </div>
         </form>

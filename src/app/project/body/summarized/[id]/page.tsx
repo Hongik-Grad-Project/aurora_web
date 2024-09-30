@@ -78,7 +78,7 @@ export default function SummarizedProjectBodyPage() {
         const payload = {
             subtitleList: textSections.map((section) => section.subtitle), // 소제목 배열
             contentList: textSections.map((section) => section.content),  // 내용 배열
-            tagList: ["태그1", "태그2", "태그3"],  // 임시 태그 배열
+            tagList: ["태그 4"],  // 임시 태그 배열
         };
 
         try {
@@ -96,7 +96,7 @@ export default function SummarizedProjectBodyPage() {
         const payload = {
             subtitleList: textSections.map((section) => section.subtitle), // 소제목 배열
             contentList: textSections.map((section) => section.content),  // 내용 배열
-            tagList: ["태그1", "태그2", "태그3"],  // 임시 태그 배열
+            tagList: ["태그 4"],  // 임시 태그 배열
         };
 
         try {
