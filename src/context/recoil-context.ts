@@ -127,3 +127,15 @@ export const selectedSummaryContentState = atom<SummaryContent | null>({
     solution: '',
   },
 });
+
+
+// 기획서 자동 완성 
+export const subTitleListState = atom<string[]>({
+  key: 'subTitleListState',
+  default: [],
+});
+
+export const contentListState = atom<string[]>({
+  key: 'contentListState',
+  default: [],
+});

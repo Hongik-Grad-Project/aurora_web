@@ -1,15 +1,26 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ProjectBodyTextProps {
     index: number;
+    subtitle?: string; // subtitle을 props로 전달받음
+    content?: string;  // content를 props로 전달받음
     onChange: (index: number, subtitle: string, content: string) => void;
 }
 
-export default function ProjectBodyText({ index, onChange }: ProjectBodyTextProps) {
-    const [subtitle, setSubtitle] = useState('');
-    const [content, setContent] = useState('');
+export default function ProjectBodyText({ index, subtitle: initialSubtitle = '', content: initialContent = '', onChange }: ProjectBodyTextProps) {
+    const [subtitle, setSubtitle] = useState(initialSubtitle);
+    const [content, setContent] = useState(initialContent);
+
+    // props의 값이 변경될 때마다 내부 상태 업데이트
+    useEffect(() => {
+        setSubtitle(initialSubtitle);
+    }, [initialSubtitle]);
+
+    useEffect(() => {
+        setContent(initialContent);
+    }, [initialContent]);
 
     const handleSubtitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newSubtitle = e.target.value;
@@ -21,7 +32,7 @@ export default function ProjectBodyText({ index, onChange }: ProjectBodyTextProp
         const newContent = e.target.value;
         setContent(newContent);
         onChange(index, subtitle, newContent);
-    };    
+    };
 
     return (
         <div className="flex flex-col w-[58.75rem] items-start gap-[1.1875rem]">

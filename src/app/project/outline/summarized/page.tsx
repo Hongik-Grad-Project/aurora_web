@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { TargetObject } from "@/lib/data";
 import { addDays } from "date-fns";
-import { useRecoilValue } from 'recoil'
-import { accessTokenState, selectedSummaryRoomIdState } from '@/context/recoil-context'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { accessTokenState, selectedSummaryRoomIdState, subTitleListState, contentListState } from '@/context/recoil-context'
 import { useRouter } from 'next/navigation'
 import Image from "next/image";
 import Dropdown from "@/components/common/component/Basic/Dropdown";
@@ -39,6 +39,9 @@ export default function ProjectSummarizedOutlinePage() {
     const [projectRepresentImage, setProjectRepresentImage] = useState<File | null>(null)
     const [projectRepresentImageUrl, setProjectRepresentImageUrl] = useState<string | null>(null)
 
+    const [subTitleList, setSubTitleList] = useRecoilState(subTitleListState);
+    const [contentList, setContentList] = useRecoilState(contentListState);
+
     // API 호출하여 빈칸 채우기
     useEffect(() => {
         const fetchNoteCompletion = async () => {
@@ -55,6 +58,9 @@ export default function ProjectSummarizedOutlinePage() {
                     setValue("target", completionData.target || "");
                     setValue("summary", completionData.summary || "");
                     setValue("projectTitle", completionData.projectTitle || "");
+                
+                    setSubTitleList(completionData.subTitleList || []);
+                    setContentList(completionData.contentList || []);
                 }
             } catch (error) {
                 console.error("Error fetching note completion data:", error);
@@ -64,7 +70,7 @@ export default function ProjectSummarizedOutlinePage() {
         };
 
         fetchNoteCompletion();
-    }, [accessToken, selectedSummaryRoomId, setValue]);
+    }, [accessToken, selectedSummaryRoomId, setSubTitleList, setContentList, setValue]);
 
     const handleTargetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setTarget(e.target.value);

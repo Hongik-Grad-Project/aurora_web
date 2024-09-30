@@ -109,23 +109,6 @@ export default function ProjectBodyPage() {
         }
     };
 
-    const onSubmit: SubmitHandler<FormInputs> = async () => {
-        if (!accessToken) return;
-
-        const payload = {
-            subtitleList: textSections.map((section) => section.subtitle),
-            contentList: textSections.map((section) => section.content),
-            tagList: tags,
-        };
-
-        try {
-            const response = await PostProjectBodyData(accessToken, projectId, payload, imageFiles);
-            router.push(`/project/body/${projectId}`);
-        } catch (error) {
-            console.error('프로젝트 저장 오류:', error);
-        }
-    };
-
     // 프로젝트 저장 API 호출
     const onSaveProject: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
@@ -141,6 +124,23 @@ export default function ProjectBodyPage() {
             console.log("프로젝트가 저장되었습니다.");
         } catch (error) {
             console.error('프로젝트 저장 오류:', error);
+        }
+    };
+
+    const onSubmit: SubmitHandler<FormInputs> = async () => {
+        if (!accessToken) return;
+
+        const payload = {
+            subtitleList: textSections.map((section) => section.subtitle),
+            contentList: textSections.map((section) => section.content),
+            tagList: tags,
+        };
+
+        try {
+            const response = await RegisterProject(accessToken, projectId, payload, imageFiles);
+            router.push(`/project/gallery`);
+        } catch (error) {
+            console.error('프로젝트 등록 오류:', error);
         }
     };
 
@@ -229,6 +229,7 @@ export default function ProjectBodyPage() {
                     <button
                         type="submit"
                         disabled={!canSubmit}
+                        onClick={handleSubmit(onSubmit)}
                         className={`flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${canSubmit ? 'bg-[#776BFF]' : 'bg-[#E2E6EF] cursor-not-allowed'} transition duration-150`}
                     >
                         <span className={`text-center font-medium text-[1.125rem] leading-[1.6875rem] ${canSubmit ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'}`}>프로젝트 등록하기</span>

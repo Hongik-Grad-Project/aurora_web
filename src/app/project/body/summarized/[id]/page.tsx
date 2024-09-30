@@ -1,29 +1,62 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '@/context/recoil-context'
-import { useRouter, usePathname } from 'next/navigation'
+import { accessTokenState, subTitleListState, contentListState } from '@/context/recoil-context'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
-import { EditProjectBodyData, PostProjectBodyData, RegisterProject } from '@/lib/action'
+import { EditProjectBodyData, RegisterProject } from '@/lib/action'
 
-interface FormInputs { }
+interface FormInputs {
+    tags: string;
+}
 
 export default function SummarizedProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const { handleSubmit } = useForm<FormInputs>()
+    const searchParams = useSearchParams();
+    const { handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
+        mode: 'onChange'
+    })
     const accessToken = useRecoilValue(accessTokenState) || ''
 
-    const [textSections, setTextSections] = useState<{ subtitle: string; content: string }[]>([{ subtitle: '', content: '' }])
+    const subTitleList = useRecoilValue(subTitleListState);
+    const contentList = useRecoilValue(contentListState);
+
+    const [textSections, setTextSections] = useState<{ subtitle: string; content: string }[]>([]);
     const [imageFiles, setImageFiles] = useState<File[]>([])
     const [imagePreviews, setImagePreviews] = useState<string[]>([])
+    const [tags, setTags] = useState<string[]>([])
 
     const pathSegments = pathname.split('/');
     const projectId = pathSegments[pathSegments.length - 1];
+
+    // textSections를 전역 상태에서 가져온 값으로 초기화
+    useEffect(() => {
+        if (subTitleList.length > 0 && contentList.length > 0) {
+            const initialSections = subTitleList.map((subtitle, index) => ({
+                subtitle,
+                content: contentList[index] || '',
+            }));
+            setTextSections(initialSections);
+            setValue('tags', tags.join(', '));
+        } else {
+            setTextSections([{ subtitle: '', content: '' }]);
+            setValue('tags', tags.join(', '));
+        }
+    }, [subTitleList, contentList]);
+
+
+    // 필수 조건을 만족하는지 확인
+    const areTextSectionsValid = textSections.some(section => section.subtitle.trim() !== '' && section.content.trim() !== '');
+    const isImageValid = imageFiles.length > 0;
+    const isTagsValid = tags.length > 0;
+
+    // 전체 유효성 확인
+    const canSubmit = areTextSectionsValid && isImageValid && isTagsValid;
 
     const addTextSection = () => {
         if (textSections.length < 3) {
@@ -37,18 +70,16 @@ export default function SummarizedProjectBodyPage() {
         }
     }
 
-    // 여러 개의 이미지를 업로드하고 미리보기를 제공하는 함수
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const files = event.target.files;
         if (files && files[0]) {
             const file = files[0];
-            
+
             if (file.size > 1024 * 1024 * 2) { // 2MB 크기 제한
                 alert('파일 크기가 2MB를 초과할 수 없습니다.');
                 return;
             }
 
-            // 파일을 추가 및 미리보기 업데이트
             const updatedFiles = [...imageFiles];
             const updatedPreviews = [...imagePreviews];
 
@@ -57,8 +88,8 @@ export default function SummarizedProjectBodyPage() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 updatedPreviews[index] = URL.createObjectURL(file);
-                setImagePreviews(updatedPreviews); // 미리보기 업데이트
-                setImageFiles(updatedFiles); // 파일 업데이트
+                setImagePreviews(updatedPreviews);
+                setImageFiles(updatedFiles);
             };
 
             reader.readAsDataURL(file);
@@ -71,6 +102,27 @@ export default function SummarizedProjectBodyPage() {
         setTextSections(updatedTexts);
     }
 
+    const handleTagInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            const input = event.target as HTMLInputElement;
+            const tag = input.value.trim(); // 앞뒤 공백 제거
+
+            // 유효한 태그인지 확인하고 태그 목록에 추가
+            if (tag && !tags.includes(tag)) {
+                setTags((prevTags) => {
+                    const updatedTags = [...prevTags, tag];
+                    setValue('tags', updatedTags.join(', ')); // 폼 값 업데이트
+                    return updatedTags;
+                });
+            }
+
+            // 입력 필드 초기화
+            input.value = '';
+        }
+    };
+
     // 프로젝트 저장 API 호출
     const onSaveProject: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
@@ -78,30 +130,29 @@ export default function SummarizedProjectBodyPage() {
         const payload = {
             subtitleList: textSections.map((section) => section.subtitle), // 소제목 배열
             contentList: textSections.map((section) => section.content),  // 내용 배열
-            tagList: ["태그 4"],  // 임시 태그 배열
+            tagList: tags,  // 태그 배열
         };
 
         try {
-            const response = await EditProjectBodyData(accessToken, projectId, payload, imageFiles);  // projectId를 실제로 교체
+            const response = await EditProjectBodyData(accessToken, projectId, payload, imageFiles);
             console.log("프로젝트가 저장되었습니다.");
         } catch (error) {
             console.error('프로젝트 저장 오류:', error);
         }
     };
 
-    // 프로젝트 등록 API 호출
-    const onRegisterProject: SubmitHandler<FormInputs> = async () => {
+    const onSubmit: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
 
         const payload = {
-            subtitleList: textSections.map((section) => section.subtitle), // 소제목 배열
-            contentList: textSections.map((section) => section.content),  // 내용 배열
-            tagList: ["태그 4"],  // 임시 태그 배열
+            subtitleList: textSections.map((section) => section.subtitle),
+            contentList: textSections.map((section) => section.content),
+            tagList: tags,
         };
 
         try {
-            const response = await RegisterProject(accessToken, projectId, payload, imageFiles);  // projectId를 실제로 교체
-            router.push('/project/gallery');  // 성공 시 이동할 경로
+            await RegisterProject(accessToken, projectId, payload, imageFiles);
+            router.push(`/project/gallery`);
         } catch (error) {
             console.error('프로젝트 등록 오류:', error);
         }
@@ -114,11 +165,6 @@ export default function SummarizedProjectBodyPage() {
                     <div className="text-[#9DA1AD] font-medium text-[2.5rem] leading-[3.75rem] opacity-80">
                         프로젝트 개요
                     </div>
-                    <div className="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
-                            <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
-                        </svg>
-                    </div>
                     <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
                         본문 작성
                     </div>
@@ -126,12 +172,14 @@ export default function SummarizedProjectBodyPage() {
 
                 <div className="flex flex-col items-start gap-[1.25rem] self-stretch">
                     <div className="flex flex-col justify-center items-center gap-[1.1875rem] self-stretch p-[1.875rem] rounded-[1rem] bg-[#FEFEFE]">
-                        {/* 본문 텍스트 입력 부분 */}
+                        {/* 프로젝트 본문 텍스트 입력 */}
                         {textSections.map((section, index) => (
                             <ProjectBodyText
                                 key={index}
                                 index={index}
-                                onChange={(index, subtitle, content) => handleTextChange(index, subtitle, content)}  // 인덱스를 함께 전달
+                                subtitle={section.subtitle}  // 초기값 전달
+                                content={section.content}    // 초기값 전달
+                                onChange={(index, subtitle, content) => handleTextChange(index, subtitle, content)}
                             />
                         ))}
 
@@ -142,7 +190,6 @@ export default function SummarizedProjectBodyPage() {
                                     <ProjectImage
                                         onFileChange={(file: File) => handleImageUpload({ target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>, index)}
                                     />
-                                    {/* 이미지 미리보기 표시 */}
                                     {imagePreviews[index] && (
                                         <Image
                                             src={imagePreviews[index]}
@@ -168,7 +215,7 @@ export default function SummarizedProjectBodyPage() {
 
                         {/* 태그 입력 */}
                         <div className="flex flex-col items-start gap-[1rem] self-stretch">
-                            <div className="self-stretch text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">
+                            <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">
                                 태그 등록
                             </div>
                             <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
@@ -178,16 +225,26 @@ export default function SummarizedProjectBodyPage() {
                                         type="text"
                                         placeholder="프로젝트의 태그를 입력하고 엔터해주세요"
                                         className="flex-grow bg-transparent text-[#0F1011] outline-none"
+                                        onKeyPress={handleTagInput} // 변경된 부분
                                     />
                                 </div>
                             </div>
                         </div>
 
+                        {/* 태그 리스트 표시 */}
+                        <div className="flex flex-wrap gap-2 mt-2">
+                            {tags.map((tag, index) => (
+                                <span key={index} className="px-3 py-1 bg-gray-200 rounded-full text-sm">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+
                         {/* 저장 버튼 */}
                         <div className="flex justify-end items-center self-stretch pl-[44.25rem]">
                             <div className="flex items-start gap-[0.625rem]">
-                                <button 
-                                    type="button" // submit 대신 button으로 변경
+                                <button
+                                    type="button"
                                     onClick={handleSubmit(onSaveProject)} // 프로젝트 저장 함수 호출
                                     className="flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#776BFF]"
                                 >
@@ -199,14 +256,14 @@ export default function SummarizedProjectBodyPage() {
                         </div>
                     </div>
 
-                    <button 
-                        type="button" // submit 대신 button으로 변경
-                        onClick={handleSubmit(onRegisterProject)} // 프로젝트 등록 함수 호출
-                        className="flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#776BFF]"
+                    {/* 등록 버튼 */}
+                    <button
+                        type="submit"
+                        disabled={!canSubmit}
+                        onClick={handleSubmit(onSubmit)}
+                        className={`flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${canSubmit ? 'bg-[#776BFF]' : 'bg-[#E2E6EF] cursor-not-allowed'} transition duration-150`}
                     >
-                        <span className="text-[#FEFEFE] text-center font-medium text-[1.125rem] leading-[1.6875rem]">
-                            프로젝트 등록하기
-                        </span>
+                        <span className={`text-center font-medium text-[1.125rem] leading-[1.6875rem] ${canSubmit ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'}`}>프로젝트 등록하기</span>
                     </button>
                 </div>
             </form>
