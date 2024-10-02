@@ -16,7 +16,8 @@ export default function ChatAurora() {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatHistory]); // 의존성 배열에 chatHistory를 추가하여 메시지가 추가될 때마다 스크롤이 이동하도록 설정
+    console.log('ChatAurora useEffect 실행');
+  }, [selectedChatRoomId, chatHistory]); // `selectedChatRoomId`와 `chatHistory` 모두를 의존성 배열에 추가
 
   return (
     <div className="flex flex-col w-full h-full bg-gray-100 relative">
@@ -26,11 +27,10 @@ export default function ChatAurora() {
             {chatHistory.map((message, index) => (
               <div
                 key={index}
-                className={`relative p-4 rounded-lg ${
-                  message.senderType === 'AURORA_AI'
-                    ? 'bg-gray-200 text-gray-800 self-start mr-auto'
-                    : 'bg-indigo-500 text-white self-end ml-auto'
-                }`}
+                className={`relative p-4 rounded-lg ${message.senderType === 'AURORA_AI'
+                  ? 'bg-gray-200 text-gray-800 self-start mr-auto'
+                  : 'bg-indigo-500 text-white self-end ml-auto'
+                  }`}
                 style={{
                   maxWidth: '75%',
                   wordWrap: 'break-word',

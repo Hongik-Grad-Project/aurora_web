@@ -48,26 +48,41 @@ export default function ChatInput() {
             alert('로그인 이후에 채팅을 이용할 수 있습니다.');
             return;
         }
-
+    
         if (inputValue.trim() === '' || isSendingRef.current) return;
-
+    
         isSendingRef.current = true;
-
+    
         let currentChatRoomId = selectedChatRoomId;
-
+    
+        const userMessage: AuroraMessage = {
+            contents: inputValue,
+            senderType: 'MEMBER',
+            createdAt: new Date().toISOString(),
+        };
+    
         if (!currentChatRoomId) {
+            // 새로운 채팅방 생성 요청
             const location = await GetChatLocation(accessToken);
-
             if (location) {
                 currentChatRoomId = parseInt(location.split('/').pop()!);
-                setSelectedChatRoomId(currentChatRoomId);
+    
+                // `selectedChatRoomId`가 업데이트될 때까지 기다림
+                await new Promise<void>((resolve) => {
+                    setSelectedChatRoomId(currentChatRoomId);
+                    setTimeout(resolve, 100);  // 약간의 지연을 추가하여 `setSelectedChatRoomId`가 완료되도록 함
+                });
+    
+                // 새로운 채팅방을 가져와 업데이트
                 const chatRoomsResponse = await GetChatList(accessToken);
                 setChatRooms(chatRoomsResponse);
             }
         }
-
+    
+        // `selectedChatRoomId`가 설정된 이후에 메시지 추가
         setChatHistory((prev) => [...prev, userMessage]);
-
+    
+        // AI 응답 처리
         if (currentChatRoomId) {
             const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
             const aiMessage: AuroraMessage = {
@@ -75,13 +90,17 @@ export default function ChatInput() {
                 senderType: 'AURORA_AI',
                 createdAt: new Date().toISOString(),
             };
+    
+            // AI 메시지 추가
             setChatHistory((prev) => [...prev, aiMessage]);
         }
-
+    
         updateChatRooms();
         isSendingRef.current = false;
+        setInputValue(''); // 입력 창 초기화
     };
-
+          
+    
     const updateChatRooms = async () => {
         const newRooms = await GetChatList(accessToken);
         setChatRooms(newRooms);
