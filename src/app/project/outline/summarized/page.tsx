@@ -108,8 +108,6 @@ export default function ProjectSummarizedOutlinePage() {
         }
     };
 
-
-
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
         if (!accessToken) return;
 
