@@ -38,9 +38,9 @@ export default function ProjectBodyPage() {
         setValue('imageFiles', imageFiles);
     }, [tags, textSections, imageFiles, setValue]);
 
-    // 필수 조건을 만족하는지 확인
+    // 조건 충족 여부 확인 함수
     const areTextSectionsValid = textSections.some(section => section.subtitle.trim() !== '' && section.content.trim() !== '');
-    const isImageValid = imageFiles.length > 0;
+    const isImageValid = imageFiles.length > 0 && imageFiles.some((file) => file.size > 0); // 파일이 실제로 업로드된 경우만 유효
     const isTagsValid = tags.length > 0;
 
     // 전체 유효성 확인
