@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, subTitleListState, contentListState } from '@/context/recoil-context'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
@@ -17,7 +17,6 @@ interface FormInputs {
 export default function SummarizedProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const searchParams = useSearchParams();
     const { handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
         mode: 'onChange'
     })
@@ -49,13 +48,11 @@ export default function SummarizedProjectBodyPage() {
         }
     }, [subTitleList, contentList]);
 
-
-    // 필수 조건을 만족하는지 확인
+    // 조건 충족 여부 확인 함수
     const areTextSectionsValid = textSections.some(section => section.subtitle.trim() !== '' && section.content.trim() !== '');
-    const isImageValid = imageFiles.length > 0;
+    const isImageValid = imageFiles.length > 0 && imageFiles.some((file) => file.size > 0); // 파일이 실제로 업로드된 경우만 유효
     const isTagsValid = tags.length > 0;
 
-    // 전체 유효성 확인
     const canSubmit = areTextSectionsValid && isImageValid && isTagsValid;
 
     const addTextSection = () => {
@@ -107,9 +104,8 @@ export default function SummarizedProjectBodyPage() {
             event.preventDefault();
 
             const input = event.target as HTMLInputElement;
-            const tag = input.value.trim(); // 앞뒤 공백 제거
+            const tag = input.value.trim();
 
-            // 유효한 태그인지 확인하고 태그 목록에 추가
             if (tag && !tags.includes(tag)) {
                 setTags((prevTags) => {
                     const updatedTags = [...prevTags, tag];
@@ -118,23 +114,21 @@ export default function SummarizedProjectBodyPage() {
                 });
             }
 
-            // 입력 필드 초기화
             input.value = '';
         }
     };
 
-    // 프로젝트 저장 API 호출
     const onSaveProject: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
 
         const payload = {
-            subtitleList: textSections.map((section) => section.subtitle), // 소제목 배열
-            contentList: textSections.map((section) => section.content),  // 내용 배열
-            tagList: tags,  // 태그 배열
+            subtitleList: textSections.map((section) => section.subtitle),
+            contentList: textSections.map((section) => section.content),
+            tagList: tags,
         };
 
         try {
-            const response = await EditProjectBodyData(accessToken, projectId, payload, imageFiles);
+            await EditProjectBodyData(accessToken, projectId, payload, imageFiles);
             console.log("프로젝트가 저장되었습니다.");
         } catch (error) {
             console.error('프로젝트 저장 오류:', error);
