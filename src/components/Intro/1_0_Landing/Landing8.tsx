@@ -20,7 +20,7 @@ export default function Landing8() {
                         <h1
                             className="text-[#0F1A2A] text-[2.625rem] font-bold leading-[3.625rem]"
                         >
-                            지금, 오로라가 찾은 사회문제를 살펴보세요
+                            지금, 오로라에서 다양한 프로젝트를 살펴보세요
                         </h1>
 
                     </div>

@@ -26,7 +26,7 @@ export default function Landing3() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1, duration: 0.8 }} // 동일한 애니메이션 속도 적용
                         >
-                            해결하기 어려운 세상의 다양한 사회 문제들
+                            해결하기 어려운 세상의 다양한 문제들
                         </motion.div>
                         <motion.h1
                             className="text-[#0F1A2A] text-[1.875rem] md:text-[2.625rem] font-bold leading-[2.625rem] md:leading-[3.625rem]"

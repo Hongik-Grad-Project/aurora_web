@@ -45,7 +45,7 @@ export default function Landing4() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.35, duration: 0.5 }}
                     >
-                        해결하고 싶은 사회 문제가 무엇인지, 차근차근 당신의 생각을
+                        해결하고 싶은 문제가 무엇인지, 차근차근 당신의 생각을
                         <br />
                         구체화 시켜드릴게요
                     </motion.div>
