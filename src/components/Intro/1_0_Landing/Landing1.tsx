@@ -37,9 +37,9 @@ export default function Landing1() {
             color: '#6A6F7A',
           }}
         >
-          세상은 복잡하고, 우리 주변에는 아직 해결되지 않은 
+          세상은 복잡하고,
           <br className="block lg:hidden" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}
-          수많은 문제들이 존재해요
+          우리 주변에는 아직 해결되지 않은 수많은 문제들이 존재해요
           <br className="block" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}
           만약 이러한 문제들을 바라만 보고 있었다면, 
           <br className="block lg:hidden" /> {/* 모바일과 노트북에서는 줄바꿈, 큰 화면에서는 숨김 */}

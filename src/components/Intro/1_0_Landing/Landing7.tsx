@@ -4,41 +4,39 @@ import { motion } from "framer-motion";
 
 export default function Landing7() {
     return (
-        <div className="relative flex justify-center h-screen 
-        min-h-screen w-full pl-[6.88rem] pr-[7.88rem] snap-mandatory 
-        snap-start snap-always flex-row overflow-hidden overflow-x-auto 
-        bg-cover bg-no-repeat pt-[5rem]"
-            style={{
+        <div className="relative flex justify-center items-center h-screen min-h-screen
+        w-full snap-mandatory snap-start snap-always flex-col md:flex-row 
+        overflow-hidden bg-[#FFFFFF] bg-cover bg-no-repeat pt-[3rem]
+        md:pt-[5rem]"style={{
                 background: 'linear-gradient(180deg, #FFF 0%, #E2DDFF 100%)',
-            }}
-        >
-            <div className="flex w-full flex-row justify-between items-start gap-[1.19rem]">
+            }}>
+            <div className="flex w-full flex-col md:flex-row justify-center items-center md:justify-between gap-[3rem]">
                 <motion.div
-                    className="inline-flex flex-col items-start gap-[1.1875rem] mt-[9.03rem]"
+                    className="flex-1 flex flex-col items-center gap-[1.1875rem]" // 중앙 정렬 및 flex-1 적용
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.5 }}
+                    transition={{ delay: 0.1, duration: 0.8 }}
                 >
-                    <div className="flex flex-col items-start">
+                    <div className="flex flex-col items-center gap-[0.375rem]">
                         <motion.div
-                            className="flex text-[1.25rem] text-[#475569] mb-[0.38rem]"
+                            className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.875rem] opacity-80"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: 0.4 }}
+                            transition={{ delay: 0.1, duration: 0.8 }}
                         >
                             프로젝트를 스스로 검증하기 어려웠나요?
                         </motion.div>
                         <motion.h1
-                            className="text-[2.625rem] text-[#0F1A2A] font-bold mb-[1.19rem]"
+                            className="text-center text-[#0F1A2A] text-[1.875rem] md:text-[2.625rem] font-bold leading-[2.625rem] md:leading-[3.625rem]"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.25, duration: 0.4 }}
                         >
-                            사회 문제에 공감하는 사람들에게 응원받아요
+                            공감하는 사람들에게 응원받아요
                         </motion.h1>
                     </div>
                     <motion.div
-                        className="text-[#475569] text-[1.25rem] font-medium leading-[1.875rem]"
+                        className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.5rem] md:leading-[1.875rem] opacity-80"
                         style={{ fontFamily: 'Pretendard, sans-serif' }}
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -49,13 +47,10 @@ export default function Landing7() {
                 </motion.div>
 
                 <motion.div
+                    className="flex-1 order-last md:order-none" // 모바일에서는 첫 번째로, 데스크톱에서는 순서 없음
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                        delay: 1,
-                        duration: 1.0,
-                    }}
-                    className="flex w-[31.8125rem] h-[29.5625rem] pt-[1.25rem] px-[2.875rem] pb-[6.86225rem] justify-center items-center mt-[3.75rem]"
+                    transition={{ delay: 0.3, duration: 0.8 }}
                 >
                     <div
                         className="flex w-[26.0625rem] h-[20.4375rem] justify-center items-end"
@@ -91,7 +86,6 @@ export default function Landing7() {
                                 </span>
                             </div>
                         </button>
-
                     </div>
                 </motion.div>
             </div >
