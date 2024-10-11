@@ -2,69 +2,119 @@
 
 import { useEffect, useState } from 'react';
 import GalleryWindow from '@/components/Gallery/GalleryWindow';
-import { ProjectGallery as ProjectGalleryType } from '@/lib/types'; // 응답 데이터 타입
+import { ProjectGallery as ProjectGalleryType } from '@/lib/types';
 import { GetRecommendProjects } from '@/lib/action';
-
+import { motion } from "framer-motion";
 import { useRecoilValue } from 'recoil';
-import { accessTokenState, authState } from '@/context/recoil-context';
+import { accessTokenState } from '@/context/recoil-context';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 export default function Landing6() {
-    const accessToken = useRecoilValue(accessTokenState) || ''; // accessToken이 없는 경우 빈 문자열 사용
+    const accessToken = useRecoilValue(accessTokenState) || '';
 
-    const [projects, setProjects] = useState<ProjectGalleryType[]>([]); // 프로젝트 리스트 상태
-    const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
-    const [error, setError] = useState<string | null>(null); // 에러 상태
+    const [projects, setProjects] = useState<ProjectGalleryType[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // 추천 프로젝트 조회 함수
     const fetchRecommendsProject = async () => {
         try {
             const response = await GetRecommendProjects(accessToken);
             if (response && Array.isArray(response)) {
-                setProjects(response); // 프로젝트 리스트 상태 업데이트
+                setProjects(response);
             } else {
                 setError('Invalid response format');
             }
         } catch (err) {
             setError('An error occurred while fetching the projects.');
         } finally {
-            setLoading(false); // 로딩 완료
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchRecommendsProject(); // 컴포넌트가 마운트될 때 데이터 요청
+        fetchRecommendsProject();
     }, [accessToken]);
 
     if (loading) {
-        return <div>Loading...</div>; // 로딩 중일 때 표시
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>; // 에러 발생 시 표시
+        return <div>Error: {error}</div>;
     }
 
     return (
-        <div className="relative flex h-screen min-h-screen w-full snap-mandatory snap-start snap-always flex-col overflow-hidden overflow-x-auto bg-[#FFFFFF] bg-cover bg-no-repeat pt-[5rem]">
-            <div className="flex flex-col justify-center items-center">
-                <p className="mt-[4.12rem] mb-[0.56rem]">
-                    사람들이 어떤 사회문제에 관심이 많은지 궁금하나요?
-                </p>
-                <h1 className="text-[#0F1A2A] text-[2.625rem] font-bold leading-[3.625rem] mb-[1.19rem]">
-                    이번 달에 가장 많이 응원받은 프로젝트에요
-                </h1>
-                <p className="text-[#475569] text-[1.25rem] font-medium leading-[1.875rem] opacity-80 mb-[2.44rem]">
-                    사회문제를 해결하기 위한 다양한 프로젝트를 만나보세요.
-                </p>
-                <div className="flex flex-row gap-[0.75rem]">
-                    {/* projects 배열이 있을 때만 map 함수 실행 */}
-                    {Array.isArray(projects) && projects.length > 0 ? (
+        <div className="relative flex justify-center items-center h-screen min-h-screen
+        w-full snap-mandatory snap-start snap-always flex-col md:flex-row 
+        overflow-hidden bg-[#FFFFFF] bg-cover bg-no-repeat pt-[3rem]
+        md:pt-[5rem]">
+            <div className="flex w-full flex-col md:flex-row justify-center items-center md:justify-between gap-[3rem]">
+                <motion.div
+                    className="flex-1 flex flex-col items-center gap-[1.1875rem]" // 중앙 정렬 및 flex-1 적용
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.8 }}
+                >
+                    <div className="flex flex-col items-center gap-[0.375rem]">
+                        <motion.div
+                            className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.875rem] opacity-80"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, duration: 0.8 }}
+                        >
+                            사람들이 어떤 사회문제에 관심이 많은지 궁금하나요?
+                        </motion.div>
+                        <motion.h1
+                            className="text-center text-[#0F1A2A] text-[1.875rem] md:text-[2.625rem] font-bold leading-[2.625rem] md:leading-[3.625rem]"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.25, duration: 0.4 }}
+                        >
+                            이번 달에 가장 많이 응원받은 프로젝트에요
+                        </motion.h1>
+                    </div>
+                    <motion.div
+                        className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.5rem] md:leading-[1.875rem] opacity-80"
+                        style={{ fontFamily: 'Pretendard, sans-serif' }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35, duration: 0.5 }}
+                    >
+                        사회문제를 해결하기 위한 다양한 프로젝트를 만나보세요.
+                    </motion.div>
+                </motion.div>
+                <Swiper
+                    spaceBetween={10}
+                    simulateTouch={true}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    modules={[Navigation, Pagination]}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    breakpoints={{
+                        320: { slidesPerView: 1 },  // For mobile devices
+                        768: { slidesPerView: 3 },  // For tablets and above
+                    }}
+                    style={{ maxWidth: '1200px', width: '100%', margin: 'auto' }}  // 인라인 스타일 적용
+                >
+                    {projects.length > 0 ? (
                         projects.map((project) => (
-                            <GalleryWindow key={project.projectId} project={project} />
+                            <SwiperSlide key={project.projectId} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <GalleryWindow project={project} />
+                            </SwiperSlide>
                         ))
                     ) : (
-                        <p>프로젝트가 없습니다.</p>
+                        <SwiperSlide>
+                            <p>프로젝트가 없습니다.</p>
+                        </SwiperSlide>
                     )}
-                </div>
+                </Swiper>
             </div>
         </div>
     );

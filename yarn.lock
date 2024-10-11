@@ -2653,6 +2653,7 @@ __metadata:
     recoil: "npm:^0.7.7"
     recoil-persist: "npm:^5.1.0"
     slick-carousel: "npm:^1.8.1"
+    swiper: "npm:^11.1.14"
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5"
     yup: "npm:^1.4.0"
@@ -6794,6 +6795,13 @@ __metadata:
   bin:
     svgo: ./bin/svgo
   checksum: 10c0/a6badbd3d1d6dbb177f872787699ab34320b990d12e20798ecae915f0008796a0f3c69164f1485c9def399e0ce0a5683eb4a8045e51a5e1c364bb13a0d9f79e1
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "swiper@npm:11.1.14"
+  checksum: 10c0/a1075cbd2254aedd22b411ea03cbd7a91ba1cc79d7c2dc41f215e987811e449a2915a26b39fdfc1d7c08250fa2cfbe51d28476f834e75033c73ea357a4ac9f8d
   languageName: node
   linkType: hard
 

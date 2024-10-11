@@ -10,7 +10,7 @@ interface ProjectGalleryWindowProps {
 }
 
 export default function GalleryWindow({ project }: ProjectGalleryWindowProps) {
-
+    console.log(project);
     const isWriting = project.completedStatusType === 'NOT_COMPLETED';
     const isCompleted = project.completedStatusType === 'COMPLETED';
     const isClosed = project.completedStatusType === 'CLOSED';

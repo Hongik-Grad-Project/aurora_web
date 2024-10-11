@@ -10,13 +10,13 @@ export default function Landing5() {
         overflow-hidden bg-[#FFFFFF] bg-cover bg-no-repeat pt-[3rem]
         md:pt-[5rem]">
             <div className="flex w-full flex-col md:flex-row justify-center items-center md:justify-between gap-[3rem]">
-            <motion.div
+                <motion.div
                     className="flex-1 flex flex-col items-center gap-[1.1875rem]" // 중앙 정렬 및 flex-1 적용
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.8 }}
                 >
-<div className="flex flex-col items-center gap-[0.375rem]">
+                    <div className="flex flex-col items-center gap-[0.375rem]">
                         <motion.div
                             className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.875rem] opacity-80"
                             initial={{ opacity: 0, y: 30 }}
