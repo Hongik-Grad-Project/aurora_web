@@ -108,19 +108,16 @@ export default function SummarizedProjectBodyPage() {
     const handleTagInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-
+    
             const input = event.target as HTMLInputElement;
             const tag = input.value.trim();
-
-            if (tag && !tags.includes(tag)) {
-                setTags((prevTags) => {
-                    const updatedTags = [...prevTags, tag];
-                    setValue('tagInput', updatedTags.join(', ')); // 폼 값 업데이트
-                    return updatedTags;
-                });
+    
+            if (tag && !tags.includes(tag) && tags.length < 10) { // 태그 중복 검사 및 최대 태그 수 제한
+                const updatedTags = [...tags, tag];
+                setTags(updatedTags); // 태그 상태 업데이트
+                setValue('tagInput', ''); // 입력 필드 초기화
+                input.value = ''; // 입력 필드 HTML 요소 직접 초기화
             }
-
-            input.value = '';
         }
     };
 
@@ -165,6 +162,11 @@ export default function SummarizedProjectBodyPage() {
                     <div className="text-[#9DA1AD] font-medium text-[2.5rem] leading-[3.75rem] opacity-80">
                         프로젝트 개요
                     </div>
+                    <div className="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
+                                <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
+                            </svg>
+                    </div>
                     <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
                         본문 작성
                     </div>
@@ -190,7 +192,7 @@ export default function SummarizedProjectBodyPage() {
                                     <ProjectImage
                                         onFileChange={(file: File) => handleImageUpload({ target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>, index)}
                                     />
-                                    {imagePreviews[index] && (
+                                    {/* {imagePreviews[index] && (
                                         <Image
                                             src={imagePreviews[index]}
                                             alt={`이미지 미리보기 ${index + 1}`}
@@ -198,7 +200,7 @@ export default function SummarizedProjectBodyPage() {
                                             height={100}
                                             className="rounded-md"
                                         />
-                                    )}
+                                    )} */}
                                 </div>
                             ))}
                         </div>

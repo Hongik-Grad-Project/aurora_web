@@ -28,7 +28,7 @@ export default function ProjectImage({ onFileChange }: { onFileChange: (file: Fi
                     <button 
                         type="button" // 버튼 타입을 명시적으로 button으로 설정
                         onClick={handleButtonClick} 
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+                        className="px-4 py-2 bg-[#776BFF] text-white rounded-md hover:bg-[#AEA0FF] transition-colors duration-300"
                     >
                         이미지 선택
                     </button>
