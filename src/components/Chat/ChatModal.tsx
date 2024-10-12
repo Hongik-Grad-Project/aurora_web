@@ -89,7 +89,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
                     </button>
                     <button
                         onClick={handleYes}
-                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors"
+                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-[#776BFF] text-white font-semibold hover:bg-[#AEA0FF] transition-colors"
                     >
                         예
                     </button>

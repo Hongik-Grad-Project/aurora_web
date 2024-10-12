@@ -101,7 +101,12 @@ export default function Landing6() {
                         320: { slidesPerView: 1 },  // For mobile devices
                         768: { slidesPerView: 3 },  // For tablets and above
                     }}
-                    style={{ maxWidth: '1200px', width: '100%', margin: 'auto' }}  // 인라인 스타일 적용
+                    style={{
+                        maxWidth: '1200px',
+                        width: '100%',
+                        margin: 'auto',
+                        paddingBottom: '35px' // Adds space for pagination
+                    }}
                 >
                     {projects.length > 0 ? (
                         projects.map((project) => (

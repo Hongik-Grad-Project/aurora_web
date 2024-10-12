@@ -11,15 +11,17 @@ import ProjectImage from '@/components/Project/ProjectImage'
 import { EditProjectBodyData, RegisterProject } from '@/lib/action'
 
 interface FormInputs {
-    tags: string;
+    tagInput: string; // Adjusted to handle live input
 }
 
 export default function SummarizedProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const { handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
-        mode: 'onChange'
-    })
+    const { register, handleSubmit, watch, setValue, getValues, resetField } = useForm<FormInputs>({
+        defaultValues: {
+            tagInput: ''
+        }
+    });
     const accessToken = useRecoilValue(accessTokenState) || ''
 
     const subTitleList = useRecoilValue(subTitleListState);
@@ -41,10 +43,10 @@ export default function SummarizedProjectBodyPage() {
                 content: contentList[index] || '',
             }));
             setTextSections(initialSections);
-            setValue('tags', tags.join(', '));
+            setValue('tagInput', tags.join(', '));
         } else {
             setTextSections([{ subtitle: '', content: '' }]);
-            setValue('tags', tags.join(', '));
+            setValue('tagInput', tags.join(', '));
         }
     }, [subTitleList, contentList]);
 
@@ -66,6 +68,10 @@ export default function SummarizedProjectBodyPage() {
             setImageFiles([...imageFiles, new File([], '')])
         }
     }
+
+    const removeTag = (index: number) => {
+        setTags(prev => prev.filter((_, i) => i !== index)); // Remove tag by index
+    };
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const files = event.target.files;
@@ -109,7 +115,7 @@ export default function SummarizedProjectBodyPage() {
             if (tag && !tags.includes(tag)) {
                 setTags((prevTags) => {
                     const updatedTags = [...prevTags, tag];
-                    setValue('tags', updatedTags.join(', ')); // 폼 값 업데이트
+                    setValue('tagInput', updatedTags.join(', ')); // 폼 값 업데이트
                     return updatedTags;
                 });
             }
@@ -207,32 +213,29 @@ export default function SummarizedProjectBodyPage() {
                             </button>
                         </div>
 
-                        {/* 태그 입력 */}
-                        <div className="flex flex-col items-start gap-[1rem] self-stretch">
-                            <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">
-                                태그 등록
-                            </div>
-                            <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
-                                후원자들이 프로젝트를 쉽게 검색할 수 있도록 프로젝트와 관련된 검색 키워드를 입력해주세요! (최대 10개)
-                                <div className="flex h-[2.75rem] px-[0.875rem] pr-[15.5625rem] py-[0.625rem] items-center gap-[0.625rem] self-stretch rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC]">
+                        <div className="w-full">
+                            {/* 태그 입력 */}
+                            <div className="flex flex-col items-start gap-[0.5rem] w-full">
+                                <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">태그 등록</div>
+                                <div className="flex items-center w-full gap-[0.625rem] rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC] p-[0.625rem] overflow-hidden">
+                                    {tags.map((tag, index) => (
+                                        <div key={index} className="flex items-center gap-2.5 bg-purple-200 rounded px-2 py-1 text-center justify-center align-center h-8">
+                                            <span>#{tag}</span>
+                                            <button type="button" onClick={() => removeTag(index)} className="text-sm">x</button>
+                                        </div>
+                                    ))}
+
                                     <input
+                                        {...register('tagInput')}
                                         type="text"
-                                        placeholder="프로젝트의 태그를 입력하고 엔터해주세요"
-                                        className="flex-grow bg-transparent text-[#0F1011] outline-none"
-                                        onKeyPress={handleTagInput} // 변경된 부분
+                                        placeholder="#태그 입력 (최대 10개)"
+                                        className="flex-1 p-2 bg-transparent outline-none"
+                                        onKeyPress={handleTagInput}
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        {/* 태그 리스트 표시 */}
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {tags.map((tag, index) => (
-                                <span key={index} className="px-3 py-1 bg-gray-200 rounded-full text-sm">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
 
                         {/* 저장 버튼 */}
                         <div className="flex justify-end items-center self-stretch pl-[44.25rem]">
