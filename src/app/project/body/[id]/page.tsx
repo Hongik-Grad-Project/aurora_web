@@ -19,7 +19,7 @@ interface FormInputs {
 export default function ProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const { register, handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
+    const { register, watch, handleSubmit, setValue, formState: { isValid } } = useForm<FormInputs>({
         mode: 'onChange',
         defaultValues: {
             tagInput: ''
@@ -93,27 +93,31 @@ export default function ProjectBodyPage() {
 
     const handleTagInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            event.preventDefault();
-
+            event.preventDefault(); // 폼 제출 방지
             const input = event.target as HTMLInputElement;
-            const tag = input.value.trim(); // 앞뒤 공백 제거
+            const newTag = input.value.trim();
 
-            // 유효한 태그인지 확인하고 태그 목록에 추가
-            if (tag && !tags.includes(tag)) {
+            if (newTag && !tags.includes(newTag) && tags.length < 10) {
                 setTags((prevTags) => {
-                    const updatedTags = [...prevTags, tag];
+                    const updatedTags = [...prevTags, newTag];
                     setValue('tagInput', updatedTags.join(', ')); // 폼 값 업데이트
                     return updatedTags;
                 });
             }
 
-            // 입력 필드 초기화
             input.value = '';
         }
     };
 
     const removeTag = (index: number) => {
         setTags(prev => prev.filter((_, i) => i !== index)); // Remove tag by index
+    };
+
+    // 텍스트 섹션 삭제
+    const removeTextSection = (index: number) => {
+        console.log(`Removing text section at index ${index}`); // 로그 출력
+        const updatedSections = textSections.filter((_, idx) => idx !== index);
+        setTextSections(updatedSections);
     };
 
     // 프로젝트 저장 API 호출
@@ -175,6 +179,7 @@ export default function ProjectBodyPage() {
                                 key={index}
                                 index={index}
                                 onChange={(index, subtitle, content) => handleTextChange(index, subtitle, content)}
+                                onRemove={() => removeTextSection(index)} // 여기서 onRemove를 전달
                             />
                         ))}
 
@@ -213,13 +218,11 @@ export default function ProjectBodyPage() {
                                             <button type="button" onClick={() => removeTag(index)} className="text-sm">x</button>
                                         </div>
                                     ))}
-
                                     <input
-                                        {...register('tagInput')}
                                         type="text"
                                         placeholder="#태그 입력 (최대 10개)"
                                         className="flex-1 p-2 bg-transparent outline-none"
-                                        onKeyPress={handleTagInput}
+                                        onKeyPress={handleTagInput} // 입력 이벤트 처리
                                     />
                                 </div>
                             </div>

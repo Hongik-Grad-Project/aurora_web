@@ -17,7 +17,7 @@ interface FormInputs {
 export default function SummarizedProjectBodyPage() {
     const router = useRouter()
     const pathname = usePathname()
-    const { register, handleSubmit, watch, setValue, getValues, resetField } = useForm<FormInputs>({
+    const { register, handleSubmit, setValue } = useForm<FormInputs>({
         defaultValues: {
             tagInput: ''
         }
@@ -57,11 +57,7 @@ export default function SummarizedProjectBodyPage() {
 
     const canSubmit = areTextSectionsValid && isImageValid && isTagsValid;
 
-    const addTextSection = () => {
-        if (textSections.length < 3) {
-            setTextSections([...textSections, { subtitle: '', content: '' }])
-        }
-    }
+
 
     const addImageSection = () => {
         if (imageFiles.length < 3) {
@@ -71,6 +67,19 @@ export default function SummarizedProjectBodyPage() {
 
     const removeTag = (index: number) => {
         setTags(prev => prev.filter((_, i) => i !== index)); // Remove tag by index
+    };
+
+    const addTextSection = () => {
+        if (textSections.length < 3) {
+            setTextSections([...textSections, { subtitle: '', content: '' }])
+        }
+    }
+
+    // 텍스트 섹션 삭제
+    const removeTextSection = (index: number) => {
+        console.log(`Removing text section at index ${index}`); // 로그 출력
+        const updatedSections = textSections.filter((_, idx) => idx !== index);
+        setTextSections(updatedSections);
     };
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -107,17 +116,19 @@ export default function SummarizedProjectBodyPage() {
 
     const handleTagInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            event.preventDefault();
-    
+            event.preventDefault(); // 폼 제출 방지
             const input = event.target as HTMLInputElement;
-            const tag = input.value.trim();
-    
-            if (tag && !tags.includes(tag) && tags.length < 10) { // 태그 중복 검사 및 최대 태그 수 제한
-                const updatedTags = [...tags, tag];
-                setTags(updatedTags); // 태그 상태 업데이트
-                setValue('tagInput', ''); // 입력 필드 초기화
-                input.value = ''; // 입력 필드 HTML 요소 직접 초기화
+            const newTag = input.value.trim();
+
+            if (newTag && !tags.includes(newTag) && tags.length < 10) {
+                setTags((prevTags) => {
+                    const updatedTags = [...prevTags, newTag];
+                    setValue('tagInput', updatedTags.join(', ')); // 폼 값 업데이트
+                    return updatedTags;
+                });
             }
+
+            input.value = '';
         }
     };
 
@@ -163,9 +174,9 @@ export default function SummarizedProjectBodyPage() {
                         프로젝트 개요
                     </div>
                     <div className="flex-shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
-                                <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
-                            </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
+                            <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
+                        </svg>
                     </div>
                     <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
                         본문 작성
@@ -179,9 +190,10 @@ export default function SummarizedProjectBodyPage() {
                             <ProjectBodyText
                                 key={index}
                                 index={index}
-                                subtitle={section.subtitle}  // 초기값 전달
-                                content={section.content}    // 초기값 전달
-                                onChange={(index, subtitle, content) => handleTextChange(index, subtitle, content)}
+                                subtitle={section.subtitle}
+                                content={section.content}
+                                onChange={handleTextChange}
+                                onRemove={() => removeTextSection(index)} // 여기서 onRemove를 전달
                             />
                         ))}
 
@@ -226,13 +238,11 @@ export default function SummarizedProjectBodyPage() {
                                             <button type="button" onClick={() => removeTag(index)} className="text-sm">x</button>
                                         </div>
                                     ))}
-
                                     <input
-                                        {...register('tagInput')}
                                         type="text"
                                         placeholder="#태그 입력 (최대 10개)"
                                         className="flex-1 p-2 bg-transparent outline-none"
-                                        onKeyPress={handleTagInput}
+                                        onKeyPress={handleTagInput} // 입력 이벤트 처리
                                     />
                                 </div>
                             </div>

@@ -62,7 +62,7 @@ export default function ProjectSummarizedOutlinePage() {
                     setValue("target", completionData.target || "");
                     setValue("summary", completionData.summary || "");
                     setValue("projectTitle", completionData.projectTitle || "");
-                
+
                     setSubTitleList(completionData.subTitleList || []);
                     setContentList(completionData.contentList || []);
                 }
@@ -300,21 +300,20 @@ export default function ProjectSummarizedOutlinePage() {
                         </div>
 
                         <div className="flex pl-[51.8125rem] justify-end items-center self-stretch">
-            <div className="flex items-start gap-[0.625rem]">
-              <button
-                type="submit"
-                disabled={!isValid || !isImageUploaded} // 모든 입력값이 유효하지 않거나 이미지가 없으면 비활성화
-                className={`flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${isValid && isImageUploaded ? 'bg-[#776BFF] cursor-pointer' : 'bg-[#E2E6EF] cursor-not-allowed'
-                  }`}
-              >
-                <span className={`text-center text-[1.125rem] leading-[1.6875rem] ${isValid && isImageUploaded ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'
-                  }`}>
-                  다음
-                </span>
-              </button>
-            </div>
-          </div>
-
+                            <div className="flex items-start gap-[0.625rem]">
+                                <button
+                                    type="submit"
+                                    disabled={!isValid || !isImageUploaded} // 모든 입력값이 유효하지 않거나 이미지가 없으면 비활성화
+                                    className={`flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${isValid && isImageUploaded ? 'bg-[#776BFF] cursor-pointer' : 'bg-[#E2E6EF] cursor-not-allowed'
+                                        }`}
+                                >
+                                    <span className={`text-center text-[1.125rem] leading-[1.6875rem] ${isValid && isImageUploaded ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'
+                                        }`}>
+                                        다음
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
