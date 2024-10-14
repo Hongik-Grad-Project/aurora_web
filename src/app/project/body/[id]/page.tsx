@@ -120,6 +120,13 @@ export default function ProjectBodyPage() {
         setTextSections(updatedSections);
     };
 
+    const removeImageSection = (index: number) => {
+        const newFiles = imageFiles.filter((_, i) => i !== index);
+        setImageFiles(newFiles);
+        const newPreviews = imagePreviews.filter((_, i) => i !== index);
+        setImagePreviews(newPreviews);
+    };
+
     // 프로젝트 저장 API 호출
     const onSaveProject: SubmitHandler<FormInputs> = async () => {
         if (!accessToken) return;
@@ -183,16 +190,14 @@ export default function ProjectBodyPage() {
                             />
                         ))}
 
-                        {/* 이미지 업로드 부분 */}
                         <div className="flex flex-row justify-center items-center gap-x-5">
-                            {imageFiles.map((_, index) => (
+                            {imageFiles.map((file, index) => (
                                 <div key={index}>
                                     <ProjectImage
                                         onFileChange={(file: File) => handleImageUpload({ target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>, index)}
+                                        onRemove={() => removeImageSection(index)}
+                                        preview={imagePreviews[index]}
                                     />
-                                    {imagePreviews[index] && (
-                                        <Image src={imagePreviews[index]} alt={`이미지 미리보기 ${index + 1}`} width={100} height={100} className="rounded-md" />
-                                    )}
                                 </div>
                             ))}
                         </div>

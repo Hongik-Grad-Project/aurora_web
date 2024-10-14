@@ -9,6 +9,7 @@ import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
 import { EditProjectBodyData, RegisterProject } from '@/lib/action'
+import { set } from 'date-fns'
 
 interface FormInputs {
     tagInput: string; // Adjusted to handle live input
@@ -80,6 +81,11 @@ export default function SummarizedProjectBodyPage() {
         console.log(`Removing text section at index ${index}`); // 로그 출력
         const updatedSections = textSections.filter((_, idx) => idx !== index);
         setTextSections(updatedSections);
+    };
+
+    const removeImageSection = (index: number) => {
+        const updatedFiles = imageFiles.filter((_, idx) => idx !== index);
+        setImageFiles(updatedFiles);
     };
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -199,20 +205,13 @@ export default function SummarizedProjectBodyPage() {
 
                         {/* 이미지 입력 부분 */}
                         <div className="flex flex-row justify-center items-center gap-x-5">
-                            {imageFiles.map((_, index) => (
+                            {imageFiles.map((file, index) => (
                                 <div key={index}>
                                     <ProjectImage
                                         onFileChange={(file: File) => handleImageUpload({ target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>, index)}
+                                        onRemove={() => removeImageSection(index)}
+                                        preview={imagePreviews[index]}
                                     />
-                                    {/* {imagePreviews[index] && (
-                                        <Image
-                                            src={imagePreviews[index]}
-                                            alt={`이미지 미리보기 ${index + 1}`}
-                                            width={100}
-                                            height={100}
-                                            className="rounded-md"
-                                        />
-                                    )} */}
                                 </div>
                             ))}
                         </div>
