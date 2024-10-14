@@ -9,7 +9,7 @@ import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
 import { EditProjectBodyData, RegisterProject } from '@/lib/action'
-import { set } from 'date-fns'
+import { pushNotification } from '@/components/common/component/ToastPopUp/ToastPopUp'
 
 interface FormInputs {
     tagInput: string; // Adjusted to handle live input
@@ -149,9 +149,9 @@ export default function SummarizedProjectBodyPage() {
 
         try {
             await EditProjectBodyData(accessToken, projectId, payload, imageFiles);
-            console.log("프로젝트가 저장되었습니다.");
+            pushNotification('임시저장되었습니다.', 'success'); // 성공 알림
         } catch (error) {
-            console.error('프로젝트 저장 오류:', error);
+            pushNotification('프로젝트 저장 오류', 'error'); // 오류 알림
         }
     };
 

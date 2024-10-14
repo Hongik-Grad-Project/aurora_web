@@ -9,6 +9,7 @@ import Image from 'next/image'
 import ProjectBodyText from '@/components/Project/ProjectBodyText'
 import ProjectImage from '@/components/Project/ProjectImage'
 import { PostProjectBodyData, RegisterProject } from '@/lib/action'
+import { pushNotification } from '@/components/common/component/ToastPopUp/ToastPopUp'
 
 interface FormInputs {
     tagInput: string
@@ -139,9 +140,9 @@ export default function ProjectBodyPage() {
 
         try {
             const response = await PostProjectBodyData(accessToken, projectId, payload, imageFiles);
-            console.log("프로젝트가 저장되었습니다.");
+            pushNotification('임시저장되었습니다', 'success'); // 성공 알림
         } catch (error) {
-            console.error('프로젝트 저장 오류:', error);
+            pushNotification('임시저장에 실패했습니다', 'error'); // 오류 알림
         }
     };
 

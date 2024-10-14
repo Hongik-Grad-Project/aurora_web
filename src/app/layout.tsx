@@ -6,11 +6,11 @@ import Header from '@/components/Layout/Header'
 import Footer from '@/components/Layout/Footer'
 import 'react-datepicker/dist/react-datepicker.css';
 
-
 import './globals.css'
 
 import ClientProvider from '@/components/common/ClientProvider'
-import FetchSetting from '@/components/common/fetch/page'
+import 'react-toastify/ReactToastify.min.css';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Aurora',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: {
       url: '/logo.png',
     },
-  },
+  }
 }
 
 const pretendard = localFont({
@@ -60,8 +60,18 @@ export default function RootLayout({
       <body className={`${pretendard.className} bg-[#fff]`}>
         <ClientProvider>
           {/* <FetchSetting> */}
-            <Header />
-            <div className="bg-[#F4F6FA]">{children}</div>
+          <Header />
+          <ToastContainer
+            style={{
+              width: '250px', // Width of the container
+              display: 'inline-flex', // Make it inline-flex to manage alignment and direction
+              minHeight: '56px', // Minimum height
+              justifyContent: 'center', // Center items horizontally in the container
+              alignItems: 'center', // Center items vertically in the container
+              gap: '20px', // Gap between items in the container
+            }}
+          />
+          <div className="bg-[#F4F6FA]">{children}</div>
           {/* </FetchSetting> */}
         </ClientProvider>
       </body>
