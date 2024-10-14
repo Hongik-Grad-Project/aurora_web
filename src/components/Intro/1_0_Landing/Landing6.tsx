@@ -68,7 +68,7 @@ export default function Landing6() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1, duration: 0.8 }}
                         >
-                            사람들이 어떤 사회문제에 관심이 많은지 궁금하나요?
+                            사람들이 어떤 문제에 관심이 많은지 궁금하나요?
                         </motion.div>
                         <motion.h1
                             className="text-center text-[#0F1A2A] text-[1.875rem] md:text-[2.625rem] font-bold leading-[2.625rem] md:leading-[3.625rem]"
@@ -79,15 +79,6 @@ export default function Landing6() {
                             이번 달에 가장 많이 응원받은 프로젝트에요
                         </motion.h1>
                     </div>
-                    <motion.div
-                        className="text-center text-[#475569] text-[1rem] md:text-[1.25rem] font-medium leading-[1.5rem] md:leading-[1.875rem] opacity-80"
-                        style={{ fontFamily: 'Pretendard, sans-serif' }}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.35, duration: 0.5 }}
-                    >
-                        사회문제를 해결하기 위한 다양한 프로젝트를 만나보세요.
-                    </motion.div>
                 </motion.div>
                 <Swiper
                     spaceBetween={10}
