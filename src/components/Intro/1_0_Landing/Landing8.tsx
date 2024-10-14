@@ -11,8 +11,8 @@ export default function Landing8() {
             }}
         >
             <div className="flex w-full flex-col justify-center items-center px-4 md:px-8 gap-[2rem]">
-                <div className="flex flex-col justify-center items-center text-center mb-[2rem] md:mb-[3.91rem]">
-                    <p className="text-[#0F1011] text-[1rem] md:text-[1.25rem] font-medium leading-[1.375rem] md:leading-[1.875rem] opacity-80">
+                <div className="flex flex-col justify-center items-center text-center mb-[1rem] md:mb-[1.5rem]"> {/* 간격을 조절함 */}
+                    <p className="text-[#0F1011] text-[1rem] md:text-[1.25rem] font-medium leading-[1.375rem] md:leading-[1.875rem] opacity-80 mb-[1rem] md:mb-[1.5rem]"> {/* 하단 간격 추가 */}
                         의미있는 프로젝트를 하고싶나요?
                     </p>
                     <h1
@@ -23,7 +23,7 @@ export default function Landing8() {
                 </div>
                 <button
                     className="flex py-[1.25rem] md:py-[1.75rem] px-[2rem] md:px-[3.3125rem] justify-center items-center gap-[0.625rem] rounded-[0.625rem] bg-[#776BFF] shadow-[0px 20px 40px -14px #8684A2] hover:bg-[#9B8AFF] hover:scale-105 transition-transform duration-200"
-                    onClick={() => router.push('/project/gallery')} // 버튼 클릭 시 /project/gallery로 이동
+                    onClick={() => router.push('/project/gallery')}
                 >
                     <span
                         className="text-white text-[1.25rem] md:text-[1.5rem] font-semibold leading-[1.75rem] md:leading-[2.25rem]"
