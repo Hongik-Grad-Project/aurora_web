@@ -45,22 +45,23 @@ export default function Landing7() {
                         내 프로젝트를 응원하고 지켜보는 사람들이 있어요!
                     </motion.div>
                 </motion.div>
+                {/* 이미지 버튼 부분 */}
                 <motion.div
-                    className="flex-1 order-last md:order-last md:pl-[10rem] md:pb-[5rem] px-4 md:px-0" // Added padding for mobile screens
+                    className="flex order-last md:order-last md:px-[8rem] md:pb-[5rem] px-4 md:px-0 mx-4"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.8 }}
                 >
                     <div
-                        className="flex w-[26.0625rem] h-[20.4375rem] justify-center items-end"
+                        className="image-button-container flex w-[26.0625rem] h-[20.4375rem] justify-center items-center"
                         style={{
                             backgroundImage: 'url(/assets/intro/section7_fire.png)',
-                            backgroundSize: 'cover',
+                            backgroundSize: 'contain',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }}
                     >
-                        <button className="inline-flex py-[3.125rem] px-[1.25rem] flex-col justify-center items-center gap-[1.56969rem] rounded-[3.125rem] border border-[#E2E6EF] bg-white shadow-[17px_27px_90px_0px_#CECAFF] transform transition-transform duration-200 hover:scale-105">
+                        <button className="image-button inline-flex py-[3rem] px-[1.25rem] flex-col justify-center items-center gap-[1.56969rem] rounded-[3.125rem] border border-[#E2E6EF] bg-white shadow-[17px_27px_90px_0px_#CECAFF] transform transition-transform duration-200 hover:scale-105">
                             <div className="flex flex-col justify-center items-center gap-[0.65406rem] self-stretch">
                                 <div className="flex w-[14.78125rem] h-[6.67118rem] justify-center items-center rounded-[3.92425rem] border-[2.093px] border-[#E2E6EF] bg-[#FEFEFE]">
                                     <div className="flex flex-row justify-center gap-[1.57rem]">
@@ -87,7 +88,14 @@ export default function Landing7() {
                         </button>
                     </div>
                 </motion.div>
-            </div >
-        </div >
+            </div>
+            <style jsx>{`
+                @media (max-width: 768px) {
+                    .image-button-container {
+                        transform: scale(0.83);
+                    }
+                }
+            `}</style>
+        </div>
     )
 }
