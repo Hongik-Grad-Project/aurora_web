@@ -51,7 +51,7 @@ export default function Landing6() {
 
     return (
         <div className="relative flex justify-center items-center h-screen min-h-screen w-full snap-mandatory snap-start snap-always flex-col md:flex-col overflow-hidden bg-[#FFFFFF] bg-cover bg-no-repeat pt-[3rem] md:pt-[5rem] md:px-[5rem]">
-            <div className="flex w-full flex-col md:flex-row justify-center items-center md:justify-center gap-[3rem] md:gap-[5rem] transition-all duration-500 ease-in-out">
+            <div className="flex w-full flex-col md:flex-row justify-center items-center md:justify-center gap-[2rem] md:gap-[5rem] transition-all duration-500 ease-in-out">
                 {/* Text Section */}
                 <motion.div
                     className="flex-1 flex flex-col items-center md:items-center gap-[1.1875rem]"
@@ -77,7 +77,7 @@ export default function Landing6() {
                     </motion.h1>
                 </motion.div>
                 {/* Swiper Section for Mobile */}
-                <div className="block md:hidden w-full mt-[2rem]">
+                <div className="block md:hidden w-full">
                     <Swiper
                         spaceBetween={10}
                         simulateTouch={true}

@@ -42,7 +42,7 @@ export default function Landing5() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5, duration: 0.8 }}
                     >
-                        시간이 지나도 잊어버리지 않고 빠르게 프로젝트를 수행할 수 있어요.
+                        시간이 지나도 잊어버리지 않고 <br className="block md:hidden"/>빠르게 프로젝트를 수행할 수 있어요.
                     </motion.div>
                 </motion.div>
                 <motion.div
