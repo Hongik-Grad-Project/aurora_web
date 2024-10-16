@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChatRoomIdState, selectedChatHistoryState, chatRoomsState } from '@/context/recoil-context';
@@ -16,12 +18,12 @@ export default function ChatAurora() {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-    console.log('ChatAurora useEffect 실행');
-  }, [selectedChatRoomId, chatHistory]); // `selectedChatRoomId`와 `chatHistory` 모두를 의존성 배열에 추가
+  }, [selectedChatRoomId, chatHistory]);
 
   return (
     <div className="flex flex-col w-full h-full bg-gray-100 relative">
-      <div className="flex-grow overflow-y-auto p-6 bg-white">
+      {/* Adjust the top margin on mobile screens */}
+      <div className="flex-grow overflow-y-auto p-6 bg-white mt-[57px] lg:mt-0">
         {currentChatRoom ? (
           <div className="space-y-4 w-full">
             {chatHistory.map((message, index) => (
