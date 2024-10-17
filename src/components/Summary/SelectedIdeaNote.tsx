@@ -9,7 +9,7 @@ import SummaryDeleteModal from './SummaryDeleteModal';
 
 export default function SelectedIdeaNote() {
     const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
+    const isAuth = useRecoilValue(authState) || false
     const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState);
     const summaryContent = useRecoilValue(selectedSummaryContentState);
     const summaryRooms = useRecoilValue(summaryRoomsState);

@@ -7,7 +7,7 @@ import { GetSummaryNoteList, GetSummaryNoteContent } from '@/lib/action';
 
 export default function SummaryNav() {
     const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
+    const isAuth = useRecoilValue(authState) || false
     const [selectedSummaryRoomId, setSelectedSummaryRoomId] = useRecoilState(selectedSummaryRoomIdState);
     const setSummaryContents = useSetRecoilState(selectedSummaryContentState);
     const [summaryRooms, setSummaryRooms] = useRecoilState<SummaryRoom[]>(summaryRoomsState);

@@ -9,7 +9,7 @@ import { GetChatList, GetChatHistory } from '@/lib/action';
 
 export default function ChatMobileNav() {
     const accessToken = useRecoilValue(accessTokenState) || '';
-    const isAuth = useRecoilValue(authState);
+    const isAuth = useRecoilValue(authState) || false
     const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState);
     const setChatHistory = useSetRecoilState(selectedChatHistoryState);
     const [chatRooms, setChatRooms] = useRecoilState<ChatRoom[]>(chatRoomsState);
