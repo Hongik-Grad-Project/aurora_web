@@ -43,7 +43,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: '100vh', opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-[31.5rem] h-[21.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
+        className="w-[31.5rem] h-[27.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
       >
         <div className="flex flex-col items-center">
           <Image src="/assets/colorLogo.svg" width={172} height={57} alt="logo" />
