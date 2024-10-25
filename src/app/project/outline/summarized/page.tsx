@@ -141,7 +141,7 @@ export default function ProjectSummarizedOutlinePage() {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-[0.9375rem] pt-[2.94rem] pb-[12rem]">
                     <div className="flex w-[62.5rem] items-center gap-[1.75rem]">
                         <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
-                            프로젝트 개요
+                            개요 작성
                         </div>
                         <div className="flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">

@@ -38,7 +38,7 @@ export default function SummaryModal({ isOpen, onClose }: SummaryModalProps) {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg max-w-[400px] w-full"
             >
-                <h1 className="text-xl font-semibold text-gray-800 mb-8">프로젝트 개요를 자동완성하시겠습니까?</h1>
+                <h1 className="flex flex-col items-center justify-center text-center text-xl font-semibold text-gray-800 mb-8">AI로 문서 초안을<br/>작성하시겠습니까?</h1>
                 <div className="flex w-full justify-center gap-[1.5rem] px-2">
                     <div className="flex-1">
                         <button
