@@ -1,4 +1,4 @@
-import { Career, Education, FindTeamInterface, TeamProfile, ProjectGalleryInterface } from '@/lib/types'
+import { Career, Education, FindTeamInterface } from '@/lib/types'
 import { atom } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
 const { persistAtom } = recoilPersist()

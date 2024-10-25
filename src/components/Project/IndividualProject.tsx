@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { GetProjectGalleryDetail, ToggleProjectLike } from '@/lib/action'
 import { ProjectGalleryDetailResponse } from '@/lib/types'
 import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '@/context/recoil-context'
+import { accessTokenState, authState } from '@/context/recoil-context'
 import CheerButton from './CheerButton'
 import Image from 'next/image'
 import Footer from '../Layout/Footer'
@@ -17,6 +17,7 @@ interface LikeResponse {
 
 export default function IndividualProject() {
     const accessToken = useRecoilValue(accessTokenState) || '';  // accessToken 초기값을 빈 문자열로 유지
+    const isAuth = useRecoilValue(authState);
     const router = useRouter();
     const [data, setData] = useState<ProjectGalleryDetailResponse | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -80,6 +81,29 @@ export default function IndividualProject() {
                 <div className="flex flex-col items-center gap-[3.125rem] w-[45.3125rem] mt-[4.21rem]">
                     {/* 제목, 이미지, 태그 프레임 */}
                     <div className="flex flex-col items-start gap-[2.1875rem] self-stretch">
+                        {isAuth && (
+                            <div className="self-end">
+                                <button className="p-2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#FF0000"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-trash"
+                                    >
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6l-1.5 14a2 2 0 0 1-2 2H8.5a2 2 0 0 1-2-2L5 6"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        )}
                         <div className="flex flex-col items-start gap-[2.3125rem] self-stretch">
                             <div className="flex flex-col items-start gap-[0.4375rem] self-stretch">
                                 <div className="flex justify-between items-center self-stretch">
@@ -164,7 +188,14 @@ export default function IndividualProject() {
                             <div className="flex items-center gap-[0.875rem]">
                                 <div className="flex w-[16.5625rem] flex-col items-start gap-[0.875rem]">
                                     <div className="flex items-end gap-2">
-                                        <Image src="/assets/icons/my_profile_icon.svg" alt="기본 프로필" width={44} height={44} objectFit="contain" />
+                                        <Image
+                                            src={data?.memberImage || '/assets/icons/my_profile_icon.svg'}
+                                            alt="기본 프로필"
+                                            width={44}
+                                            height={44}
+                                            objectFit="contain"
+                                            className="rounded-full"
+                                        />
                                         <div className="flex flex-col items-start">
                                             <span className="self-stretch text-[#6A6F7A] font-pretendard text-sm font-normal leading-[1.125rem]">
                                                 제안자

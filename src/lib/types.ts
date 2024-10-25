@@ -126,6 +126,7 @@ export interface ProjectGalleryDetailResponse {
   contentList: string[]
   projectImageList: string[]
   memberName: string
+  memberImage: string
   memberEmail: string
   memberIntro: string
   like: boolean
