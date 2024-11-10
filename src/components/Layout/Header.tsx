@@ -155,12 +155,19 @@ export default function Header() {
                   </motion.div>
                 )}
               </div>
+
+
+
               <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 프로젝트 갤러리
               </Link>
               <button onClick={handleMyPageClick} className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 마이페이지
               </button>
+                            {/* 개발 중 메뉴 추가 */}
+              <Link href="/in-development" className="font-medium leading-5 text-grey90 hover:text-main">
+                개발 중
+              </Link>
             </div>
           </div>
 
@@ -215,11 +222,11 @@ export default function Header() {
               <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 아이디어 노트
               </Link>
+              <Link href="/in-development" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                개발 중
+              </Link>
               <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 프로젝트 갤러리
-              </Link>
-              <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                마이페이지
               </Link>
               {isAuth ? (
                 <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">

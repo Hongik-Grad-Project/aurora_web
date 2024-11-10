@@ -82,12 +82,21 @@ export default function ChatAurora() {
               <Image src="/assets/intro/section1_float_btn.png" alt="Aurora Logo" width={200} height={200} className="object-contain" />
             </motion.div>
             <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">Aurora Chat AI</h2>
-              <p className="text-center text-gray-500 text-base mt-2">
-                어떤 사회 문제를 해결하고 싶나요?
-                <br />
-                <span className="text-base text-gray-600">ex) 요즘 노인 일자리 문제가 심각한 것 같아</span>
-              </p>
+              <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">어떤 문서가 필요한가요?</h2>
+              <div className="flex gap-4 mt-6">
+                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  미케팅 기획서
+                </button>
+                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  사업 계획서
+                </button>
+                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  프로젝트 제안서
+                </button>
+                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  린캔버스
+                </button>
+              </div>
             </div>
           </div>
         )}
