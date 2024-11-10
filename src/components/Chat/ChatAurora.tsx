@@ -85,7 +85,7 @@ export default function ChatAurora() {
               <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">어떤 문서가 필요한가요?</h2>
               <div className="flex gap-4 mt-6">
                 <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
-                  미케팅 기획서
+                  마케팅 기획서
                 </button>
                 <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
                   사업 계획서
