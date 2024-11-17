@@ -90,21 +90,21 @@ export default function IndividualProject() {
             <div className="flex w-full flex-col justify-center items-center pt-[70px] bg-[#FFF]">
                 <div className="flex flex-col items-center gap-[3.125rem] w-[45.3125rem] mt-[4.21rem]">
                     <div className="flex flex-col items-start gap-[1rem] self-stretch">
-                        <div className="flex h-[1.8125rem] px-[0.75rem] py-[0.1875rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-[rgba(225,220,255,0.40)]">
-                            <span className="text-[#776BFF] font-medium text-[0.875rem] leading-[1.3125rem]">
-                                {data?.projectTarget}
+                        <div className="flex justify-between items-center w-full">
+                            <div className="flex h-[1.8125rem] px-[0.75rem] py-[0.1875rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-[rgba(225,220,255,0.40)]">
+                                <span className="text-[#776BFF] font-medium text-[0.875rem] leading-[1.3125rem]">
+                                    {data?.projectTarget}
+                                </span>
+                            </div>
+                            <span className="text-[#6A6F7A] font-medium text-[0.875rem] leading-[1.3125rem]">
+                                작성일자  |  {data?.startDate}
                             </span>
                         </div>
 
                         <div className="flex justify-between items-start w-full">
-                            <div className="flex flex-col gap-2">
-                                <h1 className="text-[#0F1011] font-semibold text-2xl leading-loose">
-                                    {data?.projectTitle}
-                                </h1>
-                                <span className="text-[#6A6F7A] font-medium text-[0.875rem] leading-[1.3125rem]">
-                                    작성일자  |  {data?.startDate}
-                                </span>
-                            </div>
+                            <h1 className="text-[#0F1011] font-semibold text-2xl leading-loose">
+                                {data?.projectTitle}
+                            </h1>
 
                             {isAuth && (
                                 <div className="relative dropdown-container">
