@@ -137,7 +137,7 @@ export async function DeleteChatRoom(accessToken: string, chatRoomId: string) {
     credentials: 'include',
   })
 
-  return await response.json();
+  return response.status;
 }
 
 // 2.8. 채팅 내역 조회 ( GET /chat/:chatRoomId/history )

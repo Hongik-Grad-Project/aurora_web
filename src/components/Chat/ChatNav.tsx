@@ -36,7 +36,7 @@ export default function ChatNav() {
     if (isAuth && accessToken) {
       fetchChatRooms();
     }
-  }, [accessToken, isAuth, setChatRooms]);
+  }, [accessToken, selectedChatRoomId, isAuth, setChatRooms]);
 
   useEffect(() => {
     const fetchChatHistory = async () => {

@@ -1,24 +1,23 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { accessTokenState, selectedChatRoomIdState } from '@/context/recoil-context'
-import { DeleteChatRoom, CreateSummaryNote } from '@/lib/action'
+import { DeleteChatRoom } from '@/lib/action'
 import LoadingSkeleton from '@/components/common/component/Skeleton/LoadingSkeleton'
 import { useRouter } from 'next/navigation'
-
-interface ChatModalProps {
+interface ChatDeleteModalProps {
     isOpen: boolean
     onClose: () => void
 }
 
-export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
+export default function ChatDeleteModal({ isOpen, onClose }: ChatDeleteModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
+    const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState);
     const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
     const router = useRouter();
-
     if (!isOpen) return null;
 
     const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -31,13 +30,10 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
         if (selectedChatRoomId) {
             setLoading(true); // 로딩 시작
             try {
-                const response = await CreateSummaryNote(accessToken, selectedChatRoomId.toString());
-                
-                // 성공적으로 응답을 받으면 noteId를 활용해서 경로로 이동
-                if (response?.noteId) {
-                    router.push(`/project/idea/${response.noteId}`);
-                } else {
-                    console.error('Invalid response: noteId is missing');
+                const response = await DeleteChatRoom(accessToken, selectedChatRoomId.toString());
+                if (response === 204) {
+                    setSelectedChatRoomId(null);
+                    router.refresh();
                 }
             } catch (error) {
                 console.error('Failed to create summary:', error);
@@ -48,23 +44,15 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
         }
     };
     
-
     const handleNo = async () => {
         if (selectedChatRoomId) {
             setLoading(true); // 로딩 시작
-            try {
-                
-            } catch (error) {
-                console.error('Failed to delete chat room:', error);
-            } finally {
-                setLoading(false); // 로딩 종료
-                onClose();
-            }
+            onClose();
         }
     }
 
     if (loading) {
-        return <LoadingSkeleton text="아이디어 노트가 자동 완성 중입니다"/>; // 로딩 중일 때 로딩 컴포넌트 표시
+        return <LoadingSkeleton text="채팅방 삭제 중입니다"/>;
     }
 
     return (
@@ -79,7 +67,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg max-w-[400px] w-full mx-2"
             >
-                <h1 className="text-xl font-semibold text-gray-800 mb-8">대화 내용을 요약하시겠습니까?</h1>
+                <h1 className="text-xl font-semibold text-gray-800 mb-8">대화 내용을 삭제하시겠습니까?</h1>
                 <div className="flex w-full justify-center gap-[1.5rem]">
                     <button
                         onClick={handleNo}

@@ -8,6 +8,7 @@ import { Message as AuroraMessage } from '@/lib/types';
 import ChatModal from './ChatModal';
 import Image from 'next/image';
 import ChatRouteNoteModal from './ChatRouteNoteModal';
+import ChatDeleteModal from './ChatDeleteModal';
 
 export default function ChatInput() {
     const accessToken = useRecoilValue(accessTokenState) || '';
@@ -18,6 +19,7 @@ export default function ChatInput() {
     const [chatRooms, setChatRooms] = useRecoilState(chatRoomsState); // 현재 채팅방 리스트 상태
     const [inputValue, setInputValue] = useState<string>('');
     const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+    const [isChatDeleteModalOpen, setIsChatDeleteModalOpen] = useState(false);
     const [isChatRouteNoteModalOpen, setIsChatRouteNoteModalOpen] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -118,6 +120,13 @@ export default function ChatInput() {
         <div className="bg-white p-4 border-t border-gray-200">
             {currentChatRoom?.isSummarized ? (
                 <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
+                    <button 
+                        onClick={() => setIsChatDeleteModalOpen(true)}
+                        className="flex justify-center items-center px-4 py-2 rounded-[1rem] border border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF] transition-colors"
+                        style={{ height: '3.2rem' }}
+                    >
+                        삭제하기
+                    </button>
                     <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
                         <div
                             className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] overflow-hidden"
@@ -142,6 +151,14 @@ export default function ChatInput() {
                 </div>
             ) : (
                 <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
+                    <button 
+                        onClick={() => setIsChatDeleteModalOpen(true)}
+                        className="flex justify-center items-center px-4 py-2 rounded-[1rem] border border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF] transition-colors"
+                        style={{ height: '3.2rem' }}
+                    >
+                        삭제하기
+                    </button>   
+
                     <div className="flex-grow flex items-center px-[1.5rem] py-[0.25rem] rounded-[1rem] border border-[#AEA0FF] bg-white relative">
                         <textarea ref={textareaRef} className="w-full text-[#6A6F7A] font-medium text-[1rem] leading-[1.5rem] resize-none outline-none overflow-hidden" placeholder="오로라와 얘기해보세요" value={inputValue} onInput={handleInput} onKeyDown={handleKeyDown} rows={1} style={{ minHeight: '1.5rem', maxHeight: '6rem', padding: '0.5rem 0' }} />
                         <button onClick={createChatRoomAndSendMessage} className="absolute right-[10px] bottom-[7px] w-[35px] h-[35px] cursor-pointer">
@@ -158,6 +175,7 @@ export default function ChatInput() {
                 </div>
             )}
             <ChatModal isOpen={isChatModalOpen} onClose={() => setIsChatModalOpen(false)} />
+            <ChatDeleteModal isOpen={isChatDeleteModalOpen} onClose={() => setIsChatDeleteModalOpen(false)} />
             <ChatRouteNoteModal isOpen={isChatRouteNoteModalOpen} onClose={() => setIsChatRouteNoteModalOpen(false)} />
         </div>
     );
