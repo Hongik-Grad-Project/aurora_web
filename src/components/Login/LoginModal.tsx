@@ -62,7 +62,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           </div>
           <div className="flex flex-col items-center gap-2 pt-6">
             <Link href={GOOGLE_AUTH_URL}>
-              <div className="flex h-[2.64825rem] w-[23.6335rem] flex-shrink-0 pl-[0.82rem] cursor-pointer items-center gap-[6.13rem] rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
+              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.82rem] cursor-pointer items-center gap-[6.13rem] rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
                 <Image src={'/assets/login/googleLogo.svg'} width={23} height={23} alt="GoogleLogin" />
                 <span className="font-normal text-[0.875rem]">Google로 시작하기</span>
               </div>

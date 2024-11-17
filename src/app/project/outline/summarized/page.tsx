@@ -179,10 +179,10 @@ export default function ProjectSummarizedOutlinePage() {
                         {/* 사회 문제 요약 */}
                         <div className="flex flex-col items-start h-[10.8125rem] gap-[2rem] self-stretch">
                             <TextLayout
-                                title="사회문제 요약"
+                                title="문제 요약"
                                 description={
                                     <>
-                                        내가 설정한 사회문제를 요약해서 설명해주세요 ex) 노인 일자리 문제<br />
+                                        해결하고 싶은 문제가 무엇인지 간단하게 적어주세요.
                                     </>
                                 }
                             />

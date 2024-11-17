@@ -129,7 +129,7 @@ export default function ProjectOutlinePage() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center w-[62.5rem] p-[1.875rem] gap-[4.9375rem] rounded-[1rem] bg-[#FEFEFE]">
+          <div className="flex flex-col justify-center items-center w-[62.5rem] p-[1.875rem] gap-[5rem] rounded-[1rem] bg-[#FEFEFE]">
             {/* 타겟 대상 선택 */}
             <div className="flex flex-col items-start h-[10.8125rem] gap-[2rem] self-stretch">
               <TextLayout
@@ -153,12 +153,12 @@ export default function ProjectOutlinePage() {
             </div>
 
             {/* 사회 문제 요약 */}
-            <div className="flex flex-col items-start h-[10.8125rem] gap-[2rem] self-stretch">
+            <div className="flex flex-col items-start h-[10.8125rem] self-stretch">
               <TextLayout
-                title="사회문제 요약"
+                title="문제 요약"
                 description={
                   <>
-                    내가 설정한 사회문제를 요약해서 설명해주세요 ex) 노인 일자리 문제<br />
+                    해결하고 싶은 문제가 무엇인지 간단하게 적어주세요.
                   </>
                 }
               />
@@ -213,7 +213,7 @@ export default function ProjectOutlinePage() {
                 description={
                   <>
                     프로젝트의 핵심 키워드를 포함하여 공백 포함 60자 이내로 작성해주세요. <br />
-                    사회 문제, 대상, 얻을 수 있는 효과가 포함되면 좋습니다! ex) “은퇴 후 사업 시작, 안전하게!”
+                    문제, 대상, 얻을 수 있는 효과가 포함되면 좋습니다! ex) “은퇴 후 사업 시작, 안전하게!”
                   </>
                 }
               />
