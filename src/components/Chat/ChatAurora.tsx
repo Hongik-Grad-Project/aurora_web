@@ -29,7 +29,7 @@ export default function ChatAurora() {
             {chatHistory.map((message, index) => (
               <div
                 key={index}
-                className={`relative p-4 rounded-lg ${message.senderType === 'AURORA_AI'
+                className={`relative p-4 rounded-2xl text-lg ${message.senderType === 'AURORA_AI'
                   ? 'bg-gray-200 text-gray-800 self-start mr-auto'
                   : 'bg-indigo-500 text-white self-end ml-auto'
                   }`}
@@ -48,7 +48,7 @@ export default function ChatAurora() {
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    className="absolute right-[-7px] bottom-[-2px]"
+                    className="absolute right-[-7px] bottom-[-1px]"
                   >
                     <path
                       d="M14.9999 14.9864C9.02761 12.3076 7.99843 5.71985 8.52749 1.21582L1.40771 11.4268C4.98573 13.1219 10.1923 15.1835 14.9999 14.9864Z"
