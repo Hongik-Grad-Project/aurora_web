@@ -367,7 +367,7 @@ export async function DeleteProject(accessToken: string, projectId: number) {
     credentials: 'include',
   })
 
-  return await response.json();
+  return response.status;
 }
 
 // 5.1. 프로젝트 갤러리 상세 조회 (GET /gallery/{projectId})

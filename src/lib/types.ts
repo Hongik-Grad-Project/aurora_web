@@ -130,6 +130,7 @@ export interface ProjectGalleryDetailResponse {
   memberEmail: string
   memberIntro: string
   like: boolean
+  mine: boolean
 }
 // 링킷 구현부
 export interface IFormData {

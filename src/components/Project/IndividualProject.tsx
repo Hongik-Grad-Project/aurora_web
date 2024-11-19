@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { GetProjectGalleryDetail, ToggleProjectLike } from '@/lib/action'
+import { GetProjectGalleryDetail, ToggleProjectLike, DeleteProject } from '@/lib/action'
 import { ProjectGalleryDetailResponse } from '@/lib/types'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, authState } from '@/context/recoil-context'
 import CheerButton from './CheerButton'
 import Image from 'next/image'
 import Footer from '../Layout/Footer'
+import ProjectDeleteModal from './ProjectDeleteModal'
 
 export default function IndividualProject() {
     const accessToken = useRecoilValue(accessTokenState) || '';  // accessToken 초기값을 빈 문자열로 유지
@@ -27,6 +28,8 @@ export default function IndividualProject() {
     
     // 드롭다운 메뉴 표시 상태 추가
     const [showDropdown, setShowDropdown] = useState(false);
+
+    const  [isProjectDeleteModalOpen, setIsProjectDeleteModalOpen] = useState(false);
 
     // 드롭다운 외부 클릭 시 닫기 핸들러
     useEffect(() => {
@@ -106,53 +109,50 @@ export default function IndividualProject() {
                                 {data?.projectTitle}
                             </h1>
 
-                            {isAuth && (
-                                <div className="relative dropdown-container">
-                                    <button 
-                                        className="p-2"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setShowDropdown(!showDropdown);
-                                        }}
-                                    >
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 5C12.5523 5 13 4.55228 13 4C13 3.44772 12.5523 3 12 3C11.4477 3 11 3.44772 11 4C11 4.55228 11.4477 5 12 5Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            <path d="M12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                        </svg>
-                                    </button>
-                                    {showDropdown && (
-                                        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                            <button 
-                                                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                                onClick={() => {
-                                                    // 수정 로직 추가
-                                                    setShowDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
-                                                수정하기
-                                            </button>
-                                            <button 
-                                                className="w-full px-4 py-2 text-left text-[#776BFF] hover:bg-gray-100 flex items-center gap-2"
-                                                onClick={() => {
-                                                    // 삭제 로직 추가
-                                                    setShowDropdown(false);
-                                                }}
-                                            >
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M3 6H5H21" stroke="#776BFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="#776BFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
-                                                삭제하기
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+    {data?.mine && isAuth && (  // data.mine이 true이고 isAuth가 true인 경우에만 UI 표시
+        <div className="relative dropdown-container">
+            <button 
+                className="p-2"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDropdown(!showDropdown);
+                }}
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5C12.5523 5 13 4.55228 13 4C13 3.44772 12.5523 3 12 3C11.4477 3 11 3.44772 11 4C11 4.55228 11.4477 5 12 5Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            </button>
+            {showDropdown && (
+                <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                    <button 
+                        className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                        onClick={() => {
+                            // 수정 로직 추가
+                            setShowDropdown(false);
+                        }}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="#6A6F7A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        수정하기
+                    </button>
+                    <button 
+                        className="w-full px-4 py-2 text-left text-[#776BFF] hover:bg-gray-100 flex items-center gap-2"
+                        onClick={() => setIsProjectDeleteModalOpen(true)}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 6H5H21" stroke="#776BFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="#776BFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        삭제하기
+                    </button>
+                </div>
+            )}
+        </div>
+    )}
                         </div>
 
                         <div className="flex h-6 px-3 items-center gap-1 rounded-sm bg-[#F4F6FA]">
@@ -279,6 +279,11 @@ export default function IndividualProject() {
                         </button>
                     </div>
                 </div>
+                <ProjectDeleteModal 
+                    isOpen={isProjectDeleteModalOpen} 
+                    onClose={() => setIsProjectDeleteModalOpen(false)} 
+                    projectId={parseInt(projectId, 10)}
+                />
             </div>
             <Footer />
         </>
