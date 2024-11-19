@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -20,19 +20,26 @@ export default function ChatAuroraDemo() {
   }>>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentAIResponseIndex, setCurrentAIResponseIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [currentText, setCurrentText] = useState('');
 
-  // AI 응답을 보내는 함수 추가
+  // AI 응답을 보내는 함수 수정
   const sendAIResponse = () => {
     if (currentAIResponseIndex < AI_RESPONSES.length) {
+      setIsTyping(true);
+      
+      // AI가 "생각하는" 시간을 추가
       setTimeout(() => {
-        addNewMessage(AI_RESPONSES[currentAIResponseIndex], false);
+        const message = AI_RESPONSES[currentAIResponseIndex];
+        setIsTyping(false);
+        addNewMessage(message, false);
         setCurrentAIResponseIndex(prev => prev + 1);
-      }, 1000); // 1초 후 AI 응답
+      }, 1500); // AI가 1.5초 동안 "생각"하는 시간
     }
   };
 
   // 새로운 메시지 추가 함수 수정
-  const addNewMessage = (message: string, isUser: boolean) => {
+  const addNewMessage = useCallback((message: string, isUser: boolean) => {
     const newMessage = {
       senderType: isUser ? 'MEMBER' : 'AURORA_AI',
       contents: message,
@@ -51,19 +58,18 @@ export default function ChatAuroraDemo() {
     if (isUser) {
       sendAIResponse();
     }
-  };
+  }, [sendAIResponse]);
 
   // 채팅 기록을 전역으로 공유
   useEffect(() => {
     window.addDemoMessage = addNewMessage;
-  }, [currentAIResponseIndex]);
+  }, [currentAIResponseIndex, addNewMessage]);
 
   // 스크롤 자동 이동
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory]);
 
-  // 스크롤 자동 이동
   return (
     <div className="flex flex-col w-full h-full bg-gray-100 relative">
       {/* Adjust the top margin on mobile screens */}
@@ -118,6 +124,17 @@ export default function ChatAuroraDemo() {
                 )}
               </div>
             ))}
+            {isTyping && (
+              <div className="relative p-4 rounded-2xl text-lg bg-gray-200 text-gray-800 self-start mr-auto"
+                   style={{ maxWidth: '75%', wordWrap: 'break-word', wordBreak: 'break-word', width: 'fit-content' }}>
+                {currentText}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                     className="absolute left-[-7px] bottom-[-2px]">
+                  <path d="M1.00011 14.9864C6.97239 12.3076 8.00157 5.71985 7.47251 1.21582L14.5923 11.4268C11.0143 13.1219 5.80766 15.1835 1.00011 14.9864Z"
+                        fill="#E5E7EB" stroke="#E5E7EB"/>
+                </svg>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         ) : (
