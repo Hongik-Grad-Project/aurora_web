@@ -11,7 +11,11 @@ import Image from 'next/image'
 import Footer from '../Layout/Footer'
 import ProjectDeleteModal from './ProjectDeleteModal'
 
-export default function IndividualProject() {
+interface IndividualProjectProps {
+    previousPath: string
+}
+
+export default function IndividualProject({previousPath}: IndividualProjectProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';  // accessToken 초기값을 빈 문자열로 유지
     const isAuth = useRecoilValue(authState);
     const router = useRouter();
@@ -30,6 +34,11 @@ export default function IndividualProject() {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const  [isProjectDeleteModalOpen, setIsProjectDeleteModalOpen] = useState(false);
+    
+    // Log previousPath to the console
+    useEffect(() => {
+        console.log('Previous Path:', previousPath);
+    }, [previousPath]); // Dependency array to log whenever previousPath changes
 
     // 드롭다운 외부 클릭 시 닫기 핸들러
     useEffect(() => {
@@ -271,7 +280,7 @@ export default function IndividualProject() {
 
                     <div className="flex flex-col items-center gap-[2.125rem] self-stretch mb-[3.5rem]">
                         <button
-                            onClick={() => router.push('/project/gallery')}
+                            onClick={() => router.push(previousPath)}
                             className="flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#F4F6FA]">
                             <span className="text-center text-[#4E525C] font-pretendard text-[1.125rem] font-medium leading-[1.6875rem]">
                                 목록으로 돌아가기
@@ -283,6 +292,7 @@ export default function IndividualProject() {
                     isOpen={isProjectDeleteModalOpen} 
                     onClose={() => setIsProjectDeleteModalOpen(false)} 
                     projectId={parseInt(projectId, 10)}
+                    previousPath={previousPath}
                 />
             </div>
             <Footer />

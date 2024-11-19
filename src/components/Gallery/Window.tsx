@@ -1,7 +1,7 @@
 'use client'
 
 import ProjectTag from './Tag'
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface ProjectWindowData {
     projectId: number;
@@ -20,8 +20,10 @@ interface ProjectWindowProps {
 export default function ProjectWindow({ data }: ProjectWindowProps) {
     
     const router = useRouter();
+    const currentPath = usePathname();
 
     const handleClick = () => {
+        localStorage.setItem('previousPath', currentPath);
         router.push(`/project/${data.projectId}`);  // projectId를 사용해 동적으로 경로 이동
     };
 

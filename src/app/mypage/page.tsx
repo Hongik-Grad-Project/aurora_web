@@ -10,6 +10,7 @@ import MyUnderpinProject from '@/components/MyPage/MyUnderpinProject'
 import { MyPageResponse, MyProfileData, MyProjectData, MyLikeProjectData } from '@/lib/types'
 import Footer from '@/components/Layout/Footer'
 import LoginModal from '@/components/Login/LoginModal'
+import { useNavigation } from '@/context/NavigationContext'
 
 export default function MyPage() {
     const accessToken = useRecoilValue(accessTokenState) || ''
@@ -18,7 +19,8 @@ export default function MyPage() {
     const [myProjects, setMyProjects] = useState<MyProjectData[]>([])
     const [likeProjects, setLikeProjects] = useState<MyLikeProjectData[]>([])
     const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false) // 로그인 모달 상태
-
+    const { previousPath, setPreviousPath } = useNavigation();
+    
     useEffect(() => {
         const GetMyPageData = async () => {
             try {
@@ -26,12 +28,13 @@ export default function MyPage() {
                 setMyProfile(data.myProfile)
                 setMyProjects(data.myProjects)
                 setLikeProjects(data.likeProjects)
+                setPreviousPath('/mypage')
             } catch (error) {
                 console.error('Failed to fetch my page data:', error)
             }
         }
         GetMyPageData()
-    }, [accessToken])
+    }, [accessToken, setPreviousPath])
 
     if (!isAuth) {
         // 로그인 모달이 열리도록 설정

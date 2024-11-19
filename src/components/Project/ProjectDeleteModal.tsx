@@ -12,9 +12,10 @@ interface ProjectDeleteModalProps {
     isOpen: boolean
     onClose: () => void
     projectId: number;
+    previousPath: string;
 }
 
-export default function ProjectDeleteModal({ isOpen, onClose, projectId }: ProjectDeleteModalProps) {
+export default function ProjectDeleteModal({ isOpen, onClose, projectId, previousPath }: ProjectDeleteModalProps) {
     const accessToken = useRecoilValue(accessTokenState) || '';
     const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
     const router = useRouter();
@@ -32,7 +33,7 @@ export default function ProjectDeleteModal({ isOpen, onClose, projectId }: Proje
             const response = await DeleteProject(accessToken, projectId);
             if (response === 204) {
                 onClose();
-                router.push('/project/gallery');
+                router.push(previousPath);
             }
         } catch (error) {
             console.error('Failed to create summary:', error);

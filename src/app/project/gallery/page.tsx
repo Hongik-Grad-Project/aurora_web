@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Banner from '@/components/Gallery/Banner';
 import GalleryCategoryNav from '@/components/Gallery/GalleryCategoryNav';
 import GalleryArray from '@/components/Gallery/GalleryArray';
 import Footer from '@/components/Layout/Footer';
+import { useNavigation } from '@/context/NavigationContext'
 
 export default function ProjectGalleryPage() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
@@ -17,6 +18,12 @@ export default function ProjectGalleryPage() {
             setCurrentPage(page);
         }
     };
+
+    const { previousPath, setPreviousPath } = useNavigation();
+
+    useEffect(() => {
+        setPreviousPath('/project/gallery')
+    }, [setPreviousPath])
 
     return (
         <div className="flex w-full flex-col justify-center items-center pt-[70px]">

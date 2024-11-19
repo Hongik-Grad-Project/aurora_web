@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './globals.css'
 
 import ClientProvider from '@/components/common/ClientProvider'
+import { NavigationProvider } from '@/context/NavigationContext'
 import 'react-toastify/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
 
@@ -58,7 +59,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       </head>
       <body className={`${pretendard.className} bg-[#fff]`}>
-        <ClientProvider>
+        <NavigationProvider>
           {/* <FetchSetting> */}
           <Header />
           <ToastContainer
@@ -73,7 +74,7 @@ export default function RootLayout({
           />
           <div className="bg-[#F4F6FA]">{children}</div>
           {/* </FetchSetting> */}
-        </ClientProvider>
+        </NavigationProvider> 
       </body>
     </html>
   )

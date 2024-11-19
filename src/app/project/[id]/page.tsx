@@ -1,12 +1,13 @@
 'use client'
 
-import Footer from "@/components/Layout/Footer"
 import IndividualProject from "@/components/Project/IndividualProject"
+import { useNavigation } from '@/context/NavigationContext'
 
 export default function PrivateProject() {
+    const { previousPath } = useNavigation();
     return (
         <div>
-            <IndividualProject />
+            <IndividualProject previousPath={previousPath} />
         </div>
     )
 }   
