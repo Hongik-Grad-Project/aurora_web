@@ -19,13 +19,13 @@ export default function AuroraChatPage() {
             </div>
             {/* 채팅 기록과 선택된 채팅방의 내용을 표시하는 영역, 헤더 70px 고려 */}
             <div className="flex-grow lg:ml-64 mt-[70px] mb-[84px]">
-                {/* <ChatAurora /> */}
-                <ChatAuroraDemo />
+                <ChatAurora />
+                {/* <ChatAuroraDemo /> */}
             </div>
             {/* 채팅 입력 영역, 하단 고정 및 측면 너비 조정 */}
             <div className="fixed bottom-0 left-0 right-0 lg:left-64">
-                {/* <ChatInput /> */}
-                <ChatInputDemo />
+                <ChatInput />
+                {/* <ChatInputDemo /> */}
             </div>
         </div>
     );
