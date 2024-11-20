@@ -32,12 +32,6 @@ export default function ChatInputDemo() {
     autoResizeTextarea();
   };
 
-const resetTextarea = () => {
-    setInputValue(''); // 입력값 초기화
-    if (textareaRef.current) {
-        textareaRef.current.style.height = '2.5rem'; // padding 포함한 한 줄 높이
-    }
-};
 
     const autoResizeTextarea = () => {
         if (textareaRef.current) {
@@ -50,7 +44,7 @@ const resetTextarea = () => {
     e.preventDefault();
     if (inputValue.trim() && window.addDemoMessage) {
       window.addDemoMessage(inputValue.trim(), true);
-      resetTextarea();
+      autoResizeTextarea();
     }
   };
 
