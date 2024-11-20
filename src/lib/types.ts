@@ -7,6 +7,7 @@ export interface ChatHistory {
   contents: string;
   senderType: SenderType;
   createdAt: string;
+  isTyping?: boolean;
 }
 
 export interface CreateChatRoomResponse {
@@ -72,6 +73,7 @@ export interface Message {
   contents: string;
   senderType: 'MEMBER' | 'AURORA_AI';
   createdAt: string;
+  isTyping?: boolean;
 }
 
 

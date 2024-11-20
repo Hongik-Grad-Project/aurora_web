@@ -56,7 +56,6 @@ export default function ChatInput() {
         isSendingRef.current = true;
 
         let currentChatRoomId = selectedChatRoomId;
-
         const userMessage: AuroraMessage = {
             contents: inputValue,
             senderType: 'MEMBER',
@@ -81,27 +80,60 @@ export default function ChatInput() {
             }
         }
 
-        // `selectedChatRoomId`가 설정된 이후에 메시지 추가
+        // 사용자 메시지 추가
         setChatHistory((prev) => [...prev, userMessage]);
 
         // AI 응답 처리
         if (currentChatRoomId) {
-            const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
-            const aiMessage: AuroraMessage = {
-                contents: messageData.responseMessage,
-                senderType: 'AURORA_AI',
-                createdAt: new Date().toISOString(),
-            };
+            try {
+                const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
+                
+                // 빈 AI 메시지 먼저 추가
+                const aiMessage: AuroraMessage = {
+                    contents: '',
+                    senderType: 'AURORA_AI',
+                    createdAt: new Date().toISOString(),
+                    isTyping: true
+                };
+                setChatHistory((prev) => [...prev, aiMessage]);
 
-            // AI 메시지 추가
-            setChatHistory((prev) => [...prev, aiMessage]);
+                // 타이핑 효과로 메시지 표시
+                let currentIndex = 0;
+                return new Promise<void>((resolve) => {
+                    const interval = setInterval(() => {
+                        if (currentIndex <= messageData.responseMessage.length) {
+                            setChatHistory(prev => {
+                                const newHistory = [...prev];
+                                const lastMessage = {
+                                    ...newHistory[newHistory.length - 1],
+                                    contents: messageData.responseMessage.slice(0, currentIndex),
+                                    isTyping: true
+                                };
+                                return [...newHistory.slice(0, -1), lastMessage];
+                            });
+                            currentIndex++;
+                        } else {
+                            clearInterval(interval);
+                            setChatHistory(prev => {
+                                const newHistory = [...prev];
+                                const lastMessage = {
+                                    ...newHistory[newHistory.length - 1],
+                                    contents: messageData.responseMessage,
+                                    isTyping: false
+                                };
+                                return [...newHistory.slice(0, -1), lastMessage];
+                            });
+                            resolve();
+                        }
+                    }, 50);
+                });
+            } finally {
+                updateChatRooms();
+                isSendingRef.current = false;
+                setInputValue('');
+            }
         }
-
-        updateChatRooms();
-        isSendingRef.current = false;
-        setInputValue(''); // 입력 창 초기화
     };
-
 
     const updateChatRooms = async () => {
         const newRooms = await GetChatList(accessToken);
