@@ -36,7 +36,7 @@ export default function ProjectBodyText({ index, subtitle: initialSubtitle = '',
             <button
                 type="button"
                 onClick={() => onRemove(index)}
-                className="absolute top-0 right-0 flex justify-center items-center p-1 w-6 h-6 bg-purple-500 text-white rounded-full hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                className="absolute top-0 right-0 flex justify-center items-center p-1 w-6 h-6 bg-[#776BFF] text-white rounded-full hover:bg-[#E2E6EF] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                 title="Remove section"
             >
                 &times;

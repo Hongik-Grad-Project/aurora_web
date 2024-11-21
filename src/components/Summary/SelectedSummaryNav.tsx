@@ -55,7 +55,7 @@ export default function SelectedSummaryNav() {
         if (isAuth && accessToken) {
             fetchSummaryContent();
         }
-    }, [selectedSummaryRoomId, setSummaryContents]);
+    }, [selectedSummaryRoomId, setSummaryContents, accessToken, isAuth]);
 
     useEffect(() => {
         // URL에서 ID 추출하여 selectedSummaryRoomId 상태 설정

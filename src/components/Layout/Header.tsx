@@ -216,9 +216,6 @@ export default function Header() {
               <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 아이디어 노트
               </Link>
-              <Link href="/in-development" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                개발 중
-              </Link>
               <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 프로젝트 갤러리
               </Link>

@@ -218,9 +218,15 @@ export default function ProjectBodyPage() {
                                 <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">태그 등록</div>
                                 <div className="flex items-center w-full gap-[0.625rem] rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC] p-[0.625rem] overflow-hidden">
                                     {tags.map((tag, index) => (
-                                        <div key={index} className="flex items-center gap-2.5 bg-purple-200 rounded px-2 py-1 text-center justify-center align-center h-8">
+                                        <div key={index} className="flex items-center gap-2.5 bg-[#776BFF] rounded px-2 py-1 text-center justify-center align-center h-8">
                                             <span>#{tag}</span>
-                                            <button type="button" onClick={() => removeTag(index)} className="text-sm">x</button>
+                                            <button 
+                                                type="button" 
+                                                onClick={() => removeTag(index)}
+                                                className="text-sm text-[#776BFF] hover:text-[#5D54CC] transition-colors"
+                                            >
+                                                x
+                                            </button>
                                         </div>
                                     ))}
                                     <input
