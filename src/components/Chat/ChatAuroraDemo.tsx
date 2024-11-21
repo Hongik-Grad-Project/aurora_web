@@ -25,46 +25,41 @@ export default function ChatAuroraDemo() {
 
   // 새로운 메시지 추가 함수 수정
   const addNewMessage = useCallback((message: string, isUser: boolean) => {
-    const sendAIResponse = () => {
-      if (currentAIResponseIndex < AI_RESPONSES.length) {
-        setIsTyping(true);
-        
-        // AI가 "생각하는" 시간
-        setTimeout(() => {
-          const aiMessage = AI_RESPONSES[currentAIResponseIndex];
-          let currentIndex = 0;
-          
-          const typingInterval = setInterval(() => {
-            if (currentIndex <= aiMessage.length) {
-              setCurrentText(aiMessage.slice(0, currentIndex));
-              currentIndex++;
-            } else {
-              clearInterval(typingInterval);
-              setIsTyping(false);
-              addNewMessage(aiMessage, false);
-              setCurrentAIResponseIndex(prev => prev + 1);
-            }
-          }, 100);
-        }, 1500); // AI가 1.5초 동안 "생각"
-      }
-    };
-
     const newMessage = {
       senderType: isUser ? 'MEMBER' : 'AURORA_AI',
       contents: message,
       createdAt: new Date().toISOString()
     } as const;
     
-    setChatHistory(prev => {
-      const lastMessage = prev[prev.length - 1];
-      if (lastMessage?.contents === message && lastMessage?.senderType === newMessage.senderType) {
-        return prev;
-      }
-      return [...prev, newMessage];
-    });
+    setChatHistory(prev => [...prev, newMessage]);
 
-    if (isUser) {
-      sendAIResponse();
+    // 사용자 메시지인 경우에만 AI 응답 시작
+    if (isUser && currentAIResponseIndex < AI_RESPONSES.length) {
+      setIsTyping(true);
+      
+      // AI 응답 타이핑 효과
+      setTimeout(() => {
+        const aiMessage = AI_RESPONSES[currentAIResponseIndex];
+        let currentIndex = 0;
+        
+        const typingInterval = setInterval(() => {
+          if (currentIndex <= aiMessage.length) {
+            setCurrentText(aiMessage.slice(0, currentIndex));
+            currentIndex++;
+          } else {
+            clearInterval(typingInterval);
+            setIsTyping(false);
+            // 타이핑이 완료된 후에 채팅 기록에 추가
+            setChatHistory(prev => [...prev, {
+              senderType: 'AURORA_AI',
+              contents: aiMessage,
+              createdAt: new Date().toISOString()
+            }]);
+            setCurrentText(''); // 타이핑 텍스트 초기화
+            setCurrentAIResponseIndex(prev => prev + 1);
+          }
+        }, 50);
+      }, 500);
     }
   }, [currentAIResponseIndex]);
 
@@ -132,7 +127,9 @@ export default function ChatAuroraDemo() {
                 )}
               </div>
             ))}
-            {isTyping && (
+            
+            {/* 타이핑 중인 메시지 */}
+            {isTyping && currentText && (
               <div className="relative p-4 rounded-2xl text-lg bg-gray-200 text-gray-800 self-start mr-auto"
                    style={{ maxWidth: '75%', wordWrap: 'break-word', wordBreak: 'break-word', width: 'fit-content' }}>
                 {currentText}

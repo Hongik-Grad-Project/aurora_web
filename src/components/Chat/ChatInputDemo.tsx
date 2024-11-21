@@ -18,6 +18,7 @@ export default function ChatInputDemo() {
     const [isChatRouteNoteModalOpen, setIsChatRouteNoteModalOpen] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const isSendingRef = useRef<boolean>(false);
 
   const currentChatRoom = chatRooms.find((room) => room.chatRoomId === selectedChatRoomId);
 
@@ -40,16 +41,27 @@ export default function ChatInputDemo() {
         }
     };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputValue.trim() && window.addDemoMessage) {
-      window.addDemoMessage(inputValue.trim(), true);
-      autoResizeTextarea();
-    }
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setTimeout(() => {
+          if (inputValue.trim() && window.addDemoMessage) {
+            window.addDemoMessage(inputValue.trim(), true);
+            autoResizeTextarea();
+          }
+        }, 0);
+    };
+
+  const createChatRoomAndSendMessage = async () => {
+    if (inputValue.trim() === '' || isSendingRef.current) return;
+
+    isSendingRef.current = true;
+
+        isSendingRef.current = false;
+        setInputValue('');
+    };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && e.nativeEvent.isComposing == false) {
       e.preventDefault();
       setInputValue('');
       handleSubmit(e);
@@ -105,7 +117,7 @@ export default function ChatInputDemo() {
                         placeholder="오로라와 얘기해보세요" 
                         value={inputValue} 
                         onInput={handleInput}
-                        onKeyUp={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         rows={1} 
                         style={{ minHeight: '1.5rem', maxHeight: '6rem', padding: '0.5rem 0' }} 
                     />
