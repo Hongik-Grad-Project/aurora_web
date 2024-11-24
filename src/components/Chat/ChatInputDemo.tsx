@@ -43,12 +43,14 @@ export default function ChatInputDemo() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setTimeout(() => {
-          if (inputValue.trim() && window.addDemoMessage) {
-            window.addDemoMessage(inputValue.trim(), true);
-            autoResizeTextarea();
-          }
-        }, 0);
+        if (inputValue.trim()) {
+            // 사용자 메시지 전송
+            window.addDemoMessage?.(inputValue.trim(), true);
+            setInputValue('');
+            if (textareaRef.current) {
+                textareaRef.current.style.height = 'auto';
+            }
+        }
     };
 
   const createChatRoomAndSendMessage = async () => {
@@ -61,10 +63,9 @@ export default function ChatInputDemo() {
     };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && e.nativeEvent.isComposing == false) {
-      e.preventDefault();
-      setInputValue('');
-      handleSubmit(e);
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+        e.preventDefault();
+        handleSubmit(e);
     }
   };
 

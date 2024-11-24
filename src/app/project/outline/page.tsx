@@ -151,7 +151,7 @@ export default function ProjectOutlinePage() {
           </div>
 
           {/* 사회 문제 요약 */}
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start md:gap-[2rem] w-full">
             <TextLayout
               title="문제 요약"
               description="해결하고 싶은 문제가 무엇인지 간단하게 적어주세요."
@@ -160,7 +160,7 @@ export default function ProjectOutlinePage() {
               <p className="text-[#9DA1AD] text-xs font-normal">
                 {summaryValue.length}/20
               </p>
-              <div className="flex w-full md:w-[42.5rem] h-[2.75rem] px-3 md:px-[0.875rem] py-2 items-center gap-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC]">
+              <div className="flex w-full h-[2.75rem] px-3 md:px-[0.875rem] py-2 items-center gap-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC]">
                 <input
                   {...register("summary", { required: true })}
                   type="text"

@@ -1,70 +1,98 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { accessTokenState, filteredProjectGalleryState } from '@/context/recoil-context'
+import GalleryWindow from '@/components/Gallery/GalleryWindow'
 
 export default function SearchBar() {
-    const [selectedTags, setSelectedTags] = useState<string[]>([])
-    
-    const tags = [
-        '여성', '지구촌', '유기동물', '주거개선', '어려운 이웃',
-        '장애인 시설', '장애인', '청년', '아동 | 청소년', '이주민 | 다문화'
-    ]
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useRecoilState(filteredProjectGalleryState);
+    const accessToken = useRecoilValue(accessTokenState);
 
-    const handleTagClick = (tag: string) => {
-        setSelectedTags(prev => {
-            if (prev.includes(tag)) {
-                return prev.filter(t => t !== tag)
-            }
-            return [...prev, tag]
-        })
-    }
+    const handleSearch = async () => {
+        if (!searchInput.trim()) return;
+
+        try {
+            const queryParams = new URLSearchParams({
+                page: '1',
+                size: '8',
+                sortType: 'new',
+                keyword: searchInput.trim()
+            });
+
+            const response = await GetProjectSearchFiltering(
+                accessToken, 
+                `/gallery/search/keyword?${queryParams.toString()}`
+            );
+            setSearchResults(response.content);
+        } catch (error) {
+            console.error('Failed to fetch filtered projects:', error);
+        }
+    };
 
     return (
-        <div className="flex w-[69.40625rem] flex-col items-start gap-[1rem] pt-[2.91rem]">
-            <div className="flex w-full flex-col justify-center items-center mb-[1.38rem]">
-                <h1 className="text-center text-[2.5rem] font-semibold mt-[5.19rem] mb-[5.06rem]">
-                    어떤 방식의
-                    <br />
-                    프로젝트를 찾고 있나요?
-                </h1>
-                <div className="flex w-[69.40625rem] items-center">
-                    <input
-                        type="text"
-                        value={selectedTags.join(' | ')}
-                        readOnly
-                        placeholder="태그를 선택해주세요"
-                        className="flex w-[67.3125rem] h-[3rem] text-[#776BFF] text-[2rem] font-semibold focus:outline-none placeholder-opacity-100 placeholder-[#6A6F7A] mb-[0.94rem]"
-                    />
-                    <button className="flex items-center justify-center h-[3rem] w-[3rem] bg-transparent border-none cursor-pointer">
-                        <Image src="/assets/icons/search_icon.svg" alt="검색" width={34} height={34} className="opacity-30" />
-                    </button>
-                </div>
-                <svg width="69.40625rem" height="0.1875rem">
-                    <line x1="0" y1="0" x2="69.40625rem" y2="0" stroke="#E2E6EF" strokeWidth="3" />
-                </svg>
-            </div>
-            
-            <div className='flex flex-col w-full'>
-                <p className="text-[1rem] font-normal text-black mb-[1rem]">
-                    태그로 찾기
-                </p>
-                <div className="flex flex-wrap gap-4">
-                    {tags.map((tag, index) => (
-                        <button
-                            key={index}
-                            className={`px-4 py-2 rounded-full border border-[#776BFF] transition-colors whitespace-nowrap
-                                ${selectedTags.includes(tag) 
-                                    ? 'bg-[#776BFF] text-white' 
-                                    : 'text-[#776BFF] hover:bg-[#776BFF] hover:text-white'
-                                }`}
-                            onClick={() => handleTagClick(tag)}
+        <>
+            <div className="flex w-full max-w-[69.40625rem] mx-auto flex-col items-start gap-[1rem] pt-[2.91rem]">
+                <div className="flex w-full flex-col justify-center items-center mb-[1.38rem]">
+                    <h1 className="text-center text-[2.5rem] font-semibold mt-[5.19rem] mb-[5.06rem]">
+                        어떤 방식의<br />프로젝트를 찾고 있나요?
+                    </h1>
+                    <div className="flex w-full items-center">
+                        <input
+                            type="text"
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                            placeholder="검색어를 입력하세요"
+                            className="flex w-full h-[3rem] text-[#776BFF] text-[2rem] font-semibold focus:outline-none placeholder-opacity-100 placeholder-[#6A6F7A] mb-[0.94rem]"
+                        />
+                        <button 
+                            className="flex items-center justify-center h-[3rem] w-[3rem] bg-transparent border-none cursor-pointer"
+                            onClick={handleSearch}
                         >
-                            {tag}
+                            <Image 
+                                src="/assets/icons/search_icon.svg" 
+                                alt="검색" 
+                                width={34} 
+                                height={34} 
+                                className={`opacity-30 ${searchInput.trim() ? 'hover:opacity-60' : ''}`}
+                            />
                         </button>
-                    ))}
+                    </div>
+                    <svg width="100%" height="0.1875rem">
+                        <line x1="0" y1="0" x2="100%" y2="0" stroke="#E2E6EF" strokeWidth="3" />
+                    </svg>
                 </div>
             </div>
-        </div>
-    )
+
+            {/* 검색 결과 */}
+            {searchResults.length > 0 && (
+                <div className="w-full max-w-[69.40625rem] mx-auto mt-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
+                        {searchResults.map((project) => (
+                            <GalleryWindow key={project.projectId} project={project} />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </>
+    );
+}
+
+export async function GetProjectSearchFiltering(accessToken: string | null, url: string) {
+    const headers: HeadersInit = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+    const options: RequestInit = {
+        method: 'GET',
+        headers,
+        credentials: accessToken ? 'include' : 'omit', // 토큰이 없으면 쿠키 전송을 생략
+      };
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}${url}`, options)
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch filtered project gallery')
+    }
+
+    return await response.json()
 }
