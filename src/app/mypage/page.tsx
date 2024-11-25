@@ -43,10 +43,16 @@ export default function MyPage() {
 
     return (
         <div className="flex w-full flex-col justify-center items-center pt-[70px] bg-[#fff]">
-            <div className="flex w-[56.25rem] flex-col items-start gap-[5rem] pt-[2.91rem]">
-                <MyProfile profileData={myProfile} />
-                <MyProject projectData={myProjects} />
-                <MyUnderpinProject likeProjectData={likeProjects} />
+            <div className="flex w-full max-w-[56.25rem] flex-col items-start gap-[3rem] sm:gap-[5rem] px-4 sm:px-8 lg:px-0 pt-[2.91rem]">
+                <div className="w-full">
+                    <MyProfile profileData={myProfile} />
+                </div>
+                <div className="w-full">
+                    <MyProject projectData={myProjects} />
+                </div>
+                <div className="w-full">
+                    <MyUnderpinProject likeProjectData={likeProjects} />
+                </div>
             </div>
             <Footer />
         </div>

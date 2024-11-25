@@ -38,21 +38,24 @@ export default function MyProject({ projectData }: MyProjectProps) {
     }));
 
     return (
-        <div className="flex flex-col w-[56.25rem]">
+        <div className="flex flex-col w-full max-w-[56.25rem] px-4 sm:px-0">
             <div className="flex justify-between items-center self-stretch mb-[1.88rem]">
-                <div className="text-black text-[2rem] font-semibold leading-[3rem]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
+                <div className="text-black text-[1.5rem] sm:text-[2rem] font-semibold leading-[3rem]">
                     나의 프로젝트
                 </div>
                 <div 
-                    className="text-[#6A6F7A] text-[1rem] font-medium leading-[1.5rem] cursor-pointer"
-                    onClick={() => router.push('/mypage/project')}  // onClick 이벤트 핸들러 추가
+                    className="text-[#6A6F7A] text-[0.875rem] sm:text-[1rem] font-medium leading-[1.5rem] cursor-pointer"
+                    onClick={() => router.push('/mypage/project')}
                 >
                     더보기
                 </div>
             </div>
-            <div className="flex flex-row gap-[0.75rem]">
+            <div className="flex flex-row flex-wrap gap-[0.75rem] justify-center sm:justify-start">
                 {myProjects.map((project, index) => (
-                    <ProjectWindow key={index} data={project} />
+                    <ProjectWindow 
+                        key={index} 
+                        data={project} 
+                    />
                 ))}
             </div>
         </div>

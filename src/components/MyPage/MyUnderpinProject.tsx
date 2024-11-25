@@ -39,7 +39,7 @@ export default function MyUnderpinProject({ likeProjectData }: LikeProjectProps)
                 </div>
             </div>
             <div
-                className="flex w-[56.25rem] h-[2.8125rem] p-[0.5rem] px-[0.625rem] justify-center items-center gap-[0.625rem] rounded-[0.3125rem] bg-[#F4F6FA] cursor-pointer"
+                className="flex w-full max-w-[56.25rem] mx-4 h-[2.8125rem] p-[0.5rem] px-[0.625rem] justify-center items-center gap-[0.625rem] rounded-[0.3125rem] bg-[#F4F6FA] cursor-pointer"
                 onClick={() => router.push('/mypage/project')}
             >
                 <div
