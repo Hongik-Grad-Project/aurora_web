@@ -106,7 +106,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-0 z-[20] w-full flex-shrink bg-white backdrop-blur-3xl">
+      <nav className="fixed top-0 z-[50] w-full flex-shrink bg-white backdrop-blur-3xl">
         <div className="flex w-full items-center justify-between px-[2.5rem] py-[18.5px]">
           <div className="flex gap-[2.19rem]">
             <div className="flex">
@@ -207,7 +207,7 @@ export default function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6 z-[30]"
+            className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6 z-[51]"
           >
             <div className="flex flex-col items-end space-y-2">
               <div className="pl-4 flex flex-col items-end space-y-2">
