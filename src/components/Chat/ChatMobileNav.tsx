@@ -83,7 +83,7 @@ export default function ChatMobileNav() {
 
     if (loading) {
         return (
-            <div className="flex flex-col gap-4 p-4 bg-white h-full w-full md:mt-[70px] border-r border-gray-200">
+            <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
                     <button onClick={onCreateNewChatRoom} title="새 채팅방 추가" className="p-2 rounded bg-transparent">

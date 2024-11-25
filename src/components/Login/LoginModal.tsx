@@ -43,48 +43,48 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: '100vh', opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-[90%] max-w-[31.5rem] h-auto min-h-[27.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
+        className="w-[90%] max-w-[24rem] h-auto min-h-[20rem] flex-shrink-0 rounded-[1rem] bg-[#FFF] pb-[2rem] pt-[1.5rem]"
       >
         <div className="flex flex-col items-center">
-          <Image src="/assets/colorLogo.svg" width={172} height={57} alt="logo" />
-          <div className="flex flex-col flex-start w-[90%] max-w-[23.6335rem] mt-[2.35rem]">
+          <Image src="/assets/colorLogo.svg" width={130} height={43} alt="logo" />
+          <div className="flex flex-col flex-start w-[90%] max-w-[20rem] mt-[1.2rem]">
             <div
-              className="text-[#0F1011] text-[1.25rem] font-bold leading-[1.875rem]"
+              className="text-[#0F1011] text-[0.9rem] font-bold leading-[1.3rem]"
             >
               회원가입하기
             </div>
             <div
-              className="text-[#0F1011] text-[0.875rem] font-medium leading-[1.3125rem] mb-[1.93rem]"
+              className="text-[#0F1011] text-[0.7rem] font-medium leading-[1rem] mb-[1rem]"
             >
               소셜 로그인 및 이메일로 가입할 수 있습니다.
             </div>
-            <div className="w-[23.3475rem] h-0 flex-shrink-0 border-t-[0.598px] border-[#CDCDCD]"></div>
+            <div className="w-full h-0 flex-shrink-0 border-t-[0.5px] border-[#CDCDCD]"></div>
           </div>
-          <div className="flex flex-col items-center gap-2 pt-6 w-[90%] max-w-[23.6335rem]">
+          <div className="flex flex-col items-center gap-[0.4rem] pt-3 w-[90%] max-w-[20rem]">
             <Link href={GOOGLE_AUTH_URL} className="w-full">
-              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
-                <div className="absolute left-4">
-                  <Image src={'/assets/login/googleLogo.svg'} width={23} height={23} alt="GoogleLogin" />
+              <div className="flex h-[2.4rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.4rem] border-[0.5px] border-[#C1C1C1] bg-[#FFF]">
+                <div className="absolute left-2">
+                  <Image src={'/assets/login/googleLogo.svg'} width={18} height={18} alt="GoogleLogin" />
                 </div>
-                <span className="font-normal text-[0.875rem]">Google로 시작하기</span>
+                <span className="font-normal text-[0.75rem]">Google로 시작하기</span>
               </div>
             </Link>
             
             <Link href={KAKAO_AUTH_URL} className="w-full">
-              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] bg-[#FDDC3F]">
-                <div className="absolute left-4">
-                  <Image src={'/assets/login/kakaoLogo.svg'} width={39} height={56} alt="kakaoLogin" />
+              <div className="flex h-[2.4rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.4rem] bg-[#FDDC3F]">
+                <div className="absolute left-2">
+                  <Image src={'/assets/login/kakaoLogo.svg'} width={30} height={42} alt="kakaoLogin" />
                 </div>
-                <span className="font-normal text-[0.875rem]">카카오로 시작하기</span>
+                <span className="font-normal text-[0.75rem]">카카오로 시작하기</span>
               </div>
             </Link>
 
             <Link href={NAVER_AUTH_URL} className="w-full">
-              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] bg-[#04BF19]">
-                <div className="absolute left-4">
-                  <Image src={'/assets/login/naverLogo.svg'} width={39} height={44} alt="naverLogin" />
+              <div className="flex h-[2.4rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.4rem] bg-[#04BF19]">
+                <div className="absolute left-2">
+                  <Image src={'/assets/login/naverLogo.svg'} width={30} height={35} alt="naverLogin" />
                 </div>
-                <p className="text-normal text-[0.875rem] text-white">네이버로 시작하기</p>
+                <p className="text-normal text-[0.75rem] text-white">네이버로 시작하기</p>
               </div>
             </Link>
           </div>
