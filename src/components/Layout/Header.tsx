@@ -23,6 +23,7 @@ export default function Header() {
   const pathname = usePathname()
 
   const hiddenPaths = useMemo(() => [
+    'chat',
     'project/idea',
     'project/outline',
     'project/body',

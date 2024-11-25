@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,7 +65,7 @@ export default function ChatMobileNav() {
         if (isAuth && accessToken) {
             fetchChatHistory();
         }
-    }, [selectedChatRoomId, setChatHistory]);
+    }, [selectedChatRoomId, setChatHistory, accessToken, isAuth]);
 
     const onSelectChatRoom = (chatRoomId: number) => {
         setSelectedChatRoomId(chatRoomId);

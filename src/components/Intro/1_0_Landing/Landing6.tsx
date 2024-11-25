@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import GalleryWindow from '@/components/Gallery/GalleryWindow';
 import { ProjectGallery as ProjectGalleryType } from '@/lib/types';
 import { GetRecommendProjects } from '@/lib/action';
@@ -22,7 +22,7 @@ export default function Landing6() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchRecommendsProject = async () => {
+    const fetchRecommendsProject = useCallback(async () => {
         try {
             const response = await GetRecommendProjects(accessToken);
             if (response && Array.isArray(response)) {
@@ -35,11 +35,11 @@ export default function Landing6() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [accessToken]);
 
     useEffect(() => {
         fetchRecommendsProject();
-    }, [accessToken]);
+    }, [fetchRecommendsProject]);
 
     if (loading) {
         return <div>Loading...</div>;

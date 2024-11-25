@@ -49,7 +49,7 @@ export default function SummarizedProjectBodyPage() {
             setTextSections([{ subtitle: '', content: '' }]);
             setValue('tagInput', tags.join(', '));
         }
-    }, [subTitleList, contentList]);
+    }, [subTitleList, contentList, setValue, tags]);
 
     // 조건 충족 여부 확인 함수
     const areTextSectionsValid = textSections.some(section => section.subtitle.trim() !== '' && section.content.trim() !== '');

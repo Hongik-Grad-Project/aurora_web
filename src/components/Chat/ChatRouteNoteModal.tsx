@@ -73,15 +73,15 @@ export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) 
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100vh', opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-lg max-w-[400px] w-full mx-2"
+                className="flex flex-col items-center justify-center bg-white p-6 sm:p-8 rounded-lg shadow-lg max-w-[320px] sm:max-w-[400px] w-[90%] mx-auto"
             >
-                <h1 className="text-xl font-semibold text-gray-800 mb-8">요약된 아이디어 노트로 이동하시겠습니까?</h1>
-                <div className="flex w-full justify-center gap-[1.5rem]">
+                <h1 className="text-base sm:text-xl font-semibold text-gray-800 mb-6 sm:mb-8">요약된 아이디어 노트로 이동하시겠습니까?</h1>
+                <div className="flex w-full justify-center gap-4 sm:gap-[1.5rem]">
                     <button
                         onClick={() => {
                             handleNo();
                         }}
-                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400 transition-colors"
+                        className="flex-1 h-9 sm:h-12 justify-center items-center rounded-lg bg-gray-300 text-xs sm:text-base text-gray-800 font-semibold hover:bg-gray-400 transition-colors"
                     >
                         아니오
                     </button>
@@ -89,7 +89,7 @@ export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) 
                         onClick={() => {
                             handleYes();
                         }}
-                        className="flex-1 h-12 mx-2 justify-center items-center rounded-lg bg-[#AEA0FF] text-white font-semibold hover:bg-[#776BFF] transition-colors"
+                        className="flex-1 h-9 sm:h-12 justify-center items-center rounded-lg bg-[#776BFF] text-xs sm:text-base text-white font-semibold hover:bg-[#AEA0FF] transition-colors"
                     >
                         예
                     </button>

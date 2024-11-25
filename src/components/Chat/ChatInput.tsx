@@ -6,7 +6,6 @@ import { accessTokenState, authState, selectedChatRoomIdState, selectedChatHisto
 import { GetChatLocation, GetChatList, SendMessage } from '@/lib/action';
 import { Message as AuroraMessage } from '@/lib/types';
 import ChatModal from './ChatModal';
-import Image from 'next/image';
 import ChatRouteNoteModal from './ChatRouteNoteModal';
 import ChatDeleteModal from './ChatDeleteModal';
 
@@ -154,7 +153,12 @@ export default function ChatInput() {
                 <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
                     <button 
                         onClick={() => setIsChatDeleteModalOpen(true)}
-                        className="flex justify-center items-center px-4 py-2 rounded-[1rem] border border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF] transition-colors sm:w-auto"
+                        disabled={!selectedChatRoomId}
+                        className={`flex justify-center items-center px-4 py-2 rounded-[1rem] border transition-colors sm:w-auto ${
+                            selectedChatRoomId 
+                                ? 'border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF]' 
+                                : 'border-gray-300 text-gray-300 cursor-not-allowed'
+                        }`}
                         style={{ height: '3.2rem' }}
                     >
                         <span className="hidden sm:inline">삭제하기</span>
@@ -179,11 +183,11 @@ export default function ChatInput() {
                     </div>
 
                     <button
-                        onClick={() => setIsChatModalOpen(true)}
+                        onClick={() => setIsChatRouteNoteModalOpen(true)}
                         className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
                         style={{ height: '3.2rem', padding: '0.5rem 1.5rem' }}
                     >
-                        <span className="hidden sm:inline">오픈으로 이동</span>
+                        <span className="hidden sm:inline">요약으로 이동</span>
                         <svg 
                             className="w-6 h-6 sm:hidden"
                             fill="none"
@@ -203,7 +207,12 @@ export default function ChatInput() {
                 <div className="flex items-end gap-[0.75rem] w-full max-w-7xl mx-auto relative">
                     <button 
                         onClick={() => setIsChatDeleteModalOpen(true)}
-                        className="flex justify-center items-center px-4 py-2 rounded-[1rem] border border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF] transition-colors sm:w-auto"
+                        disabled={!selectedChatRoomId}
+                        className={`flex justify-center items-center px-4 py-2 rounded-[1rem] border transition-colors sm:w-auto ${
+                            selectedChatRoomId 
+                                ? 'border-[#776BFF] text-[#776BFF] hover:bg-[#F9F8FF]' 
+                                : 'border-gray-300 text-gray-300 cursor-not-allowed'
+                        }`}
                         style={{ height: '3.2rem' }}
                     >
                         <span className="hidden sm:inline">삭제하기</span>
@@ -226,7 +235,7 @@ export default function ChatInput() {
                         <textarea 
                             ref={textareaRef} 
                             className="w-full text-[0.875rem] sm:text-[1rem] text-[#6A6F7A] font-medium leading-[1.5rem] resize-none outline-none overflow-hidden" 
-                            placeholder={window.innerWidth <= 640 ? "채팅 입력하기" : "오로라와 얘기해보세요"} 
+                            placeholder="오로라와 얘기해보세요" 
                             value={inputValue} 
                             onInput={handleInput} 
                             onKeyDown={handleKeyDown} 
@@ -255,7 +264,12 @@ export default function ChatInput() {
 
                     <button
                         onClick={() => setIsChatModalOpen(true)}
-                        className="flex justify-center items-center gap-[0.625rem] rounded-[1rem] bg-[#776BFF] text-white font-semibold transition duration-300 ease-in-out hover:bg-[#F9F8FF] hover:text-[#776BFF]"
+                        disabled={!selectedChatRoomId}
+                        className={`flex justify-center items-center gap-[0.625rem] rounded-[1rem] transition duration-300 ease-in-out ${
+                            selectedChatRoomId 
+                                ? 'bg-[#776BFF] text-white hover:bg-[#F9F8FF] hover:text-[#776BFF]' 
+                                : 'bg-gray-300 text-white cursor-not-allowed'
+                        }`}
                         style={{ height: '3.2rem', padding: '0.5rem 1.5rem' }}
                     >
                         <span className="hidden sm:inline">대화 끝내기</span>

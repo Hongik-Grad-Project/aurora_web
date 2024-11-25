@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, authState, filteredProjectGalleryState } from '@/context/recoil-context'
 import LableBtn from "./Lable"
@@ -22,7 +22,7 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
     const [selectedTargets, setSelectedTargets] = useState<string[]>([])
 
     // 필터링된 프로젝트 갤러리 데이터 가져오기
-    const fetchFilteredProjectGallery = async () => {
+    const fetchFilteredProjectGallery = useCallback(async () => {
         const queryParams = new URLSearchParams()
 
         // 타겟 필터를 쿼리 파라미터에 추가
@@ -44,12 +44,12 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
         } catch (error) {
             console.error('Error fetching project gallery:', error)
         }
-    }
+    }, [accessToken, currentPage, pageSize, sortType, selectedTargets, setFilteredProjectGallery])
 
     // 필터, 페이지, 정렬이 변경될 때마다 데이터 다시 가져오기
     useEffect(() => {
         fetchFilteredProjectGallery()
-    }, [selectedTargets, currentPage, pageSize, sortType])
+    }, [fetchFilteredProjectGallery])
 
     // 타겟 필터를 선택하거나 해제하는 함수
     const handleFilterSelect = (target: string) => {

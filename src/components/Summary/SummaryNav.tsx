@@ -54,7 +54,7 @@ export default function SummaryNav() {
         if (isAuth && accessToken) {
             fetchSummaryContent();
         }
-    }, [selectedSummaryRoomId, setSummaryContents]);
+    }, [selectedSummaryRoomId, setSummaryContents, accessToken, isAuth]);
 
     // 경로 이동 함수
     const onSelectSummaryRoom = (noteId: number) => {

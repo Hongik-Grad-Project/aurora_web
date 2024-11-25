@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from "react"
+import Image from 'next/image';
 
 export default function ProjectImage({
     onFileChange,
@@ -27,7 +28,12 @@ export default function ProjectImage({
     return (
         <div className="relative flex flex-col items-center justify-center w-[18.7rem] h-[200px] bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 mb-[1rem] hover:bg-gray-200 transition-colors duration-300">
             {preview ? (
-                <img src={preview} alt="Preview" className="object-cover h-full w-full rounded-lg" />
+                <Image 
+                    src={preview} 
+                    alt="Preview" 
+                    fill
+                    className="object-cover rounded-lg"
+                />
             ) : (
                 <div className="flex flex-col items-center">
                     <p className="text-gray-600 mb-2">이미지 업로드</p>

@@ -1,11 +1,9 @@
-'use client';
+'use client'
 
 import ChatAurora from '@/components/Chat/ChatAurora';
 import ChatInput from '@/components/Chat/ChatInput';
-import ChatAuroraDemo from '@/components/Chat/ChatAuroraDemo';
 import ChatNav from '@/components/Chat/ChatNav';
 import ChatMobileNav from '@/components/Chat/ChatMobileNav';
-import ChatInputDemo from '@/components/Chat/ChatInputDemo';
 
 export default function AuroraChatPage() {
     return (
