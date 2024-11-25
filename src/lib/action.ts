@@ -116,7 +116,7 @@ export async function SendMessage(accessToken: string, chatRoomId: string, messa
 
 // 2.6. 요약 노트 생성
 export async function CreateSummaryNote(accessToken: string, chatRoomId: string): Promise<CreateChatRoomResponse> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/summary`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/chat/${chatRoomId}/summary/v1`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -207,7 +207,7 @@ export async function DeleteSummaryNote(accessToken: string, noteId: string) {
 
 // 3.4. 기획서 자동 완성하기 (POST /note/{noteId}/completion)
 export async function CompleteSummaryNote(accessToken: string, noteId: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note/${noteId}/completion`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/note/${noteId}/completion/v1`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,

@@ -36,7 +36,7 @@ export default function ChatNav() {
     if (isAuth && accessToken) {
       fetchChatRooms();
     }
-  }, [accessToken, selectedChatRoomId, isAuth, setChatRooms]);
+  }, [accessToken, isAuth, setChatRooms]);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -59,7 +59,7 @@ export default function ChatNav() {
     if (isAuth && accessToken) {
       fetchChatHistory();
     }
-  }, [selectedChatRoomId, setChatHistory]);
+  }, [selectedChatRoomId, setChatHistory, accessToken, isAuth]);
 
   const onSelectChatRoom = (chatRoomId: number) => {
     setSelectedChatRoomId(chatRoomId);

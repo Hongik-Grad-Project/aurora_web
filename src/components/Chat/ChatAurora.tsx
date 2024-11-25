@@ -22,19 +22,18 @@ export default function ChatAurora() {
 
   return (
     <div className="flex flex-col w-full h-full bg-gray-100 relative">
-      {/* Adjust the top margin on mobile screens */}
-      <div className="flex-grow overflow-y-auto p-6 bg-white mt-[57px] lg:mt-0">
+      <div className="flex-grow overflow-y-auto p-3 sm:p-6 bg-white mt-[57px] lg:mt-0">
         {currentChatRoom ? (
-          <div className="space-y-4 w-full">
+          <div className="space-y-3 w-full">
             {chatHistory.map((message, index) => (
               <div
                 key={index}
-                className={`relative p-4 rounded-2xl text-lg ${message.senderType === 'AURORA_AI'
+                className={`relative p-3 sm:p-4 rounded-2xl text-sm sm:text-base ${message.senderType === 'AURORA_AI'
                   ? 'bg-gray-200 text-gray-800 self-start mr-auto'
                   : 'bg-indigo-500 text-white self-end ml-auto'
                   }`}
                 style={{
-                  maxWidth: '75%',
+                  maxWidth: '85%',
                   wordWrap: 'break-word',
                   wordBreak: 'break-word',
                   width: 'fit-content',
@@ -79,10 +78,10 @@ export default function ChatAurora() {
         ) : (
           <div className="flex flex-col justify-center items-center w-full h-full">
             <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-              <Image src="/assets/intro/section1_float_btn.png" alt="Aurora Logo" width={200} height={200} className="object-contain" />
+              <Image src="/assets/intro/section1_float_btn.png" alt="Aurora Logo" width={150} height={150} className="object-contain" />
             </motion.div>
             <div className="flex flex-col justify-center items-center mt-4">
-              <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">어떤 문서가 필요한가요?</h2>
+              <h2 className="text-xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">어떤 문서가 필요한가요?</h2>
               <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-4 mt-6 w-full max-w-[300px] sm:max-w-none px-4 sm:px-0">
                 <button className="px-3 sm:px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
                   <span className="text-[11px] sm:text-base">마케팅 기획서</span>
