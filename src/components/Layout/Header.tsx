@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -22,14 +22,14 @@ export default function Header() {
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const pathname = usePathname()
 
-  const dropdownRef = useRef<HTMLDivElement>(null) // 드롭다운을 참조하는 ref
-
-  const hiddenPaths = [
+  const hiddenPaths = useMemo(() => [
     'project/idea',
     'project/outline',
     'project/body',
     'project/gallery'
-  ]
+  ], [])
+
+  const dropdownRef = useRef<HTMLDivElement>(null) // 드롭다운을 참조하는 ref
 
   useEffect(() => {
     if (hiddenPaths.includes(pathname)) return
@@ -207,18 +207,26 @@ export default function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6"
+            className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6 z-[30]"
           >
             <div className="flex flex-col items-end space-y-2">
-              <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                오로라 채팅하기
-              </Link>
-              <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                아이디어 노트
-              </Link>
+              <div className="pl-4 flex flex-col items-end space-y-2">
+                <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                  오로라 채팅하기
+                </Link>
+                <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                  아이디어 노트
+                </Link>
+                <Link href="/project/outline" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                  기획서 생성
+                </Link>
+              </div>
               <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                 프로젝트 갤러리
               </Link>
+              <button onClick={handleMyPageClick} className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                마이페이지
+              </button>
               {isAuth ? (
                 <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">
                   로그아웃

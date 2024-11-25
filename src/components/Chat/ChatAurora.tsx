@@ -83,18 +83,18 @@ export default function ChatAurora() {
             </motion.div>
             <div className="flex flex-col justify-center items-center mt-4">
               <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-300">어떤 문서가 필요한가요?</h2>
-              <div className="flex gap-4 mt-6">
-                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
-                  마케팅 기획서
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-4 mt-6 w-full max-w-[300px] sm:max-w-none px-4 sm:px-0">
+                <button className="px-3 sm:px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  <span className="text-[11px] sm:text-base">마케팅 기획서</span>
                 </button>
-                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
-                  사업 계획서
+                <button className="px-3 sm:px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  <span className="text-[11px] sm:text-base">사업 계획서</span>
                 </button>
-                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
-                  프로젝트 제안서
+                <button className="px-3 sm:px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  <span className="text-[11px] sm:text-base">프로젝트 제안서</span>
                 </button>
-                <button className="px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
-                  린캔버스
+                <button className="px-3 sm:px-6 py-2 bg-gray-50/80 border border-gray-200 rounded-full hover:bg-gray-100/90 transition-all">
+                  <span className="text-[11px] sm:text-base">린캔버스</span>
                 </button>
               </div>
             </div>
