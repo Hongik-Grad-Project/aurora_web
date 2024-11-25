@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import Image from "next/image";
 import Dropdown from "@/components/common/component/Basic/Dropdown";
 import TextLayout from "@/components/common/component/Basic/TextLayout";
-import DatePicker from "@/components/common/component/Basic/DatePicker";
+import { DatePicker } from "@/components/common/component/Basic/DatePicker";
 import { PostProjectOutlineData } from "@/lib/action";
 
 interface FormInputs {
@@ -110,11 +110,11 @@ export default function ProjectOutlinePage() {
   }
 
   return (
-    <div className="flex w-full flex-col justify-center items-center mt-[30px] md:mt-[70px] px-4 md:px-0">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-3 md:gap-[0.9375rem] w-full max-w-[62.5rem] pt-4 md:pt-[2.94rem] pb-8 md:pb-[12rem]">
+    <div className="flex w-full flex-col justify-center items-center mt-[70px] pt-[10px] px-4 md:px-0">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-start gap-3 md:gap-[0.9375rem] w-full max-w-[62.5rem] pb-8 md:pb-[12rem]">
         {/* 헤더 섹션 */}
         <div className="flex w-full items-center gap-3 md:gap-[1.75rem]">
-          <div className="text-[#0F1011] font-bold text-xl md:text-[2.5rem] leading-normal md:leading-[3.75rem]">
+          <div className="text-[#0F1011] font-bold text-lg md:text-[2.5rem] leading-normal">
             개요 작성
           </div>
           <div className="flex-shrink-0">
@@ -122,7 +122,7 @@ export default function ProjectOutlinePage() {
               <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <div className="text-[#9DA1AD] font-medium text-xl md:text-[2.5rem] leading-normal md:leading-[3.75rem] opacity-80">
+          <div className="text-[#9DA1AD] font-medium text-lg md:text-[2.5rem] leading-normal">
             본문 작성
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function ProjectOutlinePage() {
               placeholder="대상 선택"
               options={TargetObject.map(target => ({ value: target, label: target }))}
               required
-              className="w-full"
+              className="w-full max-w-full"
             />
           </div>
 
@@ -185,18 +185,19 @@ export default function ProjectOutlinePage() {
                 </>
               }
             />
-            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-[0.5rem] w-full">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-[0.5rem] w-full">
               <DatePicker
-                selected={startDate}
-                onChange={handleStartDateChange}
-                placeholderText="시작 날짜 선택"
-                className="w-full md:w-auto"
+                date={startDate}
+                onDateChange={handleStartDateChange}
+                placeholder="시작 날짜 선택"
               />
-              <div className="text-base md:text-[1.125rem] text-[#4E525C]">~</div>
-              <div className="relative flex w-full md:w-[20.375rem] items-center gap-2 px-3 md:px-[0.875rem] py-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-white">
-                <span className="text-[#6A6F7A] text-sm md:text-base">
-                  {endDate ? endDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '종료 날짜가 계산됩니다'}
-                </span>
+              <div className="text-base md:text-[1.125rem] text-[#4E525C] self-center">~</div>
+              <div className="w-full md:w-[20.375rem]">
+                <div className="relative flex w-full items-center gap-2 px-3 md:px-[0.875rem] py-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-white">
+                  <span className="text-[#6A6F7A] text-sm md:text-base">
+                    {endDate ? endDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '종료 날짜가 계됩니다'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

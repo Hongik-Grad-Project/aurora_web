@@ -1,46 +1,49 @@
-import React, { forwardRef } from 'react';
-import ReactDatePicker, { DatePickerProps } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { registerLocale } from 'react-datepicker';
-import { ko } from 'date-fns/locale';
-import Image from 'next/image';
+'use client'
 
-// 한국어 로케일 등록
-registerLocale('ko', ko);
+import styled from 'styled-components'
+import ReactDatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"
 
-const CustomInput = forwardRef<HTMLInputElement, any>(({ value, onClick }, ref) => (
-  <div className="relative flex items-center w-full">
-    <input
-      type="text"
-      value={value}
-      onClick={onClick}
-      ref={ref}
-      readOnly
-      className="w-[20.375rem] px-[0.875rem] py-[0.625rem] rounded-[0.4375rem] border border-[#E2E6EF] bg-white cursor-pointer"
-      placeholder="날짜를 선택하세요"
-    />
-    <div className="absolute right-[0.875rem] top-1/2 transform -translate-y-1/2 pointer-events-none">
-      <Image
-        src="/assets/icons/calendar.svg"
-        alt="달력 아이콘"
-        width={20}
-        height={20}
-      />
-    </div>
-  </div>
-));
+const StyledDatePickerWrapper = styled.div`
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 20.375rem; // 326px, 종료 날짜 컴포넌트와 동일한 너비
+  }
 
-CustomInput.displayName = 'CustomInput';
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
 
-function DatePicker({ ...props }: DatePickerProps) {
-  return (
-    <ReactDatePicker
-      locale="ko"
-      dateFormat="yyyy년 MM월 dd일"
-      customInput={<CustomInput />}
-      {...props}
-    />
-  );
+  input {
+    width: 100%;
+    height: 2.75rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.4375rem;
+    border: 1px solid #E2E6EF;
+    background: white;
+    color: #6A6F7A;
+    font-size: 0.875rem;
+    @media (min-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+`;
+
+interface DatePickerProps {
+  date: Date | null;
+  onDateChange: (date: Date | null) => void;
+  placeholder?: string;
 }
 
-export default DatePicker;
+export function DatePicker({ date, onDateChange, placeholder }: DatePickerProps) {
+  return (
+    <StyledDatePickerWrapper>
+      <ReactDatePicker
+        selected={date}
+        onChange={onDateChange}
+        dateFormat="yyyy.MM.dd"
+        placeholderText={placeholder}
+      />
+    </StyledDatePickerWrapper>
+  );
+}

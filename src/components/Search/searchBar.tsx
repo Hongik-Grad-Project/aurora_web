@@ -5,11 +5,19 @@ import { useState, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, filteredProjectGalleryState } from '@/context/recoil-context'
 import GalleryWindow from '@/components/Gallery/GalleryWindow'
+import { useRouter } from 'next/navigation';
 
 export default function SearchBar() {
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useRecoilState(filteredProjectGalleryState);
     const accessToken = useRecoilValue(accessTokenState);
+    const router = useRouter();
+
+    // 컴포넌트 마운트 시 검색 결과 초기화
+    useEffect(() => {
+        setSearchResults([]);
+        setSearchInput('');
+    }, [setSearchResults]);
 
     const handleSearch = async () => {
         if (!searchInput.trim()) return;
@@ -72,7 +80,13 @@ export default function SearchBar() {
                 <div className="w-full max-w-[69.40625rem] mx-auto mt-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
                         {searchResults.map((project) => (
-                            <GalleryWindow key={project.projectId} project={project} />
+                            <div 
+                                key={project.projectId} 
+                                className="cursor-pointer transition-transform hover:scale-105"
+                                onClick={() => router.push(`/project/${project.projectId}`)}
+                            >
+                                <GalleryWindow project={project} />
+                            </div>
                         ))}
                     </div>
                 </div>

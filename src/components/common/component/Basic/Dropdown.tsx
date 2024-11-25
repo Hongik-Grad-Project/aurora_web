@@ -22,7 +22,7 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
         ref
     ) => {
         return (
-            <div className="relative flex w-[20.375rem] flex-col items-start gap-[1.3125rem]">
+            <div className="relative flex w-full flex-col items-start gap-[1.3125rem]">
                 <select
                     id={name}
                     name={name}
@@ -30,9 +30,9 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
                     disabled={disabled}
                     required={required}
                     style={{ width: width }}
-                    className={`mt-2 rounded-[0.31rem] border border-grey40 px-[0.88rem] py-3 pr-10 text-sm outline-none appearance-none hover:ring hover:ring-grey30 ${className}`}
-                    value={value} // 부모로부터 받은 value 사용
-                    onChange={onChange} // 부모로부터 받은 onChange 사용
+                    className={`mt-2 w-full rounded-[0.31rem] border border-grey40 px-[0.88rem] py-3 pr-10 text-sm outline-none appearance-none hover:ring hover:ring-grey30 ${className}`}
+                    value={value}
+                    onChange={onChange}
                     {...rest}
                 >
                     {placeholder && (
