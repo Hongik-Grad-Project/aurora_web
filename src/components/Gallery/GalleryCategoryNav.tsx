@@ -53,16 +53,16 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
     }, [fetchFilteredProjectGallery])
 
     // 타겟 필터를 선택하거나 해제하는 함수
-    const handleFilterSelect = (target: string) => {
+    const handleFilterSelect = (target: string, isActive: boolean) => {
         setSelectedTargets((prevTargets) => {
-            if (prevTargets.includes(target)) {
-                // 이미 선택된 타겟이면 필터 해제
-                return prevTargets.filter((t) => t !== target)
+            if (isActive) {
+                // 태그 추가
+                return [...prevTargets, target];
             } else {
-                // 선택되지 않은 타겟이면 필터 추가
-                return [...prevTargets, target]
+                // 태그 제거
+                return prevTargets.filter((t) => t !== target);
             }
-        })
+        });
     }
 
     return (
@@ -73,7 +73,8 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
                     <LableBtn
                         key={target}
                         text={target}
-                        onClick={() => handleFilterSelect(target)}
+                        isActive={selectedTargets.includes(target)}
+                        onClick={(text, isActive) => handleFilterSelect(text, isActive)}
                     />
                 ))}
             </div>

@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function Landing1() {
   return (
@@ -20,10 +21,16 @@ export default function Landing1() {
         }}
         className="flex flex-col items-center gap-4 w-full px-4"
       >
-        <div className="bg-white rounded-lg p-4 lg:p-8 shadow-lg w-[85%] lg:w-[500px]">
-          <p className="text-center text-sm lg:text-lg text-gray-700">
-            구글폼QR
-          </p>
+        <div className="bg-white rounded-lg shadow-lg w-[200px] sm:w-[220px] md:w-[230px] lg:w-[250px]">
+          <div className="relative w-full aspect-square">
+            <Image
+              src="/assets/intro/aurora_qr.jpeg"
+              alt="Google Form QR Code"
+              fill
+              className="object-contain rounded-lg"
+              priority
+            />
+          </div>
         </div>
 
         <div className="text-center mt-2 lg:mt-4">

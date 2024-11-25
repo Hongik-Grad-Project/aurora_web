@@ -7,15 +7,19 @@ interface LableBtnProps {
     onClick: (value: string, isActive: boolean) => void; // onClick 핸들러를 prop으로 추가
 }
 
-export default function LableBtn({ text, onClick }: LableBtnProps) {
-    const [isActive, setIsActive] = useState(false);
+interface LableBtnProps {
+    text: string;
+    isActive?: boolean;  // isActive prop 추가
+    onClick: (value: string, isActive: boolean) => void;
+}
+
+export default function LableBtn({ text, isActive: externalIsActive, onClick }: LableBtnProps) {
+    const [internalIsActive, setInternalIsActive] = useState(false);
+    const isActive = externalIsActive ?? internalIsActive;  // 외부에서 전달받은 값이 있으면 그 값을 사용
 
     const handleClick = () => {
-        setIsActive(prev => {
-            const newActive = !prev;
-            onClick(text, newActive); // 부모 컴포넌트에게 변경된 상태를 전달
-            return newActive;
-        });
+        const newActive = !isActive;
+        onClick(text, newActive);
     };
 
     return (

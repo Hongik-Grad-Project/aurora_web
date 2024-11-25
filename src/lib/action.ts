@@ -429,6 +429,17 @@ export async function SearchProjectGalleryByTag(accessToken: string, tag: string
   return await response.json();
 }
 
+export async function GetPopularGalleryTag(accessToken: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery/tag`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+  })
+  return await response.json();
+} 
+
 // 6.1. 프로젝트 좋아요 상태 변경 (POST /project/{projectId}/like)
 // ToggleProjectLike 함수 수정
 export async function ToggleProjectLike(accessToken: string, projectId: number, isLike: boolean): Promise<LikeResponse> {
