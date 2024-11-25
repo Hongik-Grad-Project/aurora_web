@@ -83,7 +83,7 @@ export default function ChatMobileNav() {
 
     if (loading) {
         return (
-            <div className="flex flex-col gap-4 p-4 bg-white h-full w-full border-r border-gray-200">
+            <div className="flex flex-col gap-4 p-4 bg-white h-full w-full md:mt-[70px] border-r border-gray-200">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold text-gray-800">채팅 내역</h2>
                     <button onClick={onCreateNewChatRoom} title="새 채팅방 추가" className="p-2 rounded bg-transparent">
@@ -119,7 +119,7 @@ export default function ChatMobileNav() {
 
     return (
         <div className="relative">
-            <button className="p-4 bg-white text-gray-800 flex items-center justify-center w-full space-x-2" onClick={() => setIsOpen(!isOpen)}>
+            <button className="p-4 bg-white text-gray-800 flex items-center justify-center w-full space-x-2 text-sm" onClick={() => setIsOpen(!isOpen)}>
                 <span>{selectedChatRoomId ? chatRooms.find(room => room.chatRoomId === selectedChatRoomId)?.chatRoomName || "채팅방 이름 없음" : "채팅 내역"}</span>
                 <span>{isOpen ? '▲' : '▼'}</span>
             </button>
@@ -134,7 +134,7 @@ export default function ChatMobileNav() {
                                 onClick={() => onSelectChatRoom(room.chatRoomId)}
                             >
                                 <div className="flex flex-col space-y-1">
-                                    <div className="text-md font-medium text-gray-800">{room.chatRoomName || "채팅방 이름 없음"}</div>
+                                    <div className="text-sm font-medium text-gray-800">{room.chatRoomName || "채팅방 이름 없음"}</div>
                                 </div>
                             </div>
                         ))}

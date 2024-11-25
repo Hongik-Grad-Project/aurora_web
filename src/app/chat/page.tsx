@@ -12,11 +12,11 @@ export default function AuroraChatPage() {
             <div className="hidden lg:block fixed left-0 top-0 h-full w-64 pt-[70px] border-r border-gray-300">
                 <ChatNav />
             </div>
-            <div className="lg:hidden fixed top-18 w-full z-20 mt-[70px]">
+            <div className="lg:hidden fixed top-18 w-full z-20 mt-[45px] md:mt-[70px]">
                 <ChatMobileNav />
             </div>
             {/* 채팅 기록과 선택된 채팅방의 내용을 표시하는 영역, 헤더 70px 고려 */}
-            <div className="flex-grow lg:ml-64 mt-[70px] mb-[84px]">
+            <div className="flex-grow lg:ml-64 mt-[45px] lg:mt-[70px] mb-[84px]">
                 <ChatAurora />
                 {/* <ChatAuroraDemo /> */}
             </div>
