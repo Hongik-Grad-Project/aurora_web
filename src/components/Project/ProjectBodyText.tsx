@@ -8,9 +8,10 @@ interface ProjectBodyTextProps {
     content?: string;
     onChange: (index: number, subtitle: string, content: string) => void;
     onRemove: (index: number) => void; // onRemove 함수 props로 추가
+    className?: string;
 }
 
-export default function ProjectBodyText({ index, subtitle: initialSubtitle = '', content: initialContent = '', onChange, onRemove }: ProjectBodyTextProps) {
+export default function ProjectBodyText({ index, subtitle: initialSubtitle = '', content: initialContent = '', onChange, onRemove, className }: ProjectBodyTextProps) {
     const [subtitle, setSubtitle] = useState(initialSubtitle);
     const [content, setContent] = useState(initialContent);
 
@@ -36,7 +37,7 @@ export default function ProjectBodyText({ index, subtitle: initialSubtitle = '',
             <button
                 type="button"
                 onClick={() => onRemove(index)}
-                className="absolute top-0 right-0 flex justify-center items-center p-1 w-6 h-6 bg-[#776BFF] text-white rounded-full hover:bg-[#E2E6EF] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+                className="absolute -top-6 right-0 md:top-0 flex justify-center items-center p-1 w-6 h-6 bg-[#776BFF] text-white rounded-full hover:bg-[#E2E6EF] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
                 title="Remove section"
             >
                 &times;

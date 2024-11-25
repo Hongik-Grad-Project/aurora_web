@@ -108,11 +108,11 @@ export default function Header() {
   return (
     <>
       <nav className="fixed top-0 z-[50] w-full flex-shrink bg-white backdrop-blur-3xl">
-        <div className="flex w-full items-center justify-between px-[2.5rem] py-[18.5px]">
-          <div className="flex gap-[2.19rem]">
+        <div className="flex w-full items-center justify-between px-4 py-2 md:px-[2.5rem] md:py-[18.5px]">
+          <div className="flex gap-4 md:gap-[2.19rem]">
             <div className="flex">
               <Link href="/">
-                <div className="relative h-[33px] w-[112px]">
+                <div className="relative h-[25px] w-[85px] md:h-[33px] md:w-[112px]">
                   <Image src="/assets/colorLogo.svg" fill style={{ objectFit: 'contain' }} alt="logo" />
                 </div>
               </Link>
@@ -169,7 +169,7 @@ export default function Header() {
           <div className="flex lg:hidden">
             {/* 모바일 햄버거 메뉴 */}
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
               </svg>
             </button>

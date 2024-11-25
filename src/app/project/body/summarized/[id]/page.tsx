@@ -172,24 +172,24 @@ export default function SummarizedProjectBodyPage() {
     };
 
     return (
-        <div className="flex w-full flex-col justify-center items-center pt-[70px]">
-            <form className="flex flex-col items-start gap-[0.9375rem] pt-[2.94rem] pb-[12rem]">
-                <div className="flex w-[62.5rem] items-center gap-[1.75rem]">
-                    <div className="text-[#9DA1AD] font-medium text-[2.5rem] leading-[3.75rem] opacity-80">
+        <div className="flex w-full flex-col justify-center items-center pt-[30px] md:pt-[70px]">
+            <form className="flex flex-col items-start gap-3 md:gap-[0.9375rem] w-full max-w-[62.5rem] px-4 md:px-0 pt-4 md:pt-[2.94rem] pb-[6rem] md:pb-[12rem]">
+                <div className="flex w-full items-center gap-2 md:gap-[1.75rem]">
+                    <div className="text-[#9DA1AD] font-medium text-lg md:text-[2.5rem] leading-normal md:leading-[3.75rem] opacity-80">
                         프로젝트 개요
                     </div>
                     <div className="flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none" className="w-[0.5rem] h-[1rem] opacity-80">
-                            <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="fill-[#E2E6EF] stroke-[#9DA1AD]" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 12 20" fill="none" className="w-[0.3rem] h-[0.6rem] md:w-[0.5rem] md:h-[1rem] opacity-80">
+                            <path d="M2 2L10 10L2 18" stroke="#9DA1AD" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </div>
-                    <div className="text-[#0F1011] font-bold text-[2.5rem] leading-[3.75rem]">
+                    <div className="text-[#0F1011] font-bold text-lg md:text-[2.5rem] leading-normal md:leading-[3.75rem]">
                         본문 작성
                     </div>
                 </div>
 
-                <div className="flex flex-col items-start gap-[1.25rem] self-stretch">
-                    <div className="flex flex-col justify-center items-center gap-[1.1875rem] self-stretch p-[1.875rem] rounded-[1rem] bg-[#FEFEFE]">
+                <div className="flex flex-col items-start gap-3 md:gap-[1.25rem] w-full">
+                    <div className="flex flex-col justify-center items-center gap-3 md:gap-[1.1875rem] w-full p-3 md:p-[1.875rem] rounded-[1rem] bg-[#FEFEFE]">
                         {/* 프로젝트 본문 텍스트 입력 */}
                         {textSections.map((section, index) => (
                             <ProjectBodyText
@@ -227,9 +227,9 @@ export default function SummarizedProjectBodyPage() {
 
                         <div className="w-full">
                             {/* 태그 입력 */}
-                            <div className="flex flex-col items-start gap-[0.5rem] w-full">
-                                <div className="text-[#0F1011] font-pretendard text-[1.25rem] font-bold leading-[1.875rem]">태그 등록</div>
-                                <div className="flex items-center w-full gap-[0.625rem] rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC] p-[0.625rem] overflow-hidden">
+                            <div className="flex flex-col items-start gap-2 md:gap-[0.5rem] w-full">
+                                <div className="text-[#0F1011] font-pretendard text-sm md:text-[1.25rem] font-bold leading-normal md:leading-[1.875rem]">태그 등록</div>
+                                <div className="flex flex-wrap items-center w-full gap-1.5 md:gap-[0.625rem] rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC] p-2 md:p-[0.625rem]">
                                     {tags.map((tag, index) => (
                                         <div key={index} className="flex items-center gap-2.5 bg-purple-200 rounded px-2 py-1 text-center justify-center align-center h-8">
                                             <span>#{tag}</span>
@@ -239,7 +239,7 @@ export default function SummarizedProjectBodyPage() {
                                     <input
                                         type="text"
                                         placeholder="#태그 입력 (최대 10개)"
-                                        className="flex-1 p-2 bg-transparent outline-none"
+                                        className="flex-1 p-1.5 md:p-2 bg-transparent outline-none text-xs md:text-base"
                                         onKeyPress={handleTagInput} // 입력 이벤트 처리
                                     />
                                 </div>
@@ -248,18 +248,16 @@ export default function SummarizedProjectBodyPage() {
 
 
                         {/* 저장 버튼 */}
-                        <div className="flex justify-end items-center self-stretch pl-[44.25rem]">
-                            <div className="flex items-start gap-[0.625rem]">
-                                <button
-                                    type="button"
-                                    onClick={handleSubmit(onSaveProject)} // 프로젝트 저장 함수 호출
-                                    className="flex w-[6.9375rem] h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] bg-[#776BFF]"
-                                >
-                                    <span className="text-[#FEFEFE] text-center font-medium text-[1.125rem] leading-[1.6875rem]">
-                                        저장
-                                    </span>
-                                </button>
-                            </div>
+                        <div className="flex justify-end items-center w-full mt-3 md:mt-6">
+                            <button
+                                type="button"
+                                onClick={handleSubmit(onSaveProject)} // 프로젝트 저장 함수 호출
+                                className="flex h-8 md:h-[3.5rem] px-3 md:px-[1.75rem] py-1.5 md:py-[1.125rem] justify-center items-center rounded-[0.5rem] bg-[#776BFF]"
+                            >
+                                <span className="text-white text-xs md:text-[1.125rem] font-medium">
+                                    저장
+                                </span>
+                            </button>
                         </div>
                     </div>
 
@@ -268,9 +266,11 @@ export default function SummarizedProjectBodyPage() {
                         type="submit"
                         disabled={!canSubmit}
                         onClick={handleSubmit(onSubmit)}
-                        className={`flex h-[3.5rem] min-w-[6rem] px-[1.75rem] py-[1.125rem] justify-center items-center gap-[0.625rem] rounded-[0.5rem] ${canSubmit ? 'bg-[#776BFF]' : 'bg-[#E2E6EF] cursor-not-allowed'} transition duration-150`}
+                        className={`w-full md:w-auto h-8 md:h-[3.5rem] px-3 md:px-[1.75rem] py-1.5 md:py-[1.125rem] justify-center items-center rounded-[0.5rem] ${canSubmit ? 'bg-[#776BFF]' : 'bg-[#E2E6EF] cursor-not-allowed'}`}
                     >
-                        <span className={`text-center font-medium text-[1.125rem] leading-[1.6875rem] ${canSubmit ? 'text-[#FEFEFE]' : 'text-[#9DA1AD]'}`}>프로젝트 등록하기</span>
+                        <span className={`text-xs md:text-[1.125rem] font-medium ${canSubmit ? 'text-white' : 'text-[#9DA1AD]'}`}>
+                            프로젝트 등록하기
+                        </span>
                     </button>
                 </div>
             </form>

@@ -128,7 +128,9 @@ export default function ProjectOutlinePage() {
         </div>
 
         <div className="flex flex-col justify-center items-center w-full p-4 md:p-[1.875rem] gap-8 md:gap-[5rem] rounded-[1rem] bg-[#FEFEFE]">
-          {/* 타겟 대상 선택 */}
+
+
+          {/* 프겟 대상 선택 */}
           <div className="flex flex-col items-start gap-4 md:gap-[2rem] w-full">
             <TextLayout
               title="타겟 대상 선택"
@@ -195,9 +197,38 @@ export default function ProjectOutlinePage() {
               <div className="w-full md:w-[20.375rem]">
                 <div className="relative flex w-full items-center gap-2 px-3 md:px-[0.875rem] py-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-white">
                   <span className="text-[#6A6F7A] text-sm md:text-base">
-                    {endDate ? endDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '종료 날짜가 계됩니다'}
+                    {endDate ? endDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '종료 날짜가 계산됩니다'}
                   </span>
                 </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* 프로젝트 제목 */}
+          <div className="flex flex-col items-start w-full gap-4 md:gap-[2rem]">
+                        <TextLayout
+                            title="프로젝트 제목"
+                            description={
+                                <>
+                                    프로젝트의 핵심 키워드를 포함하여 공백 포함 60자 이내로 작성해주세요. <br />
+                                    사회 문제, 대상, 얻을 수 있는 효과가 포함되면 좋습니다! ex) &ldquo;은퇴 후 사업 시작, 안전하게!&rdquo;
+                                </>
+                            }
+                        />
+                        <div className="flex flex-col items-end gap-2 w-full">
+                            <p className="text-[#9DA1AD] text-xs font-normal">
+                                {projectTitle.length}/60
+                            </p>
+                            <div className="flex w-full h-[2.75rem] px-3 md:px-[0.875rem] py-2 items-center gap-2 rounded-[0.4375rem] border border-[#E2E6EF] bg-[#F8F9FC]">
+                                <input
+                                    {...register("projectTitle", { required: true })}
+                                    type="text"
+                                    value={projectTitle}
+                                    onChange={handleProjectTitleChange}
+                                    maxLength={60}
+                                    placeholder="프로젝트의 핵심 가치를 포함하여 제목에 적어주세요!"
+                                    className="w-full bg-transparent text-[#6A6F7A] text-sm md:text-base font-medium leading-normal outline-none"
+                />
               </div>
             </div>
           </div>
