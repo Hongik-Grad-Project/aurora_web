@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/logo.png',
   },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://myaurora.co.kr'),
   openGraph: {
     title: 'Aurora',
     description: '사회 문제 해결의 시작은, 오로라에서',
