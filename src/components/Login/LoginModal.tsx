@@ -43,11 +43,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: '100vh', opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-[31.5rem] h-[27.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
+        className="w-[90%] max-w-[31.5rem] h-auto min-h-[27.25rem] flex-shrink-0 rounded-[1.875rem] bg-[#FFF] pb-[4.32rem] pt-[2.59rem]"
       >
         <div className="flex flex-col items-center">
           <Image src="/assets/colorLogo.svg" width={172} height={57} alt="logo" />
-          <div className="flex flex-col flex-start w-[23.6335rem] mt-[2.35rem]">
+          <div className="flex flex-col flex-start w-[90%] max-w-[23.6335rem] mt-[2.35rem]">
             <div
               className="text-[#0F1011] text-[1.25rem] font-bold leading-[1.875rem]"
             >
@@ -60,24 +60,30 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             </div>
             <div className="w-[23.3475rem] h-0 flex-shrink-0 border-t-[0.598px] border-[#CDCDCD]"></div>
           </div>
-          <div className="flex flex-col items-center gap-2 pt-6">
-            <Link href={GOOGLE_AUTH_URL}>
-              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.82rem] cursor-pointer items-center gap-[6.13rem] rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
-                <Image src={'/assets/login/googleLogo.svg'} width={23} height={23} alt="GoogleLogin" />
+          <div className="flex flex-col items-center gap-2 pt-6 w-[90%] max-w-[23.6335rem]">
+            <Link href={GOOGLE_AUTH_URL} className="w-full">
+              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] border-[0.598px] border-[#C1C1C1] bg-[#FFF]">
+                <div className="absolute left-4">
+                  <Image src={'/assets/login/googleLogo.svg'} width={23} height={23} alt="GoogleLogin" />
+                </div>
                 <span className="font-normal text-[0.875rem]">Google로 시작하기</span>
               </div>
             </Link>
             
-            <Link href={KAKAO_AUTH_URL}>
-              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.44rem] cursor-pointer items-center gap-[6.04rem] rounded-[0.5rem] bg-[#FDDC3F]">
-                <Image src={'/assets/login/kakaoLogo.svg'} width={39} height={56} alt="kakaoLogin" />
+            <Link href={KAKAO_AUTH_URL} className="w-full">
+              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] bg-[#FDDC3F]">
+                <div className="absolute left-4">
+                  <Image src={'/assets/login/kakaoLogo.svg'} width={39} height={56} alt="kakaoLogin" />
+                </div>
                 <span className="font-normal text-[0.875rem]">카카오로 시작하기</span>
               </div>
             </Link>
 
-            <Link href={NAVER_AUTH_URL}>
-              <div className="flex h-[3.30606rem] w-[23.6335rem] flex-shrink-0 pl-[0.44rem] cursor-pointer items-center gap-[6.04rem] rounded-[0.5rem] bg-[#04BF19]">
-                <Image src={'/assets/login/naverLogo.svg'} width={39} height={44} alt="naverLogin" />
+            <Link href={NAVER_AUTH_URL} className="w-full">
+              <div className="flex h-[3.30606rem] w-full flex-shrink-0 items-center justify-center relative rounded-[0.5rem] bg-[#04BF19]">
+                <div className="absolute left-4">
+                  <Image src={'/assets/login/naverLogo.svg'} width={39} height={44} alt="naverLogin" />
+                </div>
                 <p className="text-normal text-[0.875rem] text-white">네이버로 시작하기</p>
               </div>
             </Link>

@@ -23,6 +23,9 @@ export default function ChatMobileNav() {
             setError(null);
 
             try {
+                console.log('Auth status:', isAuth);
+                console.log('Access token:', accessToken);
+                
                 const chatRoomsResponse = await GetChatList(accessToken);
                 setChatRooms(chatRoomsResponse);
             } catch (err) {
@@ -35,6 +38,8 @@ export default function ChatMobileNav() {
 
         if (isAuth && accessToken) {
             fetchChatRooms();
+        } else {
+            setLoading(false);
         }
     }, [accessToken, isAuth, setChatRooms]);
 
