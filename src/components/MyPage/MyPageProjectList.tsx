@@ -9,7 +9,7 @@ import MyPageProjectWindow from '@/components/Gallery/GalleryWindow'
 import Link from 'next/link'
 
 export default function MyPageProjectList() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const [myProjects, setMyProjects] = useState<MyProjectData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -20,6 +20,7 @@ export default function MyPageProjectList() {
             setLoading(true);
             setError(null);
             try {
+                if (!accessToken) return;  // Early return if no token
                 const myProjectsResponse = await GetMyProjects(accessToken);
                 setMyProjects(myProjectsResponse);
             } catch (err) {

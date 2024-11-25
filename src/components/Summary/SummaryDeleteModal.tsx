@@ -12,7 +12,7 @@ interface SummaryDeleteModalProps {
 }
 
 export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState);
     const resetSelectedSummaryRoomId = useResetRecoilState(selectedSummaryRoomIdState); // 상태 초기화를 위한 훅
     const router = useRouter();
@@ -27,6 +27,7 @@ export default function SummaryDeleteModal({ isOpen, onClose }: SummaryDeleteMod
 
     const handleYes = async () => {
         if (selectedSummaryRoomId) {
+            if (!accessToken) return;
             console.log('selectedSummaryRoomId:', selectedSummaryRoomId);
             await DeleteSummaryNote(accessToken, selectedSummaryRoomId.toString());
             resetSelectedSummaryRoomId(); // selectedSummaryRoomId 초기화

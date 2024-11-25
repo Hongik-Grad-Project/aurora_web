@@ -16,7 +16,7 @@ interface MyProfileProps {
 }
 
 export default function MyProfile({ profileData }: MyProfileProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false);
     const defaultProfileImage = "/assets/icons/user_basic_profile.svg";
 
@@ -79,7 +79,7 @@ export default function MyProfile({ profileData }: MyProfileProps) {
                     </div>
                 </div>
             </div>
-            {isProfileEditModalOpen && (
+            {isProfileEditModalOpen && accessToken && (
                 <ProfileEdit
                     isOpen={isProfileEditModalOpen}
                     onClose={() => setIsProfileEditModalOpen(false)}

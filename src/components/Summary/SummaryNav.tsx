@@ -6,7 +6,7 @@ import { SummaryRoom } from '@/lib/types';
 import { GetSummaryNoteList, GetSummaryNoteContent } from '@/lib/action';
 
 export default function SummaryNav() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const isAuth = useRecoilValue(authState) || false
     const [selectedSummaryRoomId, setSelectedSummaryRoomId] = useRecoilState(selectedSummaryRoomIdState);
     const setSummaryContents = useSetRecoilState(selectedSummaryContentState);
@@ -22,6 +22,7 @@ export default function SummaryNav() {
             setError(null);
 
             try {
+                if (!accessToken) return;
                 const summaryRoomsResponse = await GetSummaryNoteList(accessToken);
                 setSummaryRooms(summaryRoomsResponse);
             } catch (err) {
@@ -41,6 +42,7 @@ export default function SummaryNav() {
         const fetchSummaryContent = async () => {
             if (selectedSummaryRoomId !== null) {
                 try {
+                    if (!accessToken) return;
                     const contentData = await GetSummaryNoteContent(accessToken, selectedSummaryRoomId.toString());
                     setSummaryContents(contentData);
                 } catch (error) {

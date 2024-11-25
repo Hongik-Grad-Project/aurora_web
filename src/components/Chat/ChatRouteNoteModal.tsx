@@ -12,7 +12,7 @@ interface ChatModalProps {
 }
 
 export default function ChatRouteNoteModal({ isOpen, onClose }: ChatModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
     const router = useRouter();
 

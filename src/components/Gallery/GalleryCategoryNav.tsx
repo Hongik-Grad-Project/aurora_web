@@ -14,7 +14,7 @@ interface GalleryCategoryNavProps {
 }
 
 export default function GalleryCategoryNav({ currentPage, pageSize, sortType, setCurrentPage, setSortType }: GalleryCategoryNavProps) {
-    const accessToken = useRecoilValue(accessTokenState) || ''
+    const accessToken = useRecoilValue(accessTokenState);
     const isAuth = useRecoilValue(authState)
     const [filteredProjectGallery, setFilteredProjectGallery] = useRecoilState(filteredProjectGalleryState)
 
@@ -39,6 +39,7 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
         const url = `/gallery?${query}`
 
         try {
+            if (!accessToken) return;
             const response = await GetProjectGalleryFiltering(accessToken, url)
             setFilteredProjectGallery(response.content) // API 응답 데이터 설정
         } catch (error) {

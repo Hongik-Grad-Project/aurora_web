@@ -9,7 +9,7 @@ import { ChatRoom } from '@/lib/types';
 import { GetChatList, GetChatHistory } from '@/lib/action';
 
 export default function ChatMobileNav() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const isAuth = useRecoilValue(authState) || false
     const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState);
     const setChatHistory = useSetRecoilState(selectedChatHistoryState);
@@ -24,6 +24,7 @@ export default function ChatMobileNav() {
             setError(null);
 
             try {
+                if (!accessToken) return;
                 console.log('Auth status:', isAuth);
                 console.log('Access token:', accessToken);
                 
@@ -48,6 +49,7 @@ export default function ChatMobileNav() {
         const fetchChatHistory = async () => {
             if (selectedChatRoomId !== null) {
                 try {
+                    if (!accessToken) return;
                     const historyData = await GetChatHistory(accessToken, selectedChatRoomId.toString());
                     if (historyData) {
                         setChatHistory(historyData);

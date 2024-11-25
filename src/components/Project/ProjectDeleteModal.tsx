@@ -16,7 +16,7 @@ interface ProjectDeleteModalProps {
 }
 
 export default function ProjectDeleteModal({ isOpen, onClose, projectId, previousPath }: ProjectDeleteModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
     const router = useRouter();
     if (!isOpen) return null;
@@ -30,6 +30,7 @@ export default function ProjectDeleteModal({ isOpen, onClose, projectId, previou
     const handleYes = async () => {
         setLoading(true); // 로딩 시작
         try {
+            if (!accessToken) return;
             const response = await DeleteProject(accessToken, projectId);
             if (response === 204) {
                 onClose();

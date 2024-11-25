@@ -16,7 +16,7 @@ interface IndividualProjectProps {
 }
 
 export default function IndividualProject({previousPath}: IndividualProjectProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';  // accessToken 초기값을 빈 문자열로 유지
+    const accessToken = useRecoilValue(accessTokenState);  // accessToken 초기값을 빈 문자열로 유지
     const isAuth = useRecoilValue(authState);
     const router = useRouter();
     const [data, setData] = useState<ProjectGalleryDetailResponse | null>(null);
@@ -58,6 +58,7 @@ export default function IndividualProject({previousPath}: IndividualProjectProps
         if (projectId) { // accessToken이 없어도 조회할 수 있도록 수정
             const fetchData = async () => {
                 try {
+                    if (!accessToken) return;
                     const result = await GetProjectGalleryDetail(accessToken, parseInt(projectId, 10));
                     setData(result);
                     // 초기 좋아요 상태 및 카운트 설정

@@ -10,7 +10,7 @@ import ChatRouteNoteModal from './ChatRouteNoteModal';
 import ChatDeleteModal from './ChatDeleteModal';
 
 export default function ChatInput() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const isAuth = useRecoilValue(authState);
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
     const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState);
@@ -62,6 +62,7 @@ export default function ChatInput() {
         };
 
         if (!currentChatRoomId) {
+            if (!accessToken) return;
             // 새로운 채팅방 생성 요청
             const location = await GetChatLocation(accessToken);
             if (location) {
@@ -85,6 +86,7 @@ export default function ChatInput() {
         // AI 응답 처리
         if (currentChatRoomId) {
             try {
+                if (!accessToken) return;
                 const messageData = await SendMessage(accessToken, currentChatRoomId.toString(), inputValue);
                 
                 // 빈 AI 메시지 먼저 추가
@@ -135,6 +137,7 @@ export default function ChatInput() {
     };
 
     const updateChatRooms = async () => {
+        if (!accessToken) return;
         const newRooms = await GetChatList(accessToken);
         setChatRooms(newRooms);
     };

@@ -27,7 +27,7 @@ export default function ProjectSummarizedOutlinePage() {
     const { register, handleSubmit, setValue, formState: { isValid }, watch } = useForm<FormInputs>({
         mode: 'onChange' // 사용자가 입력할 때마다 유효성 검사
     })
-    const accessToken = useRecoilValue(accessTokenState) || ''
+    const accessToken = useRecoilValue(accessTokenState)
 
     const selectedSummaryRoomId = useRecoilValue(selectedSummaryRoomIdState)
     const [loading, setLoading] = useState<boolean>(true)

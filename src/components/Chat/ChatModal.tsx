@@ -14,7 +14,7 @@ interface ChatModalProps {
 }
 
 export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
     const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
     const router = useRouter();
@@ -31,6 +31,7 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
         if (selectedChatRoomId) {
             setLoading(true); // 로딩 시작
             try {
+                if (!accessToken) return;
                 const response = await CreateSummaryNote(accessToken, selectedChatRoomId.toString());
                 
                 // 성공적으로 응답을 받으면 noteId를 활용해서 경로로 이동

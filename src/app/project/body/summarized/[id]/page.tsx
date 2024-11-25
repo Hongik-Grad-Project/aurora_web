@@ -23,7 +23,7 @@ export default function SummarizedProjectBodyPage() {
             tagInput: ''
         }
     });
-    const accessToken = useRecoilValue(accessTokenState) || ''
+    const accessToken = useRecoilValue(accessTokenState);
 
     const subTitleList = useRecoilValue(subTitleListState);
     const contentList = useRecoilValue(contentListState);

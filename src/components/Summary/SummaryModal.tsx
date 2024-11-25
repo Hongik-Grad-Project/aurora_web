@@ -11,7 +11,7 @@ interface SummaryModalProps {
 }
 
 export default function SummaryModal({ isOpen, onClose }: SummaryModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
 
     if (!isOpen) return null

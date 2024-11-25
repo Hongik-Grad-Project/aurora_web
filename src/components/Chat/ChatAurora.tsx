@@ -22,7 +22,7 @@ export default function ChatAurora() {
 
   return (
     <div className="flex flex-col w-full h-full bg-gray-100 relative">
-      <div className="flex-grow overflow-y-auto p-3 sm:p-6 bg-white mt-[52px] md:mt-[70px] lg:mt-0">
+      <div className="flex-grow overflow-y-auto p-3 sm:p-6 bg-white mt-[52px] lg:mt-0">
         {currentChatRoom ? (
           <div className="space-y-3 w-full">
             {chatHistory.map((message, index) => (

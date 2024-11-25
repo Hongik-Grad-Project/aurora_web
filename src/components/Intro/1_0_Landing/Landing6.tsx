@@ -16,13 +16,14 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 export default function Landing6() {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
 
     const [projects, setProjects] = useState<ProjectGalleryType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchRecommendsProject = useCallback(async () => {
+        if (!accessToken) return;
         try {
             const response = await GetRecommendProjects(accessToken);
             if (response && Array.isArray(response)) {

@@ -13,7 +13,7 @@ import LoginModal from '@/components/Login/LoginModal'
 import { useNavigation } from '@/context/NavigationContext'
 
 export default function MyPage() {
-    const accessToken = useRecoilValue(accessTokenState) || ''
+    const accessToken = useRecoilValue(accessTokenState);
     const isAuth = useRecoilValue(authState)
     const [myProfile, setMyProfile] = useState<MyProfileData | null>(null)
     const [myProjects, setMyProjects] = useState<MyProjectData[]>([])
@@ -24,6 +24,7 @@ export default function MyPage() {
     useEffect(() => {
         const GetMyPageData = async () => {
             try {
+                if (!accessToken) return;
                 const data: MyPageResponse = await GetMyPage(accessToken)
                 setMyProfile(data.myProfile)
                 setMyProjects(data.myProjects)

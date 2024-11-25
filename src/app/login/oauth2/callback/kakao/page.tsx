@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Suspense } from 'react'
 import KakaoRedirect from '@/components/Login/KakaoRedirect'
 

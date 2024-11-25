@@ -13,7 +13,7 @@ interface ChatDeleteModalProps {
 }
 
 export default function ChatDeleteModal({ isOpen, onClose }: ChatDeleteModalProps) {
-    const accessToken = useRecoilValue(accessTokenState) || '';
+    const accessToken = useRecoilValue(accessTokenState);
     const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState);
     const setSelectedChatRoomId = useSetRecoilState(selectedChatRoomIdState);
     const [loading, setLoading] = useState<boolean>(false) // 로딩 상태 초기값은 false
@@ -30,6 +30,7 @@ export default function ChatDeleteModal({ isOpen, onClose }: ChatDeleteModalProp
         if (selectedChatRoomId) {
             setLoading(true); // 로딩 시작
             try {
+                if (!accessToken) return;
                 const response = await DeleteChatRoom(accessToken, selectedChatRoomId.toString());
                 if (response === 204) {
                     setSelectedChatRoomId(null);

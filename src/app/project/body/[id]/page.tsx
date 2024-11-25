@@ -26,7 +26,7 @@ export default function ProjectBodyPage() {
             tagInput: ''
         }
     })
-    const accessToken = useRecoilValue(accessTokenState) || ''
+    const accessToken = useRecoilValue(accessTokenState);
 
     const [textSections, setTextSections] = useState([{ subtitle: '', content: '' }])
     const [imageFiles, setImageFiles] = useState<File[]>([])
