@@ -20,11 +20,12 @@ export default function GalleryArray({ currentPage, pageSize }: GalleryArrayProp
 
     // 페이지별로 받아온 데이터 그대로 사용
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 justify-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full place-items-center sm:place-items-center lg:place-items-start">
             {galleryData.map((project) => (
                 <Link
                     key={project.projectId}
                     href={`/project/${project.projectId}`}
+                    className="w-full max-w-[280px] justify-self-center lg:justify-self-start"
                 >
                     <GalleryWindow project={project} />
                 </Link>

@@ -66,9 +66,9 @@ export default function GalleryCategoryNav({ currentPage, pageSize, sortType, se
     }
 
     return (
-        <div className="flex flex-col items-start gap-[0.5rem] self-stretch">
+        <div className="flex flex-col items-start gap-[0.25rem] self-stretch">
             {/* 필터 버튼 */}
-            <div className="flex flex-wrap items-center gap-[0.5rem] self-stretch">
+            <div className="flex flex-wrap items-center gap-[0.25rem] self-stretch">
                 {TargetObject.map((target) => (
                     <LableBtn
                         key={target}

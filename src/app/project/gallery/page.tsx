@@ -26,14 +26,14 @@ export default function ProjectGalleryPage() {
     }, [setPreviousPath])
 
     return (
-        <div className="flex w-full flex-col justify-center items-center pt-[70px]">
+        <div className="flex w-full flex-col justify-center items-center pt-[45px] md:pt-[70px]">
             <Banner
                 imgSrc="/assets/images/project_gallery_banner.png"
                 title="프로젝트 갤러리"
                 subTitle="이제 행동으로 옮길 일만 남았어요"
             />
 
-            <div className="flex w-full justify-center bg-gry10 px-4 pb-12 pt-[4rem] md:pt-[8rem] lg:pt-[2rem]">
+            <div className="flex w-full justify-center bg-gry10 px-4 pb-12 pt-[1.5rem] md:pt-[1.5rem] lg:pt-[1.5rem]">
                 <div className="flex w-full flex-col items-center justify-center gap-[1.5rem] lg:flex-row lg:items-start">
                     <GalleryCategoryNav
                         currentPage={currentPage}
@@ -45,44 +45,52 @@ export default function ProjectGalleryPage() {
                 </div>
             </div>
 
-            {/* 정렬 버튼 그룹 추가 */}
-            <div className="flex w-full justify-start gap-4 mb-8 px-4 md:justify-center lg:justify-end lg:pr-[6%]"> {/* 오른쪽 간격을 비율로 변경 */}
-                <button
-                    className={`text-lg font-semibold ${sortType === 'likeCount' ? 'text-[#AEA0FF]' : 'text-gray-500'}`}
-                    onClick={() => setSortType('likeCount')}
-                >
-                    인기순
-                </button>
-                <button
-                    className={`text-lg font-semibold ${sortType === 'recentTime' ? 'text-[#AEA0FF]' : 'text-gray-500'}`}
-                    onClick={() => setSortType('recentTime')}
-                >
-                    최신순
-                </button>
-                <button
-                    className={`text-lg font-semibold ${sortType === 'closingTime' ? 'text-[#AEA0FF]' : 'text-gray-500'}`}
-                    onClick={() => setSortType('closingTime')}
-                >
-                    종료임박순
-                </button>
-            </div>
-
             <div className="flex flex-col items-start gap-[1.375rem] self-stretch">
-                <GalleryArray currentPage={currentPage} pageSize={pageSize} />
+                <div className="flex w-full justify-start gap-3 px-4 lg:px-[6%]">
+                    <button
+                        className={`text-sm md:text-lg font-semibold transition-colors ${
+                            sortType === 'likeCount' ? 'text-[#AEA0FF]' : 'text-gray-500'
+                        }`}
+                        onClick={() => setSortType('likeCount')}
+                    >
+                        인기순
+                    </button>
+                    <button
+                        className={`text-sm md:text-lg font-semibold transition-colors ${
+                            sortType === 'recentTime' ? 'text-[#AEA0FF]' : 'text-gray-500'
+                        }`}
+                        onClick={() => setSortType('recentTime')}
+                    >
+                        최신순
+                    </button>
+                    <button
+                        className={`text-sm md:text-lg font-semibold transition-colors ${
+                            sortType === 'closingTime' ? 'text-[#AEA0FF]' : 'text-gray-500'
+                        }`}
+                        onClick={() => setSortType('closingTime')}
+                    >
+                        종료임박순
+                    </button>
+                </div>
+
+                <div className="w-full px-4 lg:px-[6%]">
+                    <GalleryArray currentPage={currentPage} pageSize={pageSize} />
+                </div>
             </div>
 
             {/* 페이지네이션 UI */}
-            <div className="flex justify-center items-center mt-8 mb-[4rem] gap-4">
+            <div className="flex justify-center items-center mt-8 mb-[4rem] gap-2 md:gap-4">
                 <button
-                    className={`px-4 py-2 rounded-full transition-colors duration-300 ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
-                        }`}
+                    className={`px-2 py-1 md:px-4 md:py-2 text-sm md:text-base rounded-full transition-colors duration-300 ${
+                        currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
+                    }`}
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                 >
                     이전
                 </button>
 
-                <div className="flex gap-2">
+                <div className="flex gap-1 md:gap-2">
                     {[...Array(totalPages)].map((_, index) => {
                         const page = index + 1;
                         const isActive = currentPage === page;
@@ -90,8 +98,9 @@ export default function ProjectGalleryPage() {
                         return (
                             <button
                                 key={page}
-                                className={`px-3 py-1 rounded-full transition-all duration-300 ${isActive ? 'bg-[#AEA0FF] text-white scale-110' : 'bg-gray-200 text-gray-800 hover:bg-[#776BFF] hover:text-white'
-                                    }`}
+                                className={`w-6 h-6 md:w-8 md:h-8 text-xs md:text-base rounded-full transition-all duration-300 ${
+                                    isActive ? 'bg-[#AEA0FF] text-white scale-110' : 'bg-gray-200 text-gray-800 hover:bg-[#776BFF] hover:text-white'
+                                }`}
                                 onClick={() => handlePageChange(page)}
                             >
                                 {page}
@@ -101,8 +110,9 @@ export default function ProjectGalleryPage() {
                 </div>
 
                 <button
-                    className={`px-4 py-2 rounded-full transition-colors duration-300 ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
-                        }`}
+                    className={`px-2 py-1 md:px-4 md:py-2 text-sm md:text-base rounded-full transition-colors duration-300 ${
+                        currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#AEA0FF] text-white hover:bg-[#776BFF]'
+                    }`}
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                 >

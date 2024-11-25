@@ -7,13 +7,13 @@ import SelectedSummaryMobileNav from "@/components/Summary/SelectedSummaryMobile
 export default function SelectedProjectIdeaPage() {
   return (
     <div className="flex w-full h-screen">
-      <div className="hidden lg:block fixed left-0 top-0 h-full w-64 pt-[70px] border-r border-gray-300">
+      <div className="hidden lg:block fixed left-0 top-0 h-full w-64 pt-[45px] md:pt-[70px] border-r border-gray-300">
         <SelectedSummaryNav />
       </div>
-      <div className="lg:hidden fixed top-18 w-full z-20 mt-[70px]">
+      <div className="lg:hidden fixed top-18 w-full z-20 mt-[45px] md:mt-[70px]">
         <SelectedSummaryMobileNav />
       </div>
-      <div className="flex-grow lg:ml-64 mt-[70px]">
+      <div className="flex-grow lg:ml-64 mt-[45px] md:mt-[70px]">
         <SelectedIdeaNote />
       </div>
     </div>

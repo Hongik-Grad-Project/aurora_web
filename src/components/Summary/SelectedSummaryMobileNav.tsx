@@ -27,7 +27,7 @@ export default function SelectedSummaryMobileNav() {
   return (
     <div className="bg-white border-b border-gray-300">
       <div className="flex justify-between items-center p-4">
-        <h2 className="text-lg font-semibold truncate max-w-[80%]">
+        <h2 className="text-sm sm:text-lg font-semibold truncate max-w-[80%]">
           {selectedSummary?.title || '선택된 요약 없음'}
         </h2>
         <button
@@ -62,16 +62,16 @@ export default function SelectedSummaryMobileNav() {
       {/* 드롭다운 메뉴 */}
       {isOpen && (
         <div className="absolute left-0 right-0 bg-white border-b border-gray-300 shadow-lg max-h-[70vh] overflow-y-auto">
-          <div className="p-4 space-y-3">
+          <div className="p-2 sm:p-4 space-y-2 sm:space-y-3">
             {summaryRooms.length === 0 ? (
-              <div className="text-gray-500 p-4 text-center">
+              <div className="text-gray-500 p-2 sm:p-4 text-xs sm:text-base text-center">
                 요약된 노트가 없습니다.
               </div>
             ) : (
               summaryRooms.map((sumRoom) => (
                 <div
                   key={sumRoom.noteId}
-                  className={`flex items-center justify-between p-4
+                  className={`flex items-center justify-between p-2 sm:p-4
                     rounded-lg shadow-sm cursor-pointer transition duration-200
                     ease-in-out ${selectedSummaryRoomId === sumRoom.noteId 
                       ? "bg-[#EFEDFF] hover:bg-[#CEC6FF]" 
@@ -80,10 +80,10 @@ export default function SelectedSummaryMobileNav() {
                   onClick={() => onSelectSummaryRoom(sumRoom.noteId)}
                 >
                   <div className="flex flex-col space-y-1">
-                    <div className="text-md font-medium text-gray-800">
+                    <div className="text-xs sm:text-md font-medium text-gray-800">
                       {sumRoom.title}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-[8px] sm:text-xs text-gray-400">
                       {new Date(sumRoom.createdAt).toLocaleString()}
                     </div>
                   </div>
