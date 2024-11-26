@@ -1,5 +1,5 @@
 'use client'
-import { authState, emailState, accessTokenState } from '@/context/recoil-context'
+import { authState, accessTokenState } from '@/context/recoil-context'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -11,7 +11,6 @@ const KakaoRedirect: React.FC = () => {
   const params = useSearchParams()
   const code = params.get('code')
   const router = useRouter()
-  const [toEmail, setToEmail] = useRecoilState(emailState)
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [loading, setLoading] = useState(true)
@@ -42,7 +41,7 @@ const KakaoRedirect: React.FC = () => {
     if (code) {
       kakaoLogin()
     }
-  }, [code, router, setToEmail, setIsAuth, setAccessToken])
+  }, [code, router, setIsAuth, setAccessToken])
 
   return loading ? (
     <div className="flex h-screen flex-col items-center justify-center">

@@ -1,6 +1,6 @@
 // app/layout.tsx
 
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import Header from '@/components/Layout/Header'
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: 'Aurora',
   description: '문제 발굴부터 해결책 검증까지',
   icons: {
-    icon: 'https://trackers-aurora-dev-bucket.s3.ap-northeast-2.amazonaws.com/dev/aurora.png',
+    icon: './logo.png',
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://myaurora.co.kr'),
   openGraph: {
@@ -53,7 +53,6 @@ export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
-  hideFooter?: boolean // Optional prop to hide the footer
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${museomoderno.variable}`}>
@@ -82,3 +81,9 @@ export default function RootLayout({
   )
 }
 
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width',
+  maximumScale: 1,
+  viewportFit: 'cover',
+}

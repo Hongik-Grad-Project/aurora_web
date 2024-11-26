@@ -1,5 +1,5 @@
 'use client'
-import { accessTokenState, authState, emailState } from '@/context/recoil-context'
+import { accessTokenState, authState } from '@/context/recoil-context'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -11,7 +11,6 @@ const NaverRedirect: React.FC = () => {
   const params = useSearchParams()
   const code = params.get('code')
   const router = useRouter()
-  const [toEmail, setToEmail] = useRecoilState(emailState)
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [showMarketingModal, setShowMarketingModal] = useState(false)

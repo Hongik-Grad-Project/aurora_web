@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import FooterComponent from '../Layout/FooterComponent'
 import Landing1 from './1_0_Landing/Landing1'
 import Landing2 from './1_0_Landing/Landing2'
@@ -10,7 +11,11 @@ import Landing6 from './1_0_Landing/Landing6'
 import Landing7 from './1_0_Landing/Landing7'
 import Landing8 from './1_0_Landing/Landing8'
 
+import { useRecoilValue } from 'recoil'
+import { authState } from '@/context/recoil-context'
+
 export default function IntroLayout() {
+  const isAuth = useRecoilValue(authState)
     return (
         <div className="flex h-screen w-full snap-y snap-mandatory flex-col overflow-y-scroll">
           <Landing1 />
