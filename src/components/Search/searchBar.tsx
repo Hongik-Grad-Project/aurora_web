@@ -28,7 +28,8 @@ export default function SearchBar() {
         }
     }, [setSearchResults, accessToken]);
 
-    const handleSearch = async () => {
+    // 키워드 검색 처리 (검색창 직접 입력)
+    const handleKeywordSearch = async () => {
         if (!searchInput.trim()) return;
 
         try {
@@ -39,7 +40,7 @@ export default function SearchBar() {
                 keyword: searchInput.trim()
             });
 
-            const response = await GetProjectSearchFiltering(
+            const response = await GetProjectSearchKeywordFiltering(
                 accessToken, 
                 `/gallery/search/keyword?${queryParams.toString()}`
             );
@@ -49,43 +50,45 @@ export default function SearchBar() {
         }
     };
 
-    const handleTagClick = async (tagText: string, isActive: boolean) => {
-        if (isActive) {
-            // 태그 추가
-            setSelectedTags(prev => [...prev, tagText]);
-            // 검색창에 모든 선택된 태그를 | 로 구분해서 표시
-            setSearchInput(prev => {
-                const newTags = [...prev.split('|').map(t => t.trim()).filter(t => t), tagText];
-                return newTags.join(' | ');
-            });
-        } else {
-            // 태그 제거
-            setSelectedTags(prev => prev.filter(tag => tag !== tagText));
-            setSearchInput(prev => {
-                const newTags = prev.split('|')
-                    .map(t => t.trim())
-                    .filter(t => t && t !== tagText);
-                return newTags.length > 0 ? newTags.join(' | ') : '';
-            });
+    // 태그 검색 처리 (UI 태그 클릭)
+    const handleTagSearch = async (tags: string[]) => {
+        if (tags.length === 0) {
+            setSearchResults([]);
+            return;
         }
 
-        // 검색 실행
         try {
-            const queryParams = new URLSearchParams({
-                page: '1',
-                size: '8',
-                sortType: 'new',
-                keyword: tagText
-            });
-
-            const response = await GetProjectSearchFiltering(
+            const response = await GetProjectSearchTagFiltering(
                 accessToken,
-                `/gallery/search/keyword?${queryParams.toString()}`
+                1,
+                8,
+                'new',
+                tags
             );
             setSearchResults(response.content);
         } catch (error) {
             console.error('Failed to fetch filtered projects:', error);
         }
+    };
+
+    const handleTagClick = (tagText: string, isActive: boolean) => {
+        let newSelectedTags: string[];
+        
+        if (isActive) {
+            // 태그 추가
+            newSelectedTags = [...selectedTags, tagText];
+            setSelectedTags(newSelectedTags);
+            // 검색창에 모든 선택된 태그를 | 로 구분해서 표시
+            setSearchInput(newSelectedTags.join(' | '));
+        } else {
+            // 태그 제거
+            newSelectedTags = selectedTags.filter(tag => tag !== tagText);
+            setSelectedTags(newSelectedTags);
+            setSearchInput(newSelectedTags.join(' | '));
+        }
+
+        // 태그 검색 실행
+        handleTagSearch(newSelectedTags);
     };
 
     return (
@@ -100,13 +103,13 @@ export default function SearchBar() {
                             type="text"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                            onKeyPress={(e) => e.key === 'Enter' && handleKeywordSearch()}
                             placeholder="검색어를 입력하세요"
                             className="flex w-full h-[3rem] text-[#776BFF] text-[2rem] font-semibold focus:outline-none placeholder-opacity-100 placeholder-[#6A6F7A] mb-[0.94rem]"
                         />
                         <button 
                             className="flex items-center justify-center h-[3rem] w-[3rem] bg-transparent border-none cursor-pointer"
-                            onClick={handleSearch}
+                            onClick={handleKeywordSearch}
                         >
                             <Image 
                                 src="/assets/icons/search_icon.svg" 
@@ -123,7 +126,7 @@ export default function SearchBar() {
 
                     {/* 인기 태그 섹션 */}
                     <div className="w-full mt-4 sm:mt-6">
-                        <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">인기 태그</p>
+                        <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">태그로 검색하기</p>
                         <div className="flex flex-wrap gap-2">
                             {popularTags.map((tag, index) => (
                                 <Label
@@ -158,7 +161,7 @@ export default function SearchBar() {
     );
 }
 
-export async function GetProjectSearchFiltering(accessToken: string | null, url: string) {
+export async function GetProjectSearchKeywordFiltering(accessToken: string | null, url: string) {
     const headers: HeadersInit = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
     const options: RequestInit = {
         method: 'GET',
@@ -172,4 +175,40 @@ export async function GetProjectSearchFiltering(accessToken: string | null, url:
     }
 
     return await response.json()
+}
+
+export async function GetProjectSearchTagFiltering(
+    accessToken: string | null, 
+    page: number = 1, 
+    size: number = 8, 
+    sortType: string = 'new', 
+    tags: string[]
+) {
+    const params = new URLSearchParams();
+    params.append('page', page.toString());
+    params.append('size', size.toString());
+    params.append('sortType', sortType);
+    tags.forEach(tag => params.append('tags', tag));
+
+    const headers: HeadersInit = accessToken ? { 
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json;charset=UTF-8'
+    } : {};
+    
+    const options: RequestInit = {
+        method: 'GET',
+        headers,
+        credentials: accessToken ? 'include' : 'omit',
+    };
+
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/gallery/search/tag?${params.toString()}`, 
+        options
+    );
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch filtered project gallery');
+    }
+
+    return await response.json();
 }
