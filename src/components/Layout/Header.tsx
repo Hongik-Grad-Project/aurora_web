@@ -15,7 +15,6 @@ export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [isProfileButtonDropdown, setIsProfileButtonDropdown] = useState(false)
   const router = useRouter()
   const [token, setToken] = useRecoilState(accessTokenState)
   const resetAccessTokenState = useResetRecoilState(accessTokenState)
@@ -217,6 +216,9 @@ export default function Header() {
                     <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                       마이페이지
                     </Link>
+                    <Link href="/search" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      검색하기
+                    </Link>
                     <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">
                       로그아웃
                     </button>
@@ -237,6 +239,9 @@ export default function Header() {
                     </Link>
                     <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
                       프로젝트 갤러리
+                    </Link>
+                    <Link href="/search" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      검색하기
                     </Link>
                     <button onClick={() => setIsLoginModalOpen(true)} className="font-medium leading-5 text-grey90 hover:text-main text-right">
                       로그인
