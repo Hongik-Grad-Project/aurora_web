@@ -7,16 +7,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import './globals.css'
 
-import ClientProvider from '@/components/common/ClientProvider'
 import { NavigationProvider } from '@/context/NavigationContext'
 import 'react-toastify/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Aurora',
-  description: '사회 문제 해결의 시작은, 오로라에서',
+  description: '문제 발굴부터 해결책 검증까지',
   icons: {
-    icon: '/logo.png',
+    icon: 'https://trackers-aurora-dev-bucket.s3.ap-northeast-2.amazonaws.com/dev/aurora.png',
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://myaurora.co.kr'),
   openGraph: {
