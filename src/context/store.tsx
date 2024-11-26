@@ -4,8 +4,6 @@ import { createContext, useReducer, useContext, ReactNode, Dispatch } from 'reac
 
 interface UserState {
   accessToken: string | null
-  email: string | null
-  name: string | null
 }
 
 interface UserAction {
@@ -14,9 +12,7 @@ interface UserAction {
 }
 
 const initialState: UserState = {
-  accessToken: null,
-  email: null,
-  name: null,
+  accessToken: null
 }
 
 const UserContext = createContext<{
@@ -32,9 +28,7 @@ const userReducer = (state: UserState, action: UserAction): UserState => {
     case 'SET_USER_DATA':
       return {
         ...state,
-        accessToken: action.payload.accessToken,
-        email: action.payload.email,
-        name: action.payload.name,
+        accessToken: action.payload.accessToken
       }
     default:
       return state

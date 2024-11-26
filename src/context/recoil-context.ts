@@ -1,7 +1,25 @@
-
 import { atom } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
-const { persistAtom } = recoilPersist()
+const { persistAtom } = recoilPersist({
+  key: 'recoil-persist',
+  storage: {
+    getItem: (key) => {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+      } catch {
+        return sessionStorage.getItem(key);
+      }
+    },
+    setItem: (key, value) => {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch {
+        sessionStorage.setItem(key, JSON.stringify(value));
+      }
+    }
+  },
+})
 
 
 export const accessTokenState = atom<string | null>({
