@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     url: 'https://myaurora.co.kr',
     images: [{
       url: './aurora_logo.png', // 절대 경로로 변경
-      width: 1200,
-      height: 630,
+      width: 750,
+      height: 400,
       alt: 'Aurora',
     }],
   }

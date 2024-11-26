@@ -1,5 +1,6 @@
 'use client';
 
+import ClientProvider from '@/components/common/ClientProvider';
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 
@@ -20,11 +21,11 @@ export function NavigationProvider({ children }: NavigationProviderProps) {
     const [previousPath, setPreviousPath] = useState<string>('');
 
     return (
-        <RecoilRoot>
+        <ClientProvider>
             <NavigationContext.Provider value={{ previousPath, setPreviousPath }}>
                 {children}
             </NavigationContext.Provider>
-        </RecoilRoot>
+        </ClientProvider>
     );
 }
 
