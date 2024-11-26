@@ -9,7 +9,7 @@ import { ChatRoom } from '@/lib/types';
 import { GetChatList, GetChatHistory } from '@/lib/action';
 
 export default function ChatNav() {
-  const accessToken = useRecoilValue(accessTokenState) || '';
+  const accessToken = useRecoilValue(accessTokenState);
   const isAuth = useRecoilValue(authState) || false
   const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState);
   const setChatHistory = useSetRecoilState(selectedChatHistoryState);
@@ -23,6 +23,7 @@ export default function ChatNav() {
       setError(null);
 
       try {
+        if (!accessToken) return;
         const chatRoomsResponse = await GetChatList(accessToken);
         setChatRooms(chatRoomsResponse);
       } catch (err) {
@@ -42,6 +43,7 @@ export default function ChatNav() {
     const fetchChatHistory = async () => {
       if (selectedChatRoomId !== null) {
         try {
+          if (!accessToken) return;
           const historyData = await GetChatHistory(accessToken, selectedChatRoomId.toString());
           if (historyData) {
             setChatHistory(historyData);

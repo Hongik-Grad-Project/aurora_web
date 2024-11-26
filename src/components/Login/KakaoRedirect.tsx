@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { motion } from 'framer-motion'
+import MarketingConsentModal from './MarketingConsentModal'
 
 const KakaoRedirect: React.FC = () => {
   const params = useSearchParams()
@@ -14,6 +15,7 @@ const KakaoRedirect: React.FC = () => {
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [loading, setLoading] = useState(true)
+  const [showMarketingModal, setShowMarketingModal] = useState(false)
 
   useEffect(() => {
     const kakaoLogin = async () => {
@@ -27,12 +29,13 @@ const KakaoRedirect: React.FC = () => {
         if(response.ok) {
           const responseData = await response.json()
           setAccessToken(responseData.accessToken)
+          setShowMarketingModal(true)
         }
       } catch (error) {
         console.error('Kakao login failed:', error)
+        router.push('/')
       } finally {
         setLoading(false)
-        router.push('/')
       }
     }
 
@@ -50,7 +53,23 @@ const KakaoRedirect: React.FC = () => {
       />
       <p className="mt-4 text-lg">Loading...</p>
     </div>
-  ) : null
+  ) : (
+    <>
+      {showMarketingModal && accessToken && (
+        <MarketingConsentModal 
+          accessToken={accessToken}
+          onClose={() => {
+            setShowMarketingModal(false)
+            router.push('/')
+          }}
+          onSubmit={async (consent: boolean) => {
+            setShowMarketingModal(false)
+            router.push('/')
+          }}
+        />
+      )}
+    </>
+  )
 }
 
 export default KakaoRedirect

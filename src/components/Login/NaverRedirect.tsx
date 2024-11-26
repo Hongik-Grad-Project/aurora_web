@@ -53,28 +53,16 @@ const NaverRedirect: React.FC = () => {
         />
         <p className="mt-4 text-lg">Loading...</p>
       </div>
-      {showMarketingModal && (
+      {showMarketingModal && accessToken && (
         <MarketingConsentModal 
+          accessToken={accessToken}
           onClose={() => {
             setShowMarketingModal(false)
             router.push('/')
           }}
           onSubmit={async (consent: boolean) => {
-            try {
-              await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/marketing-consent`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({ consent })
-              })
-            } catch (error) {
-              console.error('Failed to submit marketing consent:', error)
-            } finally {
-              setShowMarketingModal(false)
-              router.push('/')
-            }
+            setShowMarketingModal(false)
+            router.push('/')
           }}
         />
       )}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { motion } from 'framer-motion'
+import MarketingConsentModal from './MarketingConsentModal'
 
 const GoogleRedirect: React.FC = () => {
     const params = useSearchParams()
@@ -14,6 +15,7 @@ const GoogleRedirect: React.FC = () => {
     const [isAuth, setIsAuth] = useRecoilState(authState)
     const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
     const [loading, setLoading] = useState(true)
+    const [showMarketingModal, setShowMarketingModal] = useState(false)
   
     useEffect(() => {
       const googleLogin = async () => {
@@ -27,17 +29,21 @@ const GoogleRedirect: React.FC = () => {
           if(response.ok) {
             const responseData = await response.json()
             setAccessToken(responseData.accessToken)
+            setShowMarketingModal(true)
           }
         } catch (error) {
+          console.error('Google login failed:', error)
+          router.push('/')
         } finally {
           setLoading(false)
-          router.push('/')
         }
       }
-      googleLogin()
+      if (code) {
+        googleLogin()
+      }
     }, [code, setAccessToken, router])
   
-    return (
+    return loading ? (
       <div className="flex h-screen flex-col items-center justify-center">
         <motion.div
           className="border-t-blue-500 border-blue-200 h-12 w-12 animate-spin rounded-full border-4"
@@ -46,8 +52,24 @@ const GoogleRedirect: React.FC = () => {
         />
         <p className="mt-4 text-lg">Loading...</p>
       </div>
-    ) 
-  }
-  
-  export default GoogleRedirect
+    ) : (
+      <>
+        {showMarketingModal && accessToken && (
+          <MarketingConsentModal 
+            accessToken={accessToken}
+            onClose={() => {
+              setShowMarketingModal(false)
+              router.push('/')
+            }}
+            onSubmit={async (consent: boolean) => {
+              setShowMarketingModal(false)
+              router.push('/')
+            }}
+          />
+        )}
+      </>
+    )
+}
+
+export default GoogleRedirect
   

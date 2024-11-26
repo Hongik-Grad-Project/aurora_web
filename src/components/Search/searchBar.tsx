@@ -95,28 +95,28 @@ export default function SearchBar() {
         <>
             <div className="flex w-full max-w-[69.40625rem] mx-auto flex-col items-start gap-[1rem] pt-[2.91rem] px-4 sm:px-6">
                 <div className="flex w-full flex-col justify-center items-center mb-[1.38rem]">
-                    <h1 className="text-center text-[2.5rem] font-semibold mt-[5.19rem] mb-[5.06rem]">
-                        어떤 방식의<br />프로젝트를 찾고 있나요?
+                    <h1 className="text-center text-[1.8rem] sm:text-[2.5rem] font-semibold mt-[3rem] sm:mt-[5.19rem] mb-[3rem] sm:mb-[5.06rem] leading-tight">
+                        어떤 방식의<br /> 프로젝트를<br className="sm:block" /> 찾고 있나요?
                     </h1>
-                    <div className="flex w-full items-center">
+                    <div className="flex w-full items-center px-2 sm:px-0">
                         <input
                             type="text"
                             value={searchInput}
                             onChange={(e) => setSearchInput(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleKeywordSearch()}
                             placeholder="검색어를 입력하세요"
-                            className="flex w-full h-[3rem] text-[#776BFF] text-[2rem] font-semibold focus:outline-none placeholder-opacity-100 placeholder-[#6A6F7A] mb-[0.94rem]"
+                            className="flex w-full h-[2.5rem] sm:h-[3rem] text-[1.5rem] sm:text-[2rem] text-[#776BFF] font-semibold focus:outline-none placeholder-opacity-100 placeholder-[#6A6F7A] mb-[0.94rem]"
                         />
                         <button 
-                            className="flex items-center justify-center h-[3rem] w-[3rem] bg-transparent border-none cursor-pointer"
+                            className="flex items-center justify-center h-[2.5rem] sm:h-[3rem] w-[2.5rem] sm:w-[3rem] bg-transparent border-none cursor-pointer"
                             onClick={handleKeywordSearch}
                         >
                             <Image 
                                 src="/assets/icons/search_icon.svg" 
                                 alt="검색" 
-                                width={34} 
-                                height={34} 
-                                className={`opacity-30 ${searchInput.trim() ? 'hover:opacity-60' : ''}`}
+                                width={24} 
+                                height={24} 
+                                className={`opacity-30 sm:w-[34px] sm:h-[34px] ${searchInput.trim() ? 'hover:opacity-60' : ''}`}
                             />
                         </button>
                     </div>

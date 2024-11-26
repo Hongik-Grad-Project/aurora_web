@@ -6,14 +6,35 @@ import { motion } from 'framer-motion'
 interface MarketingConsentModalProps {
   onClose: () => void;
   onSubmit: (consent: boolean) => Promise<void>;
+  accessToken: string;
 }
 
-export default function MarketingConsentModal({ onClose, onSubmit }: MarketingConsentModalProps) {
+export default function MarketingConsentModal({ onClose, onSubmit, accessToken }: MarketingConsentModalProps) {
+  const handleConsent = async (marketingAgreement: boolean) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AURORA_SERVER_URL}/login/terms`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ marketingAgreement }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit marketing consent');
+      }
+
+      await onSubmit(marketingAgreement);
+      onClose();
+    } catch (error) {
+      console.error('Marketing consent error:', error);
+    }
+  };
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-40"
-    >
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000] bg-opacity-40">
       <motion.div
         initial={{ y: '5vh', opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -24,20 +45,21 @@ export default function MarketingConsentModal({ onClose, onSubmit }: MarketingCo
         <div className="flex flex-col items-center">
           <Image src="/assets/colorLogo.svg" width={130} height={43} alt="logo" />
           <div className="flex flex-col flex-start w-[90%] max-w-[20rem] mt-[1.2rem]">
-            <div
-              className="text-[#0F1011] text-[0.9rem] font-bold leading-[1.3rem]"
-            >
-              회원가입하기
+            <h2 className="text-center text-xl font-bold mb-4">마케팅 활용 동의 및 광고 수신 동의</h2>
+            <div className="flex items-center gap-2 mb-2">
+              <input type="checkbox" id="marketing-consent" className="h-4 w-4" />
+              <label htmlFor="marketing-consent" className="text-sm">E-mail 수신 동의 (선택)</label>
             </div>
-            <div
-              className="text-[#0F1011] text-[0.7rem] font-medium leading-[1rem] mb-[1rem]"
+            <p className="text-xs text-gray-500 mb-4">*동의 하시면 다양한 이벤트에 참여하실 수 있습니다.</p>
+            <button
+              onClick={() => handleConsent(true)}
+              className="w-full py-3 bg-[#776BFF] text-white rounded-lg"
             >
-              소셜 로그인 및 이메일로 가입할 수 있습니다.
-            </div>
-            <div className="w-full h-0 flex-shrink-0 border-t-[0.5px] border-[#CDCDCD]"></div>
+              시작하기
+            </button>
           </div>
         </div>
       </motion.div>
     </div>
-  )
+  );
 }
