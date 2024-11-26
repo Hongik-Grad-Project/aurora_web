@@ -22,18 +22,9 @@ export default function Header() {
   const [isAuth, setIsAuth] = useRecoilState(authState)
   const pathname = usePathname()
 
-  const hiddenPaths = useMemo(() => [
-    'chat',
-    'project/idea',
-    'project/outline',
-    'project/body',
-    'project/gallery'
-  ], [])
-
   const dropdownRef = useRef<HTMLDivElement>(null) // 드롭다운을 참조하는 ref
 
   useEffect(() => {
-    if (hiddenPaths.includes(pathname)) return
     if (!token || token === 'undefined') return
 
     RefreshAccessToken(token)
@@ -53,7 +44,7 @@ export default function Header() {
           setIsLoginModalOpen(true) // 세션 만료 시 로그인 모달 열기
         }
       })
-  }, [router, setToken, setIsAuth, token, pathname, hiddenPaths])
+  }, [router, setToken, setIsAuth, token, pathname])
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
@@ -100,10 +91,6 @@ export default function Header() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [dropdownRef])
-
-  if (hiddenPaths.includes(pathname)) {
-    return null
-  }
 
   return (
     <>
@@ -211,31 +198,51 @@ export default function Header() {
             className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-[200px] py-4 px-6 z-[51]"
           >
             <div className="flex flex-col items-end space-y-2">
-              <div className="pl-4 flex flex-col items-end space-y-2">
-                <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                  오로라 채팅하기
-                </Link>
-                <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                  아이디어 노트
-                </Link>
-                <Link href="/project/outline" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                  기획서 생성
-                </Link>
-              </div>
-              <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                프로젝트 갤러리
-              </Link>
-              <button onClick={handleMyPageClick} className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                마이페이지
-              </button>
               {isAuth ? (
-                <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                  로그아웃
-                </button>
+                // 로그인 상태일 때의 모바일 메뉴
+                <>
+                  <div className="pl-4 flex flex-col items-end space-y-2">
+                    <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      오로라 채팅하기
+                    </Link>
+                    <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      아이디어 노트
+                    </Link>
+                    <Link href="/project/outline" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      기획서 생성
+                    </Link>
+                    <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      프로젝트 갤러리
+                    </Link>
+                    <Link href="/mypage" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      마이페이지
+                    </Link>
+                    <button onClick={handleLogout} className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      로그아웃
+                    </button>
+                  </div>
+                </>
               ) : (
-                <button onClick={() => setIsLoginModalOpen(true)} className="font-medium leading-5 text-grey90 hover:text-main text-right">
-                  로그인
-                </button>
+                // 비로그인 상태일 때의 모바일 메뉴
+                <>
+                  <div className="pl-4 flex flex-col items-end space-y-2">
+                    <Link href="/chat" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      오로라 채팅하기
+                    </Link>
+                    <Link href="/project/idea" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      아이디어 노트
+                    </Link>
+                    <Link href="/project/outline" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      기획서 생성
+                    </Link>
+                    <Link href="/project/gallery" className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      프로젝트 갤러리
+                    </Link>
+                    <button onClick={() => setIsLoginModalOpen(true)} className="font-medium leading-5 text-grey90 hover:text-main text-right">
+                      로그인
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           </motion.div>
