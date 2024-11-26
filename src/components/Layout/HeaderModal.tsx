@@ -38,10 +38,11 @@ const DropdownMenu = () => {
     if (!token) return
     try {
       const response = await Logout(token)
-      setIsAuth(false)
-      resetAccessTokenState()
-      window.location.href = '/'
-
+      if (response === 204) { 
+        setIsAuth(false)
+        resetAccessTokenState()
+        window.location.href = '/'
+      }
     } catch (error) {
       console.error('Failed to logout', error)
     }

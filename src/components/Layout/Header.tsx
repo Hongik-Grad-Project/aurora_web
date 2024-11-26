@@ -67,7 +67,7 @@ export default function Header() {
 
     try {
       const response = await Logout(token)
-      if (response.ok) {
+      if (response === 204) {
         setIsAuth(false)
         resetAccessTokenState()
         window.location.href = '/'

@@ -40,7 +40,7 @@ const NaverRedirect: React.FC = () => {
       }
     }
     naverLogin()
-  }, [code, setAccessToken, router])
+  }, [code, router, setAccessToken, setIsAuth])
 
   return (
     <>

@@ -45,7 +45,7 @@ export async function Logout(accessToken: string) {
     credentials: 'include',
   })
 
-  return await response.json();
+  return response.status
 }
 
 // 회원탈퇴

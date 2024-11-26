@@ -40,7 +40,7 @@ const GoogleRedirect: React.FC = () => {
       if (code) {
         googleLogin()
       }
-    }, [code, setAccessToken, router])
+    }, [code, router, setAccessToken, setIsAuth])
   
     return loading ? (
       <div className="flex h-screen flex-col items-center justify-center">
