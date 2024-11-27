@@ -27,12 +27,7 @@ const NaverRedirect: React.FC = () => {
         if(response.ok) {
           const responseData = await response.json()
           setAccessToken(responseData.accessToken)
-          
-          if (responseData.isFirstLogin) {
-            setShowMarketingModal(true)
-          } else {
-            router.push('/')
-          }
+          router.push('/')
         }
       } catch (error) {
         console.error('Login failed:', error)
@@ -52,6 +47,7 @@ const NaverRedirect: React.FC = () => {
         />
         <p className="mt-4 text-lg">Loading...</p>
       </div>
+
       {showMarketingModal && accessToken && (
         <MarketingConsentModal 
           accessToken={accessToken}
