@@ -57,8 +57,6 @@ export default function SummarizedProjectBodyPage() {
 
     const canSubmit = areTextSectionsValid && isTagsValid;
 
-
-
     const addImageSection = () => {
         if (imageFiles.length < 3) {
             setImageFiles([...imageFiles, new File([], '')])

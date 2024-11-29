@@ -28,7 +28,11 @@ const GoogleRedirect: React.FC = () => {
           if(response.ok) {
             const responseData = await response.json()
             setAccessToken(responseData.accessToken)
-            setShowMarketingModal(true)
+            if(responseData.isFirstLogin) {
+              setShowMarketingModal(true)
+            } else {
+              router.push('/')
+            }
           }
         } catch (error) {
           console.error('Google login failed:', error)
